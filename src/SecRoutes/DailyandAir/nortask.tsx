@@ -11,8 +11,8 @@ export function Nortask() {
   const balanceRef = useRef({ value: 0 });
   const forceUpdate = useReducer(x => x + 1, 0)[1];
 
-  const [energy, setEnergy] = useState(100);
-  const [maxEnergy, setMaxEnergy] = useState(100);
+  const [energy, setEnergy] = useState(10000);
+  const [maxEnergy, setMaxEnergy] = useState(10000);
   const [refillRate, setRefillRate] = useState(1);
   const [lastUpdated, setLastUpdated] = useState(Date.now());
    //user
