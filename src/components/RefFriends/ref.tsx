@@ -20,8 +20,8 @@ const Refer: React.FC<ReferProps> = ({
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [formVisible, setFormVisible] = useState<boolean>(true);
 
-  const inviteLink = `https://t.me/UI02_bot    (Reffer Code:${userId})`;
-  const sharelink = `https://t.me/share/url?url=https://t.me/UI02_bot (Reffer Code:${userId})`;
+  const inviteLink = `https://t.me/ui03_bot  (Reffer Code:${userId})`;
+  const sharelink = `https://t.me/share/url?url=https://t.me/ui03_bot (Reffer Code:${userId})`;
 
   const handleInviteClick = () => {
     window.Telegram.WebApp.openLink(sharelink);
