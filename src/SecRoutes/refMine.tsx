@@ -10,7 +10,6 @@ import { SaveGame } from "../components/saveGame";
 import { sendUserDataToFirebase,updateUserAutoIncrementInFirebase} from '../firebaseFunctions';
 
 
-
 export function Refmine() {
   const balanceRef = useRef({ value: 0 });
   const forceUpdate = useReducer(x => x + 1, 0)[1];
