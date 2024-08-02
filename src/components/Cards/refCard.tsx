@@ -73,13 +73,13 @@ const RefUpgradeButton: FunctionComponent<ButtonProps> = (
     };
   }, [props.userId]);
 
-  //   useEffect(() => {
-  //     if (inviteCount >= props.refshow && !isVisible) {
-  //       setIsVisible(true);
-  //     } else if (inviteCount < props.refshow && isVisible) {
-  //       setIsVisible(true);
-  //     }
-  //   }, [inviteCount, props.refshow, isVisible]);
+    useEffect(() => {
+      if (inviteCount >= props.refshow && !isVisible) {
+        setIsVisible(true);
+      } else if (inviteCount < props.refshow && isVisible) {
+        setIsVisible(true);
+      }
+    }, [inviteCount, props.refshow, isVisible]);
   if (
     props.balance >= props.cost - Math.max(200, props.cost * 0.2) &&
     !isVisible

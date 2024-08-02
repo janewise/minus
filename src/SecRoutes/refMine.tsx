@@ -6,6 +6,8 @@ import UpgradeEnergy from "../classes/upgradeEnergy";
 import RefUpgradeButton from "../components/Cards/refCard"
 import { ShareBal } from "../components/ShareBalance/sharebalance";
 import { SaveGame } from "../components/saveGame";
+//firebase
+import { sendUserDataToFirebase,updateUserAutoIncrementInFirebase} from '../firebaseFunctions';
 
 export function Refmine() {
   const balanceRef = useRef({ value: 0 });
@@ -66,36 +68,36 @@ export function Refmine() {
     }
   }, [energy, maxEnergy, refillRate, lastUpdated, isInitialLoad]);
 
-  // useEffect(() => {
-  //   // Initialize the Telegram Web App SDK
-  //   const initTelegram = () => {
-  //     const tg = window.Telegram.WebApp;
-  //     tg.ready();
-  //     // Debug logging
-  //     console.log('Telegram Web App SDK initialized');
-  //     console.log('tg.initDataUnsafe:', tg.initDataUnsafe);
+  useEffect(() => {
+    // Initialize the Telegram Web App SDK
+    const initTelegram = () => {
+      const tg = window.Telegram.WebApp;
+      tg.ready();
+      // Debug logging
+      console.log('Telegram Web App SDK initialized');
+      console.log('tg.initDataUnsafe:', tg.initDataUnsafe);
 
-  //     const user = tg.initDataUnsafe?.user;
+      const user = tg.initDataUnsafe?.user;
 
-  //     if (user) {
-  //       const id = user.id.toString();
-  //       setUserId(user.id.toString());
-  //       sendUserDataToFirebase(id, autoIncrement);
-  //     }
-  //   };
+      if (user) {
+        const id = user.id.toString();
+        setUserId(user.id.toString());
+        sendUserDataToFirebase(id, autoIncrement);
+      }
+    };
 
-  //   if (window.Telegram) {
-  //     console.log('Telegram SDK is already loaded');
-  //     initTelegram();
-  //   } else {
-  //     console.log('Waiting for Telegram SDK to be ready');
-  //     window.addEventListener('TelegramWebAppReady', initTelegram);
-  //   }
+    if (window.Telegram) {
+      console.log('Telegram SDK is already loaded');
+      initTelegram();
+    } else {
+      console.log('Waiting for Telegram SDK to be ready');
+      window.addEventListener('TelegramWebAppReady', initTelegram);
+    }
 
-  //   return () => {
-  //     window.removeEventListener('TelegramWebAppReady', initTelegram);
-  //   };
-  // }, []);
+    return () => {
+      window.removeEventListener('TelegramWebAppReady', initTelegram);
+    };
+  }, []);
 
   
 //up is user
