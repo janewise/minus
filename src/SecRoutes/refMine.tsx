@@ -145,11 +145,11 @@ export function Refmine() {
       ) / 100;
 
 //     //downdatabase
-//     useEffect(() => {
-//       if (userId !== null) {
-//         updateUserAutoIncrementInFirebase(userId, autoIncrement);
-//       }
-//     }, [autoIncrement]);
+    useEffect(() => {
+      if (userId !== null) {
+        updateUserAutoIncrementInFirebase(userId, autoIncrement);
+      }
+    }, [autoIncrement]);
 // //updatabse
 
   useEffect(() => {
