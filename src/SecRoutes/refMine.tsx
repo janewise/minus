@@ -9,6 +9,8 @@ import { SaveGame } from "../components/saveGame";
 //firebase
 import { sendUserDataToFirebase,updateUserAutoIncrementInFirebase} from '../firebaseFunctions';
 
+
+
 export function Refmine() {
   const balanceRef = useRef({ value: 0 });
   const forceUpdate = useReducer(x => x + 1, 0)[1];
@@ -67,7 +69,6 @@ export function Refmine() {
 
     }
   }, [energy, maxEnergy, refillRate, lastUpdated, isInitialLoad]);
-
   useEffect(() => {
     // Initialize the Telegram Web App SDK
     const initTelegram = () => {
@@ -146,13 +147,13 @@ export function Refmine() {
           100
       ) / 100;
 
-//     //downdatabase
-//     useEffect(() => {
-//       if (userId !== null) {
-//         updateUserAutoIncrementInFirebase(userId, autoIncrement);
-//       }
-//     }, [autoIncrement]);
-// //updatabse
+    //downdatabase
+    useEffect(() => {
+      if (userId !== null) {
+        updateUserAutoIncrementInFirebase(userId, autoIncrement);
+      }
+    }, [autoIncrement]);
+//updatabse
 
   useEffect(() => {
     const interval = setInterval(() => {
