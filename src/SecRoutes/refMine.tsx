@@ -201,11 +201,12 @@ export function Refmine() {
 
   return (
     <>
-              <SaveGame
-                balanceRef={balanceRef}
-                upgradeMap={upgradeMap}
-               upgradeEnergyMap={upgradeEnergyMap}
-              />
+                <SaveGame
+  balanceRef={balanceRef}
+  upgradeMap={upgradeMap}
+  upgradeEnergyMap={upgradeEnergyMap}
+  userId={userId} 
+ />
  <ShareBal
             balanceRef={balanceRef}
             clickIncrement={upgradeMap.current.get("clickUpgrade")!.increment}

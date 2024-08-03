@@ -220,11 +220,12 @@ export function Coin() {
                 autoIncrement={autoIncrement}
                 refillRate={refillRate}
               />
-              <SaveGame 
-                balanceRef={balanceRef}
-                upgradeMap={upgradeMap}
-               upgradeEnergyMap={upgradeEnergyMap} 
-              />
+                <SaveGame
+  balanceRef={balanceRef}
+  upgradeMap={upgradeMap}
+  upgradeEnergyMap={upgradeEnergyMap}
+  userId={userId} 
+ />
 
           {/*2r second row for Booster */}
           <div className="booster">
