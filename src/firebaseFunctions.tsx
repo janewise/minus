@@ -140,3 +140,32 @@ export const getUserInviteCount = async (userId: string) => {
   }
   // return 0;
 };
+
+//second for airtask
+export const saveUserDataToFirebase = (userId: string, data: any) => {
+  if (!userId) return;
+
+  const userRef = ref(db, 'users/' + userId);
+
+  const structuredData = {
+    // autoIncrement: data.autoIncrement || 0,
+    // inviteCount: data.inviteCount || 0,
+    upgrades: {
+      clickUpgrade: data.upgrades?.clickUpgrade || 0,
+      autoClicker01: data.upgrades?.autoClicker01 || 0,
+      autoClicker02: data.upgrades?.autoClicker02 || 0,
+      autoClicker03: data.upgrades?.autoClicker03 || 0,
+      autoClicker04: data.upgrades?.autoClicker04 || 0,
+      autoClicker05: data.upgrades?.autoClicker05 || 0,
+      autoClicker06: data.upgrades?.autoClicker06 || 0,
+      autoClicker07: data.upgrades?.autoClicker07 || 0,
+      refClicker01: data.upgrades?.refClicker01 || 0,
+      refClicker02: data.upgrades?.refClicker02 || 0,
+    },
+    lastUpdated: data.lastUpdated || new Date().getTime(),
+  };
+
+  update(userRef, structuredData).catch((error) => {
+    console.error("Error saving user data:", error);
+  });
+};
