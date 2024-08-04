@@ -1,16 +1,17 @@
 import React, { useRef, useEffect, useReducer, useState } from "react";
 //for ts
-import UpgradeState from "../../classes/upgradeState";
-import UpgradeEnergy from "../../classes/upgradeEnergy";
-//for Task
-import Dailyreward from "../DailyandAir/Daily/dailyreward";
-//fire base
-//import { sendUserDataToFirebase,updateUserAutoIncrementInFirebase} from '../firebaseFunctions';
+import UpgradeState from "../classes/upgradeState";
+import UpgradeEnergy from "../classes/upgradeEnergy";
+//
+import { SaveGame } from "../components/saveGame";
 //firebase
-import { db } from '../../firebase';
+import { sendUserDataToFirebase,updateUserAutoIncrementInFirebase} from '../firebaseFunctions';
+//wallet
+import Exchange from "../SecRoutes/Transfer/exchange";
+import { db } from '../firebase';
 import { ref, onValue } from "firebase/database";
 
-export function Dailytask() {
+export function Wallet() {
   const balanceRef = useRef({ value: 0 });
   const forceUpdate = useReducer(x => x + 1, 0)[1];
 
@@ -22,7 +23,6 @@ export function Dailytask() {
   const [userId, setUserId] = useState<string | null>(null);
 //  exchange
 const [totalExchange, setTotalExchange] = useState<number>(0); // State for total exchange amount
-
   const [isInitialLoad, setIsInitialLoad] = useState(true); // Flag to check if initial load is done
 
   // Load state from localStorage on mount For energy and autoincrement on window close
@@ -84,7 +84,7 @@ const [totalExchange, setTotalExchange] = useState<number>(0); // State for tota
       if (user) {
         const id = user.id.toString();
         setUserId(user.id.toString());
-        //sendUserDataToFirebase(id, autoIncrement);
+        sendUserDataToFirebase(id, autoIncrement);
       }
     };
 
@@ -104,6 +104,7 @@ const [totalExchange, setTotalExchange] = useState<number>(0); // State for tota
   
 //up is user
 
+//D4
 useEffect(() => {
   if (userId) {
     const exchangeRef = ref(db, `users/${userId}/exchanges/amount`);
@@ -119,44 +120,57 @@ useEffect(() => {
   }
 }, [userId]);
 
-  const upgradeMap = useRef(new Map<string, UpgradeState>([
-    ['clickUpgrade', new UpgradeState(15, 1.1, 1, 1)],
-    ['autoClicker01', new UpgradeState(80, 1.15, 0, 0.1)],
-    ['autoClicker02', new UpgradeState(200, 1.15, 0, 3)],
-    ['autoClicker03', new UpgradeState(1100, 1.15, 0, 8)],
-    ['autoClicker04', new UpgradeState(12000, 1.15, 0, 45)],
-    ['autoClicker05', new UpgradeState(130000, 1.15, 0, 250)],
-    ['autoClicker06', new UpgradeState(1400000, 1.15, 0, 1380)],
-    ['autoClicker07', new UpgradeState(15, 1.15, 0 , 7600)],
-    ['refClicker01', new UpgradeState(15, 1.15, 0 , 1)],
-    ['refClicker02', new UpgradeState(35, 1.15, 0 , 2)],
-  ]));
+//routuerchange
+  const upgradeMap = useRef(
+    new Map<string, UpgradeState>([
+      ["clickUpgrade", new UpgradeState(15, 2, 1, 2)],
+      ["autoClicker01", new UpgradeState(80, 2, 0, 0.1)],
+      ["autoClicker02", new UpgradeState(200, 2, 0, 0.5)],
+      ["autoClicker03", new UpgradeState(1000, 2, 0, 0.8)],
+      ["autoClicker04", new UpgradeState(5000, 2, 0, 1)],
+      ["autoClicker05", new UpgradeState(5000, 2, 0, 1)],
+      ["autoClicker06", new UpgradeState(5000, 2, 0, 1)],
+      ["autoClicker07", new UpgradeState(10000, 2, 0, 1.5)],
+      //ref card
+      ["refClicker01", new UpgradeState(500, 2, 0, 1)],
+      ["refClicker02", new UpgradeState(1500, 2, 0, 1.5)],
+      ["refClicker03", new UpgradeState(1500, 2, 0, 1.5)],
+      ["refClicker04", new UpgradeState(4000, 2, 0, 2)],
+      ["refClicker05", new UpgradeState(4000, 2, 0, 2)],
+    ])
+  );
 
   const upgradeEnergyMap = useRef(new Map<string, UpgradeEnergy>([
     ['energyPool', new UpgradeEnergy(40, 1.4, 50,0)],
     ['energyfill', new UpgradeEnergy(70, 2,0, 1)],
+     // Add other entries as needed
   ]));
 
-  let autoIncrement: number = Math.round(
-    ( upgradeMap.current.get('autoClicker01')!.increment +
-      upgradeMap.current.get('autoClicker02')!.increment +
-      upgradeMap.current.get('autoClicker03')!.increment +
-      upgradeMap.current.get('autoClicker04')!.increment +
-      upgradeMap.current.get('autoClicker05')!.increment +
-      upgradeMap.current.get('autoClicker06')!.increment +
-      upgradeMap.current.get('autoClicker07')!.increment +
-      upgradeMap.current.get('refClicker01')!.increment +
-      upgradeMap.current.get('refClicker02')!.increment
-    ) * 100) / 100- (totalExchange/3600);
+  let autoIncrement: number =
+      Math.round(
+        (upgradeMap.current.get("autoClicker01")!.increment +
+          upgradeMap.current.get("autoClicker02")!.increment +
+          upgradeMap.current.get("autoClicker03")!.increment +
+          upgradeMap.current.get("autoClicker04")!.increment +
+          upgradeMap.current.get("autoClicker05")!.increment +
+          upgradeMap.current.get("autoClicker06")!.increment +
+          upgradeMap.current.get("autoClicker07")!.increment +
+          //ref card
+          upgradeMap.current.get("refClicker01")!.increment +
+          upgradeMap.current.get("refClicker02")!.increment +
+          upgradeMap.current.get("refClicker03")!.increment +
+          upgradeMap.current.get("refClicker04")!.increment +
+          upgradeMap.current.get("refClicker05")!.increment) *
+          100
+      ) / 100 - (totalExchange/3600);
 
-
-    //database
-    // useEffect(() => {
-    //   if (userId !== null) {
-    //     updateUserAutoIncrementInFirebase(userId, autoIncrement);
-    //   }
-    // }, [autoIncrement]);
-//databse
+    //downdatabase
+    useEffect(() => {
+      if (userId !== null) {
+        updateUserAutoIncrementInFirebase(userId, autoIncrement);
+      }
+    }, [autoIncrement]);
+//updatabse
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -195,24 +209,6 @@ useEffect(() => {
       } else {
         console.log(`Balance is too low to upgrade ${id} component.`);
       }
-    } else if (upgradeEnergyMap.current.has(id)) {
-      const cost = upgradeEnergyMap.current.get(id)!.currentCost;
-      if (upgradeEnergyMap.current.get(id)!.upgrade(balanceRef.current.value)) {
-        console.log(`Upgraded ${id} energy component.`);
-        balanceRef.current.value = Math.round((balanceRef.current.value - cost) * 100) / 100;
-        // Handle changes to energy attributes
-        if (id === 'energyPool') {
-          const newMaxEnergy = upgradeEnergyMap.current.get(id)!.maxEnergyIncrement;
-          setMaxEnergy((prevMaxEnergy) => prevMaxEnergy + newMaxEnergy);
-          console.log("energy pool+");
-        } else if (id === 'energyfill') {
-          const newRefillRate = upgradeEnergyMap.current.get(id)!.energyRefillIncrement;
-          setRefillRate((prevRefillRate) => prevRefillRate + newRefillRate);
-        console.log("energy +");
-        }
-      } else {
-        console.log(`Balance is too low to upgrade ${id} energy component.`);
-      }
     }
   }
 
@@ -222,10 +218,17 @@ useEffect(() => {
 
   return (
     <>
-          <div className=" Task">
-           <Dailyreward  balanceRef={balanceRef}
-                onRewardClaimed={handleRewardClaimed}/>
-            </div>
+      <div className="overlay">
+        <div className="container-fluid">
+        <SaveGame
+  balanceRef={balanceRef}
+  upgradeMap={upgradeMap}
+  upgradeEnergyMap={upgradeEnergyMap}
+  userId={userId} 
+ />
+          <Exchange autoIncrement={autoIncrement} userId={userId}/>
+        </div>
+      </div>
     </>
-  );
+  )
 }

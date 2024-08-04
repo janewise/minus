@@ -1,0 +1,75 @@
+.exbox1{
+display: flex;
+justify-content:center;
+width: 100%;
+margin-bottom: 0.5rem;
+}
+
+.exin1{
+    width: 230px;
+    height: 40px;
+    font-size: 18px;
+    font-weight: 500;
+    color: rgb(68, 68, 68);
+    outline: none;          /* Remove outline */
+}
+
+.exin2{
+    height: 40px;
+    font-size: 18px;
+    font-weight: 500;
+    color: rgb(68, 68, 68);
+}
+
+/*  */
+.exbox2{
+    display: flex;
+    justify-content:center;
+    width:100%;
+    margin-bottom: 0.5rem;
+}
+.exin2, .exin3, .exin4, .exin5, .exin6 {
+    border:     1px solid black;    
+    outline: none;           /* Remove outline */
+    cursor: pointer;         /* Add pointer cursor */
+    transition: background-color 0.3s ease; /* Smooth transition for background color */
+}
+
+.exin3{
+    width: 85px;
+        font-weight: 500;
+        color: rgb(68, 68, 68);
+        
+}
+.exin4{
+        width: 100px;
+        font-size: 18px;
+        font-weight: 500;
+        color: rgb(68, 68, 68);
+        margin: 0 5px;
+}
+.exin5{
+    width: 85px;
+    font-size: 18px;
+    font-weight: 500;
+    color: rgb(68, 68, 68);
+}    
+
+.exin6{
+    width: 140px;
+    font-size: 18px;
+    font-weight: 500;
+    color: rgb(68, 68, 68);
+}    
+
+/* Clickable Button Style */
+.clickable {
+    background-color: rgb(3, 99, 3);
+    color: white;
+}
+
+/* Unclickable Button Style */
+.unclickable {
+    background-color: white;
+    color: rgb(68, 68, 68);
+}

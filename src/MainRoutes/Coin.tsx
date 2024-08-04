@@ -10,6 +10,8 @@ import { SaveGame } from "../components/saveGame";
 import UpgradeClick from "../components/click/upgradeClick";
 //firebase
 import { sendUserDataToFirebase,updateUserAutoIncrementInFirebase} from '../firebaseFunctions';
+import { db } from '../firebase';
+import { ref, onValue } from "firebase/database";
 //countdown
 import Countdown from "../components/countdown";
 
@@ -24,6 +26,8 @@ export function Coin() {
   const [lastUpdated, setLastUpdated] = useState(Date.now());
    //user
   const [userId, setUserId] = useState<string | null>(null);
+//  exchange
+const [totalExchange, setTotalExchange] = useState<number>(0); // State for total exchange amount
 
   const [isInitialLoad, setIsInitialLoad] = useState(true); // Flag to check if initial load is done
 
@@ -148,7 +152,7 @@ export function Coin() {
           upgradeMap.current.get("refClicker04")!.increment +
           upgradeMap.current.get("refClicker05")!.increment) *
           100
-      ) / 100;
+      ) / 100 - (totalExchange/3600);
 
     //downdatabase
     useEffect(() => {

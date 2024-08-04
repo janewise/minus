@@ -8,7 +8,8 @@ import { ShareBal } from "../components/ShareBalance/sharebalance";
 import { SaveGame } from "../components/saveGame";
 //firebase
 import { sendUserDataToFirebase,updateUserAutoIncrementInFirebase} from '../firebaseFunctions';
-
+import { db } from '../firebase';
+import { ref, onValue } from "firebase/database";
 
 export function Refmine() {
   const balanceRef = useRef({ value: 0 });
@@ -20,6 +21,8 @@ export function Refmine() {
   const [lastUpdated, setLastUpdated] = useState(Date.now());
    //user
   const [userId, setUserId] = useState<string | null>(null);
+//  exchange
+const [totalExchange, setTotalExchange] = useState<number>(0); // State for total exchange amount
 
   const [isInitialLoad, setIsInitialLoad] = useState(true); // Flag to check if initial load is done
 
@@ -102,6 +105,21 @@ export function Refmine() {
   
 //up is user
 
+useEffect(() => {
+  if (userId) {
+    const exchangeRef = ref(db, `users/${userId}/exchanges/amount`);
+
+    const unsubscribe = onValue(exchangeRef, (snapshot) => {
+      const amount = snapshot.val();
+      setTotalExchange(amount || 0);
+      alert(`Exchange amount updated: ${amount}`);
+    });
+
+    // Cleanup the subscription on unmount
+    return () => unsubscribe();
+  }
+}, [userId]);
+
 //routuerchange
   const upgradeMap = useRef(
     new Map<string, UpgradeState>([
@@ -144,7 +162,8 @@ export function Refmine() {
           upgradeMap.current.get("refClicker04")!.increment +
           upgradeMap.current.get("refClicker05")!.increment) *
           100
-      ) / 100;
+      ) / 100- (totalExchange/3600);
+
 
     //downdatabase
     useEffect(() => {

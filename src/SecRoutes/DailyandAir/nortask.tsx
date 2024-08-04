@@ -6,6 +6,9 @@ import UpgradeEnergy from "../../classes/upgradeEnergy";
 import TaskCard from "../../components/TaskCard/taskcard";
 //fire base
 //import { sendUserDataToFirebase,updateUserAutoIncrementInFirebase} from '../firebaseFunctions';
+//firebase
+import { db } from '../../firebase';
+import { ref, onValue } from "firebase/database";
 
 export function Nortask() {
   const balanceRef = useRef({ value: 0 });
@@ -17,6 +20,8 @@ export function Nortask() {
   const [lastUpdated, setLastUpdated] = useState(Date.now());
    //user
   const [userId, setUserId] = useState<string | null>(null);
+//  exchange
+const [totalExchange, setTotalExchange] = useState<number>(0); // State for total exchange amount
 
   const [isInitialLoad, setIsInitialLoad] = useState(true); // Flag to check if initial load is done
 
@@ -99,6 +104,21 @@ export function Nortask() {
   
 //up is user
 
+useEffect(() => {
+  if (userId) {
+    const exchangeRef = ref(db, `users/${userId}/exchanges/amount`);
+
+    const unsubscribe = onValue(exchangeRef, (snapshot) => {
+      const amount = snapshot.val();
+      setTotalExchange(amount || 0);
+      alert(`Exchange amount updated: ${amount}`);
+    });
+
+    // Cleanup the subscription on unmount
+    return () => unsubscribe();
+  }
+}, [userId]);
+
   const upgradeMap = useRef(new Map<string, UpgradeState>([
     ['clickUpgrade', new UpgradeState(15, 1.1, 1, 1)],
     ['autoClicker01', new UpgradeState(80, 1.15, 0, 0.1)],
@@ -127,7 +147,8 @@ export function Nortask() {
       upgradeMap.current.get('autoClicker07')!.increment +
       upgradeMap.current.get('refClicker01')!.increment +
       upgradeMap.current.get('refClicker02')!.increment
-    ) * 100) / 100;
+    ) * 100) / 100- (totalExchange/3600);
+
 
     //database
     // useEffect(() => {

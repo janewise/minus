@@ -111,7 +111,7 @@ const Airtwo: React.FC<AirtwoProps> = ({ userId, balanceRef, onRewardClaimed }) 
     <div className="task-box">
       <span className="taskspan">
         <p className="taskp">
-          <span>Upgrade Cards ({Airtwo} Coin)</span>
+          <span>Lv.5,18Cards Needed (7K Coin)</span>
           <span>{renderButton()}</span>
         </p>
       </span>

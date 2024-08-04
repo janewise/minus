@@ -720,7 +720,7 @@ import {Coin} from "./MainRoutes/Coin";
 import { Nav } from "./MainRoutes/Nav";
 import {Friend} from "./MainRoutes/Friend";
 import { Tasksec } from "./MainRoutes/Tasksec";
-import { Exchange } from "./MainRoutes/Exchange";
+import { Wallet } from "./MainRoutes/Wallet";
 
 export function App() {
 
@@ -734,7 +734,7 @@ export function App() {
           <Route path="/mine/*" element={<Mine />}/>
           <Route path="/friend" element={<Friend />}/>
           <Route path="/tasksec/*" element={<Tasksec />}/>
-          <Route path="/exchange" element={<Exchange />}/>
+          <Route path="/wallet" element={<Wallet />}/>
         </Routes>
      </Router>
     </>

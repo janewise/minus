@@ -169,3 +169,64 @@ export const saveUserDataToFirebase = (userId: string, data: any) => {
     console.error("Error saving user data:", error);
   });
 };
+
+
+// Function to send and update cumulative exchange amount
+// Function to update the total exchange amount
+export function sendExchangeAmountToFirebase(userId: string, exchangeAmount: number) {
+  if (!userId) return;
+
+  const exchangeRef = ref(db, `users/${userId}/exchanges`);
+
+  // Get the current exchange amount if it exists
+  get(exchangeRef).then((snapshot) => {
+    let currentAmount = 0;
+
+    if (snapshot.exists()) {
+      // If exchanges node exists, get the current total amount
+      currentAmount = snapshot.val().amount || 0;
+    }
+
+    // Update the exchange amount with the new value
+    const newAmount = currentAmount + exchangeAmount;
+
+    update(exchangeRef, {
+      amount: newAmount,
+      timestamp: new Date().toISOString()
+    }).then(() => {
+      console.log('Exchange amount updated successfully.');
+    }).catch((error) => {
+      console.error('Error updating exchange amount:', error);
+    });
+  }).catch((error) => {
+    console.error('Error fetching exchange amount:', error);
+  });
+}
+//for reduce autoincrement
+// Function to get the latest exchange amount for a given userId
+export const getLatestExchangeAmount = async (userId: string): Promise<number> => {
+  try {
+    const exchangeRef = ref(db, `users/${userId}/exchanges`);
+    const snapshot = await get(exchangeRef);
+
+    if (snapshot.exists()) {
+      const exchangeData = snapshot.val();
+      alert(`Snapshot exists. Data: ${JSON.stringify(exchangeData)}`);
+
+      if (exchangeData && exchangeData.amount !== undefined) {
+        const amount = exchangeData.amount;
+        alert(`Successfully fetched exchange amount: ${amount}`);
+        return amount;
+      } else {
+        alert("Exchange amount field not found, returning 0.");
+        return 0;
+      }
+    } else {
+      alert("No exchange data found, returning 0.");
+      return 0; // Return 0 if no exchange data exists
+    }
+  } catch (error) {
+    alert("Error fetching exchange amount: " + error);
+    return 0; // Return 0 in case of error
+  }
+};

@@ -79,7 +79,8 @@ export function SaveGame(props: {
     // );
     //console.log("Game setitem");
     // original// setOpenSnackbar(true);
-     // Prepare data for Firebase
+
+     // Prepare data for Firebase D2
      const firebaseData = {
       balance: props.balanceRef.current.value,
       upgrades: {
@@ -109,7 +110,7 @@ export function SaveGame(props: {
       console.error("Cannot save data: userId is null.");
     }
   }
-
+//D2
 
   function handleLoad() {
     props.balanceRef.current.value = parseInt(
