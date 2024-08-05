@@ -218,7 +218,7 @@ const handleExchange = () => {
   return (
     <div>
       <h3>Exchange AutoIncrement</h3>
-      {clickUpgradeLevel === 0 && totalValue === 0 && (
+      {clickUpgradeLevel === 5 && totalValue === 4 && (
       <div className="exchange">
         <div className="exbox1">
           <input
