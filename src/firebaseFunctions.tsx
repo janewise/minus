@@ -173,7 +173,7 @@ export const saveUserDataToFirebase = (userId: string, data: any) => {
 
 //03 Function to send and update cumulative exchange amount
 // Function to update the total exchange amount
-export function sendExchangeAmountToFirebase(userId: string, exchangeAmount: number,tokens:number) {
+export function sendExchangeAmountToFirebase(userId: string, exchangeAmount: number) {
   if (!userId) return;
 
   const exchangeRef = ref(db, `users/${userId}/exchanges`);
@@ -192,7 +192,6 @@ export function sendExchangeAmountToFirebase(userId: string, exchangeAmount: num
 
     update(exchangeRef, {
       amount: newAmount,
-      tokens: tokens, 
       timestamp: new Date().toISOString()
     }).then(() => {
       console.log('Exchange amount updated successfully.');

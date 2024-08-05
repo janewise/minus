@@ -203,7 +203,7 @@ const handleExchange = () => {
   }
 
   if (userId) {
-    sendExchangeAmountToFirebase(userId, inputValue,tokens);
+    sendExchangeAmountToFirebase(userId, inputValue);
     setInputValue(0); // Reset the input after a successful exchange
     setSuccess(true); // Set success feedback
     setError(null); // Clear any previous error
