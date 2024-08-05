@@ -7,7 +7,8 @@ import { SaveGame } from "../components/saveGame";
 //firebase
 import { sendUserDataToFirebase,updateUserAutoIncrementInFirebase} from '../firebaseFunctions';
 //wallet
-import Exchange from "../SecRoutes/Transfer/exchange";
+import Swap from "../SecRoutes/SwapTk/swap";
+import Transfer from "../SecRoutes/TransferTk/transfer";
 import { db } from '../firebase';
 import { ref, onValue } from "firebase/database";
 
@@ -226,7 +227,8 @@ useEffect(() => {
   upgradeEnergyMap={upgradeEnergyMap}
   userId={userId} 
  />
-          <Exchange autoIncrement={autoIncrement} userId={userId}/>
+          <Swap autoIncrement={autoIncrement} userId={userId}/>
+          <Transfer userId={userId}/>
         </div>
       </div>
     </>

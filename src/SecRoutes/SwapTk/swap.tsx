@@ -91,7 +91,7 @@
 // export default Exchange;
 import React, { useState, useEffect } from "react";
 import { sendExchangeAmountToFirebase } from "../../firebaseFunctions"; // Import your Firebase function
-import "./exchange.css";
+import "./swap.css";
 //import { sendExchangeTokenToFirebase } from "../../firebaseFunctions";
 import { getDatabase, ref, onValue } from "firebase/database";
 import { db } from '../../firebase';
@@ -104,7 +104,7 @@ interface ExchangeProps {
 
 
 //D4-01dow is for exchange mechasim
-const Exchange: React.FC<ExchangeProps> = ({ autoIncrement, userId }) => {
+const Swap: React.FC<ExchangeProps> = ({ autoIncrement, userId }) => {
   const [inputValue, setInputValue] = useState<number>(0); // Start with 0
   const [error, setError] = useState<string | null>(null); // State for error message
   const [success, setSuccess] = useState<boolean>(false); // State for success feedback
@@ -296,7 +296,7 @@ useEffect(() => {
   );
 };
 
-export default Exchange;
+export default Swap;
 
 // const handleExchange = () => {
 //   // Calculate how many tokens can be exchanged
