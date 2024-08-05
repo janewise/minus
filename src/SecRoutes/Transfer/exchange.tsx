@@ -94,6 +94,8 @@ import { sendExchangeAmountToFirebase } from "../../firebaseFunctions"; // Impor
 import "./exchange.css";
 //import { sendExchangeTokenToFirebase } from "../../firebaseFunctions";
 import { getDatabase, ref, onValue } from "firebase/database";
+import { db } from '../../firebase';
+
 
 interface ExchangeProps {
   autoIncrement: number;
@@ -101,7 +103,7 @@ interface ExchangeProps {
 }
 
 
-//01dow is for exchange mechasim
+//D4-01dow is for exchange mechasim
 const Exchange: React.FC<ExchangeProps> = ({ autoIncrement, userId }) => {
   const [inputValue, setInputValue] = useState<number>(0); // Start with 0
   const [error, setError] = useState<string | null>(null); // State for error message
@@ -149,7 +151,7 @@ const Exchange: React.FC<ExchangeProps> = ({ autoIncrement, userId }) => {
   };
 
 
-  //02down is for visible
+  //D4-02down is for visible
 const [clickUpgradeLevel, setClickUpgradeLevel] = useState<number>(0);
 const [upgradeLevels, setUpgradeLevels] = useState<number[]>([]);
 
@@ -193,7 +195,7 @@ const calculateTotalValue = (levels: number[]) => {
 };
 const totalValue = calculateTotalValue(upgradeLevels);
 
-////03exchange token
+////D4-03exchange token
 
 const handleExchange = () => {
    const tokens = Math.floor(inputValue / exchangeRate);
@@ -213,10 +215,29 @@ const handleExchange = () => {
   }
 };
 
+//D4-04 Token show
+const [totalTokens, settotalTokens] = useState<number>(0);
+
+useEffect(() => {
+  if (userId) {
+    const exchangeRef = ref(db, `users/${userId}/exchanges/tokens`);
+
+    const unsubscribe = onValue(exchangeRef, (snapshot) => {
+      const tokens = snapshot.val();
+      settotalTokens(tokens || 0);
+      alert(`Exchange amount updated: ${tokens}`);
+    });
+
+    // Cleanup the subscription on unmount
+    return () => unsubscribe();
+  }
+}, [userId]);
 
   return (
     <div>
-      <h3>Exchange AutoIncrement</h3>
+      <h3>Swap</h3>
+      <h4>{exchangeRate}Profit/h ~ 1 Token</h4>
+      <h3>Tokens ~ {totalTokens}</h3>
       {clickUpgradeLevel === 5 && totalValue === 4 && (
       <div className="exchange">
         <div className="exbox1">
