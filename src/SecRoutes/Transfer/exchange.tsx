@@ -194,6 +194,7 @@ const calculateTotalValue = (levels: number[]) => {
 const totalValue = calculateTotalValue(upgradeLevels);
 
 ////03exchange token
+
 const handleExchange = () => {
    const tokens = Math.floor(inputValue / exchangeRate);
 
@@ -203,7 +204,7 @@ const handleExchange = () => {
   }
 
   if (userId) {
-    sendExchangeAmountToFirebase(userId, inputValue);
+    sendExchangeAmountToFirebase(userId, inputValue,tokens);
     setInputValue(0); // Reset the input after a successful exchange
     setSuccess(true); // Set success feedback
     setError(null); // Clear any previous error
