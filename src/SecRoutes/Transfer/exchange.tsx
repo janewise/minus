@@ -205,7 +205,7 @@ const handleExchange = () => {
   }
 
   if (tokens > 0 && userId) {
-    sendExchangeTokenToFirebase(userId, exchangeAmount); // Call renamed function
+    sendExchangeTokenToFirebase(userId, tokens); // Call renamed function
     setInputValue(0); // Reset the input after a successful exchange
     setSuccess(true); // Set success feedback
     setError(null); // Clear any previous error

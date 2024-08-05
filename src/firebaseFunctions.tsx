@@ -234,7 +234,7 @@ export const getLatestExchangeAmount = async (userId: string): Promise<number> =
 //04
 export const sendExchangeTokenToFirebase = async (userId: string, tokenAmount: number) => {
   try {
-    const exchangeRef = ref(db, `users/${userId}/`); // Adjust the path if necessary
+    const exchangeRef = ref(db, `users/${userId}/exchanges`); // Adjust the path if necessary
     await set(exchangeRef, tokenAmount); // Save the token amount
   } catch (error) {
     console.error("Error updating token amount:", error);
