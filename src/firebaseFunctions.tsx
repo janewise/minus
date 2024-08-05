@@ -181,18 +181,20 @@ export function sendExchangeAmountToFirebase(userId: string, exchangeAmount: num
   // Get the current exchange amount if it exists
   get(exchangeRef).then((snapshot) => {
     let currentAmount = 0;
-
+let currentTokensAmount =0;
     if (snapshot.exists()) {
       // If exchanges node exists, get the current total amount
       currentAmount = snapshot.val().amount || 0;
+      currentTokensAmount = snapshot.val().tokens || 0;
     }
 
     // Update the exchange amount with the new value
     const newAmount = currentAmount + exchangeAmount;
+    const newTokensAmount=currentTokensAmount + tokens;
 
     update(exchangeRef, {
       amount: newAmount,
-      tokens:tokens,
+      tokens:newTokensAmount,
       timestamp: new Date().toISOString()
     }).then(() => {
       console.log('Exchange amount updated successfully.');
