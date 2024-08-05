@@ -141,7 +141,7 @@ export const getUserInviteCount = async (userId: string) => {
   // return 0;
 };
 
-//second for airtask
+//02second for airtask
 export const saveUserDataToFirebase = (userId: string, data: any) => {
   if (!userId) return;
 
@@ -171,7 +171,7 @@ export const saveUserDataToFirebase = (userId: string, data: any) => {
 };
 
 
-// Function to send and update cumulative exchange amount
+//03 Function to send and update cumulative exchange amount
 // Function to update the total exchange amount
 export function sendExchangeAmountToFirebase(userId: string, exchangeAmount: number) {
   if (!userId) return;
@@ -202,8 +202,8 @@ export function sendExchangeAmountToFirebase(userId: string, exchangeAmount: num
     console.error('Error fetching exchange amount:', error);
   });
 }
+
 //for reduce autoincrement
-// Function to get the latest exchange amount for a given userId
 export const getLatestExchangeAmount = async (userId: string): Promise<number> => {
   try {
     const exchangeRef = ref(db, `users/${userId}/exchanges`);
@@ -228,5 +228,15 @@ export const getLatestExchangeAmount = async (userId: string): Promise<number> =
   } catch (error) {
     alert("Error fetching exchange amount: " + error);
     return 0; // Return 0 in case of error
+  }
+};
+
+//04
+export const sendExchangeTokenToFirebase = async (userId: string, tokenAmount: number) => {
+  try {
+    const exchangeRef = ref(db, `users/${userId}/`); // Adjust the path if necessary
+    await set(exchangeRef, tokenAmount); // Save the token amount
+  } catch (error) {
+    console.error("Error updating token amount:", error);
   }
 };

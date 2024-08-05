@@ -104,6 +104,7 @@ const [totalExchange, setTotalExchange] = useState<number>(0); // State for tota
   
 //up is user
 
+//D4
 useEffect(() => {
   if (userId) {
     const exchangeRef = ref(db, `users/${userId}/exchanges/amount`);
@@ -118,7 +119,7 @@ useEffect(() => {
     return () => unsubscribe();
   }
 }, [userId]);
-
+//
   const upgradeMap = useRef(new Map<string, UpgradeState>([
     ['clickUpgrade', new UpgradeState(15, 1.1, 1, 1)],
     ['autoClicker01', new UpgradeState(80, 1.15, 0, 0.1)],

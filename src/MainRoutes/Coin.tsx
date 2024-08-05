@@ -10,8 +10,8 @@ import { SaveGame } from "../components/saveGame";
 import UpgradeClick from "../components/click/upgradeClick";
 //firebase
 import { sendUserDataToFirebase,updateUserAutoIncrementInFirebase} from '../firebaseFunctions';
-import { db } from '../firebase';
 import { ref, onValue } from "firebase/database";
+import { db } from '../firebase';
 //countdown
 import Countdown from "../components/countdown";
 
@@ -106,9 +106,25 @@ const [totalExchange, setTotalExchange] = useState<number>(0); // State for tota
       window.removeEventListener('TelegramWebAppReady', initTelegram);
     };
   }, []);
-
   
 //up is user
+
+//D4
+useEffect(() => {
+  if (userId) {
+    const exchangeRef = ref(db, `users/${userId}/exchanges/amount`);
+
+    const unsubscribe = onValue(exchangeRef, (snapshot) => {
+      const amount = snapshot.val();
+      setTotalExchange(amount || 0);
+      alert(`Exchange amount updated: ${amount}`);
+    });
+
+    // Cleanup the subscription on unmount
+    return () => unsubscribe();
+  }
+}, [userId]);
+
 
 //routuerchange
   const upgradeMap = useRef(

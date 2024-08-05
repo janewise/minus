@@ -92,6 +92,7 @@
 import React, { useState, useEffect } from "react";
 import { sendExchangeAmountToFirebase } from "../../firebaseFunctions"; // Import your Firebase function
 import "./exchange.css";
+import { sendExchangeTokenToFirebase } from "../../firebaseFunctions";
 import { getDatabase, ref, onValue } from "firebase/database";
 
 interface ExchangeProps {
@@ -100,7 +101,7 @@ interface ExchangeProps {
 }
 
 
-//dow is for exchange mechasim
+//01dow is for exchange mechasim
 const Exchange: React.FC<ExchangeProps> = ({ autoIncrement, userId }) => {
   const [inputValue, setInputValue] = useState<number>(0); // Start with 0
   const [error, setError] = useState<string | null>(null); // State for error message
@@ -147,23 +148,8 @@ const Exchange: React.FC<ExchangeProps> = ({ autoIncrement, userId }) => {
     setInputValue(0); // Reset input value to 0
   };
 
-  const handleExchange = () => {
-    if (inputValue > maxExchangeValue) {
-      setError("Input value exceeds the current autoIncrement");
-      return;
-    }
 
-    if (userId) {
-      sendExchangeAmountToFirebase(userId, inputValue);
-      setInputValue(0); // Reset the input after a successful exchange
-      setSuccess(true); // Set success feedback
-      setError(null); // Clear any previous error
-    } else {
-      setError("User ID is not available.");
-    }
-  };
-
-  //down is for visible
+  //02down is for visible
 const [clickUpgradeLevel, setClickUpgradeLevel] = useState<number>(0);
 const [upgradeLevels, setUpgradeLevels] = useState<number[]>([]);
 
@@ -207,10 +193,32 @@ const calculateTotalValue = (levels: number[]) => {
 };
 const totalValue = calculateTotalValue(upgradeLevels);
 
+////03exchange token
+const handleExchange = () => {
+  // Calculate how many tokens can be exchanged
+  const tokens = Math.floor(inputValue / exchangeRate); // Determine number of tokens
+  const exchangeAmount = tokens * exchangeRate; // Calculate the actual amount to exchange
+
+  if (inputValue > maxExchangeValue) {
+    setError("Input value exceeds the current autoIncrement");
+    return;
+  }
+
+  if (tokens > 0 && userId) {
+    sendExchangeTokenToFirebase(userId, exchangeAmount); // Call renamed function
+    setInputValue(0); // Reset the input after a successful exchange
+    setSuccess(true); // Set success feedback
+    setError(null); // Clear any previous error
+  } else {
+    setError("User ID is not available or no valid exchange amount.");
+  }
+};
+
+
   return (
     <div>
       <h3>Exchange AutoIncrement</h3>
-      {clickUpgradeLevel === 5 && totalValue === 4 && (
+      {clickUpgradeLevel === 0 && totalValue === 0 && (
       <div className="exchange">
         <div className="exbox1">
           <input
@@ -263,6 +271,7 @@ const totalValue = calculateTotalValue(upgradeLevels);
         )}
       </div>
     )}
+    {/*  */}
     </div>
   );
 };

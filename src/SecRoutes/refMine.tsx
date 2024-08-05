@@ -105,6 +105,7 @@ const [totalExchange, setTotalExchange] = useState<number>(0); // State for tota
   
 //up is user
 
+//D4
 useEffect(() => {
   if (userId) {
     const exchangeRef = ref(db, `users/${userId}/exchanges/amount`);
