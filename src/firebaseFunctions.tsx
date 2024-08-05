@@ -173,7 +173,7 @@ export const saveUserDataToFirebase = (userId: string, data: any) => {
 
 //03 Function to send and update cumulative exchange amount
 // Function to update the total exchange amount
-export function sendExchangeAmountToFirebase(userId: string, exchangeAmount: number) {
+export function sendExchangeAmountToFirebase(userId: string, exchangeAmount: number,tokens:number) {
   if (!userId) return;
 
   const exchangeRef = ref(db, `users/${userId}/exchanges`);
@@ -192,6 +192,7 @@ export function sendExchangeAmountToFirebase(userId: string, exchangeAmount: num
 
     update(exchangeRef, {
       amount: newAmount,
+      tokens: tokens, 
       timestamp: new Date().toISOString()
     }).then(() => {
       console.log('Exchange amount updated successfully.');
@@ -231,12 +232,12 @@ export const getLatestExchangeAmount = async (userId: string): Promise<number> =
   }
 };
 
-//04
-export const sendExchangeTokenToFirebase = async (userId: string, tokenAmount: number) => {
-  try {
-    const exchangeRef = ref(db, `users/${userId}/exchanges`); // Adjust the path if necessary
-    await set(exchangeRef, tokenAmount); // Save the token amount
-  } catch (error) {
-    console.error("Error updating token amount:", error);
-  }
-};
+// //04
+// export const sendExchangeTokenToFirebase = async (userId: string, tokenAmount: number) => {
+//   try {
+//     const exchangeRef = ref(db, `users/${userId}/exchanges`); // Adjust the path if necessary
+//     await set(exchangeRef, tokenAmount); // Save the token amount
+//   } catch (error) {
+//     console.error("Error updating token amount:", error);
+//   }
+// };

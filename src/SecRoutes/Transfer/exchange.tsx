@@ -92,7 +92,7 @@
 import React, { useState, useEffect } from "react";
 import { sendExchangeAmountToFirebase } from "../../firebaseFunctions"; // Import your Firebase function
 import "./exchange.css";
-import { sendExchangeTokenToFirebase } from "../../firebaseFunctions";
+//import { sendExchangeTokenToFirebase } from "../../firebaseFunctions";
 import { getDatabase, ref, onValue } from "firebase/database";
 
 interface ExchangeProps {
@@ -195,22 +195,20 @@ const totalValue = calculateTotalValue(upgradeLevels);
 
 ////03exchange token
 const handleExchange = () => {
-  // Calculate how many tokens can be exchanged
-  const tokens = Math.floor(inputValue / exchangeRate); // Determine number of tokens
-  const exchangeAmount = tokens * exchangeRate; // Calculate the actual amount to exchange
+   const tokens = Math.floor(inputValue / exchangeRate);
 
-  if (inputValue > maxExchangeValue) {
-    setError("Input value exceeds the current autoIncrement");
+  if (inputValue > autoIncrement*3600) {
+    setError('Input value exceeds the current autoIncrement');
     return;
   }
 
-  if (tokens > 0 && userId) {
-    sendExchangeTokenToFirebase(userId, tokens); // Call renamed function
+  if (userId) {
+    sendExchangeAmountToFirebase(userId, inputValue,tokens);
     setInputValue(0); // Reset the input after a successful exchange
     setSuccess(true); // Set success feedback
     setError(null); // Clear any previous error
   } else {
-    setError("User ID is not available or no valid exchange amount.");
+    setError('User ID is not available.');
   }
 };
 
@@ -277,3 +275,23 @@ const handleExchange = () => {
 };
 
 export default Exchange;
+
+// const handleExchange = () => {
+//   // Calculate how many tokens can be exchanged
+//   const tokens = Math.floor(inputValue / exchangeRate); // Determine number of tokens
+//   const exchangeAmount = tokens * exchangeRate; // Calculate the actual amount to exchange
+
+//   if (inputValue > maxExchangeValue) {
+//     setError("Input value exceeds the current autoIncrement");
+//     return;
+//   }
+
+//   if (tokens > 0 && userId) {
+//     sendExchangeTokenToFirebase(userId, tokens); // Call renamed function
+//     setInputValue(0); // Reset the input after a successful exchange
+//     setSuccess(true); // Set success feedback
+//     setError(null); // Clear any previous error
+//   } else {
+//     setError("User ID is not available or no valid exchange amount.");
+//   }
+// };
