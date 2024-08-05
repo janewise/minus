@@ -42,7 +42,7 @@ export function ShareBal(props: {
             margin:'0'
           }}>
             <span>Share Balance:</span>
-            {addcomma(formatNumber(Math.floor(displayBalance)))}
+            {addcomma(formatNumber(Math.trunc(displayBalance)))}
           </p>
         </div>
         <div>
@@ -50,7 +50,7 @@ export function ShareBal(props: {
             margin:'0'
           }}>
             <span>Profit:</span>{" "}
-            {addcomma(formatNumber(props.autoIncrement * 3600))} /h
+            {addcomma(formatNumber(Math.floor(props.autoIncrement * 3600)))} /h
           </p>
         </div>
     </div>
