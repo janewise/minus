@@ -5,8 +5,7 @@ import UpgradeEnergy from "../../classes/upgradeEnergy";
 //for Task
 import TaskCard from "../../components/TaskCard/taskcard";
 //fire base
-//import { sendUserDataToFirebase,updateUserAutoIncrementInFirebase} from '../firebaseFunctions';
-//firebase
+import { sendUserDataToFirebase,updateUserAutoIncrementInFirebase} from '../../firebaseFunctions';
 import { db } from '../../firebase';
 import { ref, onValue } from "firebase/database";
 
@@ -84,7 +83,7 @@ const [totalExchange, setTotalExchange] = useState<number>(0); // State for tota
       if (user) {
         const id = user.id.toString();
         setUserId(user.id.toString());
-        //sendUserDataToFirebase(id, autoIncrement);
+        sendUserDataToFirebase(id, autoIncrement);
       }
     };
 
@@ -148,15 +147,15 @@ useEffect(() => {
       upgradeMap.current.get('autoClicker07')!.increment +
       upgradeMap.current.get('refClicker01')!.increment +
       upgradeMap.current.get('refClicker02')!.increment
-    ) * 100) / 100- (totalExchange/3600);
+    ) * 100) / 100 - (totalExchange/3600);
 
 
     //database
-    // useEffect(() => {
-    //   if (userId !== null) {
-    //     updateUserAutoIncrementInFirebase(userId, autoIncrement);
-    //   }
-    // }, [autoIncrement]);
+    useEffect(() => {
+      if (userId !== null) {
+        updateUserAutoIncrementInFirebase(userId, autoIncrement);
+      }
+    }, [autoIncrement]);
 //databse
 
   useEffect(() => {
