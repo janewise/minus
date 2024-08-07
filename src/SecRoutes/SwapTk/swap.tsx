@@ -109,7 +109,7 @@ const Swap: React.FC<ExchangeProps> = ({ autoIncrement, userId }) => {
   const [error, setError] = useState<string | null>(null); // State for error message
   const [success, setSuccess] = useState<boolean>(false); // State for success feedback
 
-  const exchangeRate = 2000;
+  const exchangeRate = 500;
   const maxExchangeValue = Math.floor(autoIncrement * 3600);
 
   const isClickable = inputValue > 0 && inputValue <= autoIncrement * 3600;
