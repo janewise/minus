@@ -299,14 +299,15 @@ import { Button, Box, Typography, Modal, Snackbar } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import { ref, onValue, get, runTransaction } from "firebase/database";
 import { db } from '../../firebase';
+import "./transfer.css"
 
 const style = {
   position: "absolute" as "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 350,
-  bgcolor: "rgb(14, 16, 17)",
+  width: 320,
+  bgcolor: "white",
   border: "2px solid rgb(141, 130, 114)",
   boxShadow: 24,
   p: 3,
@@ -413,7 +414,7 @@ const Transfer: React.FC<ExchangeProps> = ({ userId }) => {
 
   return (
     <div>
-      <form onSubmit={(e) => e.preventDefault()}>
+      <form onSubmit={(e) => e.preventDefault()} className="transferForm">
         <h4 className="reftitle">Enter Receiver ID and Token Amount</h4>
         <input
           type="text"
@@ -423,15 +424,21 @@ const Transfer: React.FC<ExchangeProps> = ({ userId }) => {
           placeholder="Enter Receiver ID"
           required
         />
-        <input
-          type="number"
+        <div style={{display:'flex',justifyContent:'center'}}><input
+          type="text"
           className="sendTokens"
-          max={maxExchangeValue}
           value={inputValue}
           onChange={(e) => setInputValue(Number(e.target.value))}
           placeholder="Enter Token Amount"
           required
-        />
+        /> <button
+        className={`exin2 ${isClickable ? "clickable" : "unclickable"}`}
+        onClick={handleMax}
+      >
+        Max
+      </button></div>
+        
+
         {errorMessage && <p className="error-message">{errorMessage}</p>}
         <button type="button" className="referbutton" onClick={handleOpen}>
           Send
@@ -448,7 +455,7 @@ const Transfer: React.FC<ExchangeProps> = ({ userId }) => {
             Confirm Transfer
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            <h4>Sender: {userId} | Receiver: {receiverId}</h4>
+            <h3>Sender: {userId}  Receiver: {receiverId}</h3>
             <h4>Tokens: {inputValue}</h4>
             <p>Are you sure you want to send these tokens?</p>
           </Typography>

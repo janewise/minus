@@ -1,0 +1,28 @@
+.receiverId,.sendTokens{
+    margin-bottom: 10px;
+}
+
+.receiverId{
+    width: 230px;
+    height: 40px;
+    font-size: 18px;
+    font-weight: 500;
+    color: rgb(68, 68, 68);
+    outline: none;          
+}
+
+.sendTokens{
+    width: 180px;
+    height: 40px;
+    font-size: 18px;
+    font-weight: 500;
+    color: rgb(68, 68, 68);
+    outline: none;          
+}
+
+.transferForm{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
