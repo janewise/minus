@@ -104,20 +104,7 @@ const [totalExchange, setTotalExchange] = useState<number>(0); // State for tota
 //up is user
 
 //D4
-useEffect(() => {
-  if (userId) {
-    const exchangeRef = ref(db, `users/${userId}/exchanges/amount`);
 
-    const unsubscribe = onValue(exchangeRef, (snapshot) => {
-      const amount = snapshot.val();
-      setTotalExchange(amount || 0);
-      alert(`Exchange amount updated: ${amount}`);
-    });
-
-    // Cleanup the subscription on unmount
-    return () => unsubscribe();
-  }
-}, [userId]);
 //
   const upgradeMap = useRef(new Map<string, UpgradeState>([
     ['clickUpgrade', new UpgradeState(15, 1.1, 1, 1)],
@@ -147,7 +134,7 @@ useEffect(() => {
       upgradeMap.current.get('autoClicker07')!.increment +
       upgradeMap.current.get('refClicker01')!.increment +
       upgradeMap.current.get('refClicker02')!.increment
-    ) * 100) / 100 - (totalExchange/3600);
+    ) * 100) / 100;
 
 
     //database
