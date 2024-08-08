@@ -458,10 +458,12 @@ const Transfer: React.FC<ExchangeProps> = ({ userId }) => {
             <hr />
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            <div style={{display:'flex',flexDirection:'column',justifyContent:'flex-start'}}>
             <h5>Sender  : {userId}</h5>
             <h5>Receiver: {receiverId}</h5>
             <h5>Tokens: {inputValue}</h5>
             <p>Are you sure you want to send these tokens?</p>
+            </div>
             <hr />
           </Typography>
           <Button onClick={ConfirmTransfer} color="primary">confirm</Button>
