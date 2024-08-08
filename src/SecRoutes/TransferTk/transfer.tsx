@@ -454,16 +454,18 @@ const Transfer: React.FC<ExchangeProps> = ({ userId }) => {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Confirm Transfer
+            <h3>Confirm Transfer</h3>
             <hr />
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            <h3>Sender: {userId}  Receiver: {receiverId}</h3>
-            <h4>Tokens: {inputValue}</h4>
+            <h5>Sender  : {userId}</h5>
+            <h5>Receiver: {receiverId}</h5>
+            <h5>Tokens: {inputValue}</h5>
             <p>Are you sure you want to send these tokens?</p>
+            <hr />
           </Typography>
-          <Button onClick={ConfirmTransfer}>Yes</Button>
-          <Button onClick={handleClose}>No</Button>
+          <Button onClick={ConfirmTransfer} color="primary">confirm</Button>
+          <Button onClick={handleClose} color="error">Cancel</Button>
         </Box>
       </Modal>
       {success && <Snackbar open={success} autoHideDuration={3000} message="Transfer successful!" onClose={() => setSuccess(false)} />}
