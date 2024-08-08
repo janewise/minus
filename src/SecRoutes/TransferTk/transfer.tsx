@@ -455,6 +455,7 @@ const Transfer: React.FC<ExchangeProps> = ({ userId }) => {
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
             Confirm Transfer
+            <hr />
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             <h3>Sender: {userId}  Receiver: {receiverId}</h3>
