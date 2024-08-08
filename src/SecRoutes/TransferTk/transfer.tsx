@@ -302,15 +302,17 @@ import { db } from '../../firebase';
 import "./transfer.css"
 
 const style = {
-  position: "absolute" as "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 320,
-  bgcolor: "white",
-  border: "2px solid rgb(141, 130, 114)",
+  position: 'absolute' as 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 300,
+  bgcolor: 'white',
+  border: '1px solid rgb(141, 130, 114)',
   boxShadow: 24,
   p: 3,
+  color: 'black',           // Text color set to black
+  borderRadius: '8px',      // Border radius set to 8px
 };
 
 interface ExchangeProps {
@@ -425,7 +427,7 @@ const Transfer: React.FC<ExchangeProps> = ({ userId }) => {
           required
         />
         <div style={{display:'flex',justifyContent:'center'}}><input
-          type="text"
+          type="number"
           className="sendTokens"
           value={inputValue}
           onChange={(e) => setInputValue(Number(e.target.value))}
