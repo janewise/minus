@@ -469,7 +469,7 @@ const Transfer: React.FC<ExchangeProps> = ({ userId }) => {
             </div>
             <hr />
           </Typography>
-          <Button onClick={ConfirmTransfer} color="success" style={{marginRight:'100px'}}>confirm</Button>
+          <Button onClick={ConfirmTransfer} color="success">confirm</Button>
           <Button onClick={handleClose} color="error">Cancel</Button>
         </Box>
       </Modal>
