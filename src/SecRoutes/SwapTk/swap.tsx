@@ -95,7 +95,7 @@ import "./swap.css";
 //import { sendExchangeTokenToFirebase } from "../../firebaseFunctions";
 import { getDatabase, ref, onValue } from "firebase/database";
 import { db } from '../../firebase';
-
+import { Snackbar } from "@mui/material";
 
 interface ExchangeProps {
   autoIncrement: number;
@@ -286,9 +286,7 @@ useEffect(() => {
           Exchange
         </button>
         {error && <p style={{ color: "red" }}>{error}</p>}
-        {success && !error && (
-          <p style={{ color: "green" }}>Exchange successful!</p>
-        )}
+        {success && <Snackbar open={success} autoHideDuration={3000} message="exchange successful!" onClose={() => setSuccess(false)} />}
       </div>
     )}
     {/*  */}
