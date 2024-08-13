@@ -1,3 +1,18 @@
+.transfer{
+    margin-top: 6rem;
+}
+.transferbutton{
+        background-color: rgba(61, 0, 61, 0.9);
+        color: #fff;
+        padding: 5px 10px;
+        border: 1px solid rgba(211, 211, 211, 0.6);
+        border-radius: 5px;
+        font-size: 17px;
+        font-weight: 500;
+        margin-bottom:1rem;
+        width: 230px;
+        text-align: center;
+}
 .receiverId,.sendTokens{
     margin-bottom: 10px;
 }

@@ -234,7 +234,7 @@ useEffect(() => {
 }, [userId]);
 
   return (
-    <div>
+    <div className="swap">
       <h3>Swap</h3>
       <h4>{exchangeRate}Profit/h ~ 1 Token</h4>
       <h3>Tokens ~ {totalTokens}</h3>

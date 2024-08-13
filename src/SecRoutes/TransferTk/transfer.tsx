@@ -415,9 +415,9 @@ const Transfer: React.FC<ExchangeProps> = ({ userId }) => {
   };
 
   return (
-    <div>
+    <div className="transfer">
       <form onSubmit={(e) => e.preventDefault()} className="transferForm">
-        <h4 className="reftitle">Enter Receiver ID and Token Amount</h4>
+        <h5 >Enter Receiver ID</h5>
         <input
           type="text"
           className="receiverId"
@@ -426,6 +426,7 @@ const Transfer: React.FC<ExchangeProps> = ({ userId }) => {
           placeholder="Enter Receiver ID"
           required
         />
+          <h5 >Enter Tokens Amount</h5>
         <div style={{display:'flex',justifyContent:'center'}}><input
           type="number"
           className="sendTokens"
@@ -441,11 +442,13 @@ const Transfer: React.FC<ExchangeProps> = ({ userId }) => {
       </button></div>
         
 
-        {errorMessage && <p className="error-message">{errorMessage}</p>}
-        <button type="button" className="referbutton" onClick={handleOpen}>
+      
+        <button type="button" className="transferbutton" onClick={handleOpen}>
           Send
         </button>
       </form>
+
+      {errorMessage && <p className="error-message">{errorMessage}</p>}
       <Modal
         open={open}
         onClose={handleClose}
@@ -459,15 +462,15 @@ const Transfer: React.FC<ExchangeProps> = ({ userId }) => {
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             <div style={{display:'flex',flexDirection:'column',alignItems:'flex-start'}}>
-            <h5>Sender<span>  </span>: {userId}</h5>
+            <h5>Sender: {userId}</h5>
             <h5>Receiver: {receiverId}</h5>
-            <h5>Tokens<span>  </span>: {inputValue}</h5>
-            <p>Are you sure you want to send these tokens?</p>
+            <h5>Tokens: {inputValue}</h5>
+            <p>Are you sure you want to send?</p>
             </div>
             <hr />
           </Typography>
-          <Button onClick={ConfirmTransfer} color="success" style={{marginRight:'10px'}}>confirm</Button>
-          <Button onClick={handleClose} color="error" style={{marginLeft:'10px'}}>Cancel</Button>
+          <Button onClick={ConfirmTransfer} color="success" style={{marginRight:'100px'}}>confirm</Button>
+          <Button onClick={handleClose} color="error" style={{marginLeft:'100px'}}>Cancel</Button>
         </Box>
       </Modal>
       {success && <Snackbar open={success} autoHideDuration={3000} message="Transfer successful!" onClose={() => setSuccess(false)} />}

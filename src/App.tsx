@@ -734,7 +734,7 @@ export function App() {
           <Route path="/mine/*" element={<Mine />}/>
           <Route path="/friend" element={<Friend />}/>
           <Route path="/tasksec/*" element={<Tasksec />}/>
-          <Route path="/wallet" element={<Wallet />}/>
+          <Route path="/wallet/*" element={<Wallet />}/>
         </Routes>
      </Router>
     </>
