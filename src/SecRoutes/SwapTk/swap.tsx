@@ -286,7 +286,7 @@ useEffect(() => {
           Exchange
         </button>
         {error && <p style={{ color: "red" }}>{error}</p>}
-        {success && <Snackbar open={success} autoHideDuration={3000} message="exchange successful!" onClose={() => setSuccess(false)} />}
+        {success && <Snackbar style={{color:'white',backgroundColor:'green', position:'fixed'}} open={success} autoHideDuration={3000} message="exchange successful!" onClose={() => setSuccess(false)} />}
       </div>
     )}
     {/*  */}
