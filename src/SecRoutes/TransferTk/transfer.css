@@ -1,5 +1,5 @@
 .transfer{
-    margin-top: 6rem;
+    margin-top: 8rem;
 }
 .transferbutton{
         background-color: rgba(61, 0, 61, 0.9);
@@ -10,7 +10,7 @@
         font-size: 17px;
         font-weight: 500;
         margin-bottom:1rem;
-        width: 230px;
+        width: 270px;
         text-align: center;
 }
 .receiverId,.sendTokens{
@@ -18,7 +18,7 @@
 }
 
 .receiverId{
-    width: 230px;
+    width: 270px;
     height: 40px;
     font-size: 18px;
     font-weight: 500;
@@ -27,7 +27,7 @@
 }
 
 .sendTokens{
-    width: 180px;
+    width: 230px;
     height: 40px;
     font-size: 18px;
     font-weight: 500;

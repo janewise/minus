@@ -233,11 +233,15 @@ useEffect(() => {
   }
 }, [userId]);
 
+const inusdt=totalTokens*0.5;
   return (
     <div className="swap">
-      <h3>Swap</h3>
+      <div className="swapbalance">
+        {autoIncrement}/h
+      </div>
       <h4>{exchangeRate}Profit/h ~ 1 Token</h4>
-      <h3>Tokens ~ {totalTokens}</h3>
+      <h4>Tokens ~ {totalTokens}</h4>
+      <p>{totalTokens} * 0.5 ~ {inusdt} usdt</p>
       {clickUpgradeLevel === 5 && totalValue === 4 && (
       <div className="exchange">
         <div className="exbox1">

@@ -1,5 +1,18 @@
+
+.swapbalance {
+    display: flex;
+    align-items: center;
+   justify-content: center;
+    min-height: 2.5rem;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.274);
+    padding: 0 5px 0;
+    border-radius: 8px;
+    margin-bottom: 3rem;
+  }
+
 .swap{
-    margin-top: 4rem;
+    margin-top: 7rem;
 }
 
 .exbox1{
@@ -60,10 +73,16 @@ margin-bottom: 0.5rem;
 }    
 
 .exin6{
-    width: 140px;
-    font-size: 18px;
-    font-weight: 500;
-    color: rgb(68, 68, 68);
+    background-color: rgba(61, 0, 61, 0.9);
+        color: #fff;
+        padding: 5px 10px;
+        border: 1px solid rgba(211, 211, 211, 0.6);
+        border-radius: 5px;
+        font-size: 17px;
+        font-weight: 500;
+        margin-bottom:1rem;
+        width: 270px;
+        text-align: center;
 }    
 
 /* Clickable Button Style */
