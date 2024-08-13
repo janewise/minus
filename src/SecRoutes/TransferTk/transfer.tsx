@@ -470,7 +470,7 @@ const Transfer: React.FC<ExchangeProps> = ({ userId }) => {
             <hr />
           </Typography>
           <Button onClick={ConfirmTransfer} color="success" style={{marginRight:'100px'}}>confirm</Button>
-          <Button onClick={handleClose} color="error" style={{marginLeft:'100px'}}>Cancel</Button>
+          <Button onClick={handleClose} color="error">Cancel</Button>
         </Box>
       </Modal>
       {success && <Snackbar open={success} autoHideDuration={3000} message="Transfer successful!" onClose={() => setSuccess(false)} />}
