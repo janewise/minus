@@ -354,17 +354,46 @@ const Transfer: React.FC<ExchangeProps> = ({ userId }) => {
     setErrorMessage(""); // Clear the error message when the input changes
   };
 
+  // const handleOpen = () => {
+  //   if (inputValue > totalTokens) {
+  //     setErrorMessage("Please enter a valid token amount.");
+  //     return;
+  //   }
+
+  //   if (!receiverId) {
+  //     setErrorMessage("Please enter a valid receiver ID.");
+  //     return;
+  //   }
+
+  //   const receiverRef = ref(db, `users/${receiverId}`);
+  //   get(receiverRef).then((snapshot) => {
+  //     if (!snapshot.exists()) {
+  //       setErrorMessage("Please enter a valid receiver ID.");
+  //       return;
+  //     } else {
+  //       setErrorMessage("");
+  //       setOpen(true);
+  //     }
+  //   });
+  // };
+
   const handleOpen = () => {
     if (inputValue > totalTokens) {
       setErrorMessage("Please enter a valid token amount.");
       return;
     }
-
+  
     if (!receiverId) {
       setErrorMessage("Please enter a valid receiver ID.");
       return;
     }
-
+  
+    // Check if the sender's ID is the same as the receiver's ID
+    if (receiverId === userId) {
+      setErrorMessage("You cannot transfer tokens to your own account.");
+      return;
+    }
+  
     const receiverRef = ref(db, `users/${receiverId}`);
     get(receiverRef).then((snapshot) => {
       if (!snapshot.exists()) {
@@ -376,7 +405,6 @@ const Transfer: React.FC<ExchangeProps> = ({ userId }) => {
       }
     });
   };
-
   const handleClose = () => setOpen(false);
 
   const ConfirmTransfer = () => {
