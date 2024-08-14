@@ -533,13 +533,14 @@ interface ExchangeProps {
 
 const Transfer: React.FC<ExchangeProps> = ({ userId }) => {
   const [inputValue, setInputValue] = useState<number>(0);
-  const [error, setError] = useState<string | null>(null);
+  //const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<boolean>(false);
   const [receiverId, setReceiverId] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [open, setOpen] = useState(false);
   const [totalTokens, setTotalTokens] = useState<number>(0);
   const [congratulationOpen, setCongratulationOpen] = useState(false); // New state for congratulatory modal
+  const [transferTimestamp, setTransferTimestamp] = useState<string>("");
 
   useEffect(() => {
     if (userId) {
@@ -620,6 +621,10 @@ const Transfer: React.FC<ExchangeProps> = ({ userId }) => {
           return (currentTokens || 0) + inputValue;
         })
           .then(() => {
+            const currentDate = new Date();
+            const formattedDate = `${currentDate.getUTCFullYear()}/${currentDate.getUTCMonth() + 1}/${currentDate.getUTCDate()} UTC:${currentDate.getUTCHours()}:${currentDate.getUTCMinutes()}`;
+            setTransferTimestamp(formattedDate);
+
             setSuccess(true);
             setOpen(false);
             setCongratulationOpen(true); // Open congratulatory modal after successful transfer
@@ -653,6 +658,7 @@ const Transfer: React.FC<ExchangeProps> = ({ userId }) => {
           <input
             type="number"
             className="sendTokens"
+            min='0'
             value={inputValue}
             onChange={(e) => setInputValue(Number(e.target.value))}
             placeholder="Enter Token Amount"
@@ -712,6 +718,7 @@ const Transfer: React.FC<ExchangeProps> = ({ userId }) => {
           <Typography id="congratulation-modal-description" sx={{ mt: 2 }}>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
               <p>You have successfully sent {inputValue} tokens to {receiverId}.</p>
+              <h5>Transfer Time: {transferTimestamp}</h5>
             </div>
             <hr />
           </Typography>
