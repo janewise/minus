@@ -541,6 +541,8 @@ const Transfer: React.FC<ExchangeProps> = ({ userId }) => {
   const [totalTokens, setTotalTokens] = useState<number>(0);
   const [congratulationOpen, setCongratulationOpen] = useState(false); // New state for congratulatory modal
   const [transferTimestamp, setTransferTimestamp] = useState<string>("");
+  const [tempInputValue, setTempInputValue] = useState<number>(0);
+  const [tempReceiverId, setTempReceiverId] = useState<string | null>(null);
 
   useEffect(() => {
     if (userId) {
@@ -626,15 +628,17 @@ const Transfer: React.FC<ExchangeProps> = ({ userId }) => {
             const formattedDate = `${currentDate.getUTCFullYear()}/${currentDate.getUTCMonth() + 1}/${currentDate.getUTCDate()} UTC:${currentDate.getUTCHours()}:${currentDate.getUTCMinutes()}`;
             setTransferTimestamp(formattedDate);
   
-            // Set the input value and receiver ID for the congratulations modal
-            setInputValue(inputValue);
-            setReceiverId(receiverId);
+            // Store values in temporary states before resetting
+            setTempInputValue(inputValue);
+            setTempReceiverId(receiverId);
   
             setSuccess(true);
             setOpen(false);
             setCongratulationOpen(true); // Open the congratulations modal
-            setInputValue(0); // Reset the input value
-            setReceiverId(""); // Reset the receiver ID
+  
+            // Reset input value and receiver ID
+            setInputValue(0);
+            setReceiverId(null);
             setErrorMessage("");
           })
           .catch((error) => {
@@ -645,6 +649,7 @@ const Transfer: React.FC<ExchangeProps> = ({ userId }) => {
         console.error("Error updating sender's tokens:", error);
       });
   };
+  
   
 
   return (
@@ -710,27 +715,29 @@ const Transfer: React.FC<ExchangeProps> = ({ userId }) => {
       </Modal>
 
       {/* New Congratulatory Modal */}
-      <Modal
-        open={congratulationOpen}
-        onClose={handleCongratulationClose}
-        aria-labelledby="congratulation-modal-title"
-        aria-describedby="congratulation-modal-description"
-      >
-        <Box sx={style}>
-          <Typography id="congratulation-modal-title" variant="h6" component="h2">
-            <h3>Congratulations!</h3>
-            <hr />
-          </Typography>
-          <Typography id="congratulation-modal-description" sx={{ mt: 2 }}>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-              <p>You have successfully sent {inputValue} tokens to {receiverId}.</p>
-              <p> {transferTimestamp}</p>
-            </div>
-            <hr />
-          </Typography>
-          <Button onClick={handleCongratulationClose} color="success">Exit</Button>
-        </Box>
-      </Modal>
+     {/* New Congratulatory Modal */}
+<Modal
+  open={congratulationOpen}
+  onClose={handleCongratulationClose}
+  aria-labelledby="congratulation-modal-title"
+  aria-describedby="congratulation-modal-description"
+>
+  <Box sx={style}>
+    <Typography id="congratulation-modal-title" variant="h6" component="h2">
+      <h3>Congratulations!</h3>
+      <hr />
+    </Typography>
+    <Typography id="congratulation-modal-description" sx={{ mt: 2 }}>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+        <p>You have successfully sent {tempInputValue} tokens to {tempReceiverId}.</p>
+        <p> {transferTimestamp}</p>
+      </div>
+      <hr />
+    </Typography>
+    <Button onClick={handleCongratulationClose} color="success">Exit</Button>
+  </Box>
+</Modal>
+
 
     </div>
   );
