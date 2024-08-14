@@ -603,17 +603,17 @@ const Transfer: React.FC<ExchangeProps> = ({ userId }) => {
 
   const ConfirmTransfer = () => {
     if (!userId || !receiverId) return;
-
+  
     const senderRef = ref(db, `users/${userId}/exchanges/tokens`);
     const receiverRef = ref(db, `users/${receiverId}/exchanges/tokens`);
-
+  
     // Use runTransaction to ensure atomic updates
     runTransaction(senderRef, (currentTokens) => {
       if (currentTokens === null || currentTokens < inputValue) {
         setErrorMessage("Insufficient tokens.");
         return currentTokens;
       }
-
+  
       return currentTokens - inputValue;
     })
       .then(() => {
@@ -621,15 +621,20 @@ const Transfer: React.FC<ExchangeProps> = ({ userId }) => {
           return (currentTokens || 0) + inputValue;
         })
           .then(() => {
+            // Capture the current date and time for the transfer timestamp
             const currentDate = new Date();
             const formattedDate = `${currentDate.getUTCFullYear()}/${currentDate.getUTCMonth() + 1}/${currentDate.getUTCDate()} UTC:${currentDate.getUTCHours()}:${currentDate.getUTCMinutes()}`;
             setTransferTimestamp(formattedDate);
-
+  
+            // Set the input value and receiver ID for the congratulations modal
+            setInputValue(inputValue);
+            setReceiverId(receiverId);
+  
             setSuccess(true);
             setOpen(false);
-            setCongratulationOpen(true); // Open congratulatory modal after successful transfer
-            setInputValue(0);
-            setReceiverId("");
+            setCongratulationOpen(true); // Open the congratulations modal
+            setInputValue(0); // Reset the input value
+            setReceiverId(""); // Reset the receiver ID
             setErrorMessage("");
           })
           .catch((error) => {
@@ -640,6 +645,7 @@ const Transfer: React.FC<ExchangeProps> = ({ userId }) => {
         console.error("Error updating sender's tokens:", error);
       });
   };
+  
 
   return (
     <div className="transfer">
@@ -718,7 +724,7 @@ const Transfer: React.FC<ExchangeProps> = ({ userId }) => {
           <Typography id="congratulation-modal-description" sx={{ mt: 2 }}>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
               <p>You have successfully sent {inputValue} tokens to {receiverId}.</p>
-              <h5>Transfer Time: {transferTimestamp}</h5>
+              <p> {transferTimestamp}</p>
             </div>
             <hr />
           </Typography>
