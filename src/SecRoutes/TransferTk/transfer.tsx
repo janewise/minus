@@ -654,6 +654,11 @@ const Transfer: React.FC<ExchangeProps> = ({ userId }) => {
 
   return (
     <div className="transfer">
+
+<div className="tokenbalance">
+  <h3>Token~{totalTokens}</h3>
+</div>
+
       <form onSubmit={(e) => e.preventDefault()} className="transferForm">
         <h5>Enter Receiver ID</h5>
         <input

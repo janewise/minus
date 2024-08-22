@@ -237,12 +237,12 @@ const inusdt=totalTokens*0.5;
   return (
     <div className="swap">
       <div className="swapbalance">
-        {autoIncrement}/h
+      {(Math.floor(autoIncrement * 3600))} /h
       </div>
       <h4>{exchangeRate}Profit/h ~ 1 Token</h4>
       <h4>Tokens ~ {totalTokens}</h4>
       <p>{totalTokens} * 0.5 ~ {inusdt} usdt</p>
-      {clickUpgradeLevel === 5 && totalValue === 4 && (
+      {clickUpgradeLevel > 4 && totalValue > 3 && (
       <div className="exchange">
         <div className="exbox1">
           <input

@@ -68,7 +68,11 @@ export function SaveGame(props: {
      localStorage.setItem("RC3Level", JSON.stringify(props.upgradeMap.current.get('refClicker03')!.level))
      localStorage.setItem("RC4Level", JSON.stringify(props.upgradeMap.current.get('refClicker04')!.level))
      localStorage.setItem("RC5Level", JSON.stringify(props.upgradeMap.current.get('refClicker05')!.level))
-    // console.log("Game saved");
+    //ads
+    localStorage.setItem("AD1Level", JSON.stringify(props.upgradeMap.current.get('adsClicker01')!.level))
+    localStorage.setItem("AD2Level", JSON.stringify(props.upgradeMap.current.get('adsClicker02')!.level))
+
+     // console.log("Game saved");
     // localStorage.setItem(
     //   "pool",
     //   JSON.stringify(props.upgradeEnergyMap.current.get("energyPool")!.level)
@@ -162,6 +166,10 @@ export function SaveGame(props: {
     loadUpgrade('refClicker03', parseInt(JSON.parse(localStorage.getItem("RC3Level") || '0')), props.upgradeMap)
     loadUpgrade('refClicker04', parseInt(JSON.parse(localStorage.getItem("RC4Level") || '0')), props.upgradeMap)
     loadUpgrade('refClicker05', parseInt(JSON.parse(localStorage.getItem("RC5Level") || '0')), props.upgradeMap)
+    //ads
+    loadUpgrade('adsClicker01', parseInt(JSON.parse(localStorage.getItem("AD1Level") || '0')), props.upgradeMap)
+    loadUpgrade('adsClicker02', parseInt(JSON.parse(localStorage.getItem("AD2Level") || '0')), props.upgradeMap)
+    
     // console.log("Game loaded");
     loadUpgradeEnergy(
       "energyPool",
@@ -209,6 +217,10 @@ export function SaveGame(props: {
     loadUpgrade('refClicker03', parseInt(JSON.parse('0')), props.upgradeMap);
     loadUpgrade('refClicker04', parseInt(JSON.parse('0')), props.upgradeMap);
     loadUpgrade('refClicker05', parseInt(JSON.parse('0')), props.upgradeMap);
+    //ada
+    loadUpgrade('adsClicker01', parseInt(JSON.parse('0')), props.upgradeMap);
+    loadUpgrade('adsClicker02', parseInt(JSON.parse('0')), props.upgradeMap);
+    
     loadUpgradeEnergy(
       "energyPool",
       parseInt(JSON.parse("0")),
@@ -234,6 +246,10 @@ export function SaveGame(props: {
     localStorage.removeItem("RC3Level");
     localStorage.removeItem("RC4Level");
     localStorage.removeItem("RC5Level");
+    //
+    localStorage.removeItem("AD1Level");
+    localStorage.removeItem("AD2Level");
+
     localStorage.removeItem("pool");
     localStorage.removeItem("refill");
     props.balanceRef.current.value = parseInt(JSON.parse("0"));

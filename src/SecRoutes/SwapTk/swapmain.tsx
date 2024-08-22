@@ -224,6 +224,7 @@ useEffect(() => {
   upgradeEnergyMap={upgradeEnergyMap}
   userId={userId} 
  />
+ 
           <Swap autoIncrement={autoIncrement} userId={userId}/>
     
     </>

@@ -3,6 +3,7 @@ import { Route, Routes, NavLink, Navigate } from "react-router-dom";
 import { Freemine } from "../SecRoutes/freeMine";
 import { Refmine } from "../SecRoutes/refMine";
 import "./SecNavcss/Minenav.css";
+import { Adsmine } from "../SecRoutes/adsmine";
 
 export function Mine() {
   return (
@@ -27,6 +28,14 @@ export function Mine() {
                   Ref
                 </NavLink>
               </li>
+              <li>
+                <NavLink 
+                  to="/mine/adsmine" 
+                  className={({ isActive }) => isActive ? "minelink active" : "minelink"}
+                >
+                  Ads
+                </NavLink>
+              </li>
             </ul>
           </nav>
 
@@ -34,6 +43,7 @@ export function Mine() {
             <Route path="/" element={<Navigate to="freemine" />} />
             <Route path="freemine" element={<Freemine />} />
             <Route path="refmine" element={<Refmine />} />
+            <Route path="adsmine" element={<Adsmine />} />
           </Routes>
         </div>
       </div>

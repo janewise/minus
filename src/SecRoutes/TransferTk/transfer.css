@@ -1,6 +1,19 @@
 .transfer{
     margin-top: 8rem;
 }
+
+.tokenbalance {
+    display: flex;
+    align-items: center;
+   justify-content: center;
+    min-height: 3rem;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.274);
+    padding: 0 5px 0;
+    border-radius: 8px;
+    margin-bottom: 3rem;
+  }
+
 .transferbutton{
         background-color: rgba(61, 0, 61, 0.9);
         color: #fff;
