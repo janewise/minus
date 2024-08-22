@@ -13,7 +13,7 @@ import { ref, onValue } from "firebase/database";
 import { db } from '../firebase';
 import AdsCard from "../components/Cards/AdsCard";
 
-export function Adsmine() {
+export function AdsMine() {
   const balanceRef = useRef({ value: 0 });
   const forceUpdate = useReducer(x => x + 1, 0)[1];
 
@@ -134,16 +134,15 @@ useEffect(() => {
       ["autoClicker04", new UpgradeState(5000, 2, 0, 1)],
       ["autoClicker05", new UpgradeState(5000, 2, 0, 1)],
       ["autoClicker06", new UpgradeState(5000, 2, 0, 1)],
-      ["autoClicker07", new UpgradeState(10000, 2, 0, 1.5)],
+      ["autoClicker07", new UpgradeState(1, 2, 0, 0.1)],
+      //
+    
       //ref card
       ["refClicker01", new UpgradeState(500, 2, 0, 1)],
       ["refClicker02", new UpgradeState(1500, 2, 0, 1.5)],
       ["refClicker03", new UpgradeState(1500, 2, 0, 1.5)],
       ["refClicker04", new UpgradeState(4000, 2, 0, 2)],
       ["refClicker05", new UpgradeState(4000, 2, 0, 2)],
-      //Ads
-      ["adsClicker01", new UpgradeState(500, 2, 0, 1)],
-      ["adsClicker02", new UpgradeState(1500, 2, 0, 1.5)],
     ])
   );
 
@@ -167,10 +166,7 @@ useEffect(() => {
           upgradeMap.current.get("refClicker02")!.increment +
           upgradeMap.current.get("refClicker03")!.increment +
           upgradeMap.current.get("refClicker04")!.increment +
-          upgradeMap.current.get("refClicker05")!.increment +
-          //ads
-          upgradeMap.current.get("adsClicker01")!.increment +
-          upgradeMap.current.get("adsClicker02")!.increment) *
+          upgradeMap.current.get("refClicker05")!.increment) *
           100
       ) / 100- (totalExchange/3600);
 
@@ -244,14 +240,13 @@ useEffect(() => {
 
               <div className="row center">
               <div className="col-6">
-                  <AdsCard
-                    id="adsClicker01"
-                   ads="https://www.goggle.com"
-                    name="adsSlime1"
-                    level={upgradeMap.current.get("adsClicker01")!.level}
-                    cost={upgradeMap.current.get("adsClicker01")!.currentCost}
+                  <UpgradeButton
+                    id="autoClicker01"
+                    name="Slime"
+                    level={upgradeMap.current.get("autoClicker01")!.level}
+                    cost={upgradeMap.current.get("autoClicker01")!.currentCost}
                     increment={
-                      upgradeMap.current.get("adsClicker01")!.incrementAdd
+                      upgradeMap.current.get("autoClicker01")!.incrementAdd
                     }
                     balance={balanceRef.current.value}
                     autoIncrementTotal={autoIncrement}
@@ -266,14 +261,13 @@ useEffect(() => {
                       );
                     }}
                   />
-                  <AdsCard
-                    id="adsClicker02"
-                     ads="www.goggle.com"
-                    name="adsWarrior2"
-                    level={upgradeMap.current.get("adsClicker02")!.level}
-                    cost={upgradeMap.current.get("adsClicker02")!.currentCost}
+                  <UpgradeButton
+                    id="autoClicker03"
+                    name="Warrior"
+                    level={upgradeMap.current.get("autoClicker03")!.level}
+                    cost={upgradeMap.current.get("autoClicker03")!.currentCost}
                     increment={
-                      upgradeMap.current.get("adsClicker02")!.incrementAdd
+                      upgradeMap.current.get("autoClicker03")!.incrementAdd
                     }
                     balance={balanceRef.current.value}
                     autoIncrementTotal={autoIncrement}
@@ -309,9 +303,10 @@ useEffect(() => {
                       );
                     }}
                   />
-                  <UpgradeButton
+                  <AdsCard
                     id="autoClicker07"
-                    name="Wizard"
+                    ads=""
+                    name="Wizardadsw23"
                     level={upgradeMap.current.get("autoClicker07")!.level}
                     cost={upgradeMap.current.get("autoClicker07")!.currentCost}
                     increment={

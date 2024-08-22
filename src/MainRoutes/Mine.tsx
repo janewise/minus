@@ -3,7 +3,7 @@ import { Route, Routes, NavLink, Navigate } from "react-router-dom";
 import { Freemine } from "../SecRoutes/freeMine";
 import { Refmine } from "../SecRoutes/refMine";
 import "./SecNavcss/Minenav.css";
-import { Adsmine } from "../SecRoutes/adsmine";
+import { AdsMine } from "../SecRoutes/adsmine";
 
 export function Mine() {
   return (
@@ -43,7 +43,7 @@ export function Mine() {
             <Route path="/" element={<Navigate to="freemine" />} />
             <Route path="freemine" element={<Freemine />} />
             <Route path="refmine" element={<Refmine />} />
-            <Route path="adsmine" element={<Adsmine />} />
+            <Route path="adsmine" element={<AdsMine />} />
           </Routes>
         </div>
       </div>
