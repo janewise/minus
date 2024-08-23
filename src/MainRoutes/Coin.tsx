@@ -143,6 +143,9 @@ useEffect(() => {
       ["refClicker03", new UpgradeState(1500, 2, 0, 1.5)],
       ["refClicker04", new UpgradeState(4000, 2, 0, 2)],
       ["refClicker05", new UpgradeState(4000, 2, 0, 2)],
+        //ref card
+        ["adsClicker01", new UpgradeState(500, 2, 0, 1)],
+        ["adsClicker02", new UpgradeState(1500, 2, 0, 1.5)],
     ])
   );
 
@@ -166,7 +169,10 @@ useEffect(() => {
           upgradeMap.current.get("refClicker02")!.increment +
           upgradeMap.current.get("refClicker03")!.increment +
           upgradeMap.current.get("refClicker04")!.increment +
-          upgradeMap.current.get("refClicker05")!.increment) *
+          upgradeMap.current.get("refClicker05")!.increment +
+          //ads
+          upgradeMap.current.get("adsClicker01")!.increment +
+          upgradeMap.current.get("adsClicker02")!.increment) * 
           100
       ) / 100 - (totalExchange/3600);
 

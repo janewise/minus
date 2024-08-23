@@ -161,6 +161,11 @@ export const saveUserDataToFirebase = (userId: string, data: any) => {
       autoClicker07: data.upgrades?.autoClicker07 || 0,
       refClicker01: data.upgrades?.refClicker01 || 0,
       refClicker02: data.upgrades?.refClicker02 || 0,
+      refClicker03: data.upgrades?.refClicker03 || 0,
+      refClicker04: data.upgrades?.refClicker04 || 0,
+      refClicker05: data.upgrades?.refClicker05 || 0,
+      adsClicker01: data.upgrades?.adsClicker01 || 0,
+      adsClicker02: data.upgrades?.adsClicker02 || 0,
     },
     lastUpdated: data.lastUpdated || new Date().getTime(),
   };

@@ -398,7 +398,7 @@ const AdsCard: FunctionComponent<ButtonProps> = (props: ButtonProps) => {
     if (password === correctPassword) {
       props.clickHandler(props.id);
       setIsCooldown(true);
-      setCooldownTimer(43200); // 12 hours in seconds
+      setCooldownTimer(120); // 12 hours in seconds
       setIsPasswordDialogOpen(false);
       setIsIncorrectPassword(false);
     } else {

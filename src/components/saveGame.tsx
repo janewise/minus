@@ -62,14 +62,15 @@ export function SaveGame(props: {
       "AC7Level",
       JSON.stringify(props.upgradeMap.current.get("autoClicker07")!.level)
     );
-    
      //for Ref Card
      localStorage.setItem("RC1Level", JSON.stringify(props.upgradeMap.current.get('refClicker01')!.level))
      localStorage.setItem("RC2Level", JSON.stringify(props.upgradeMap.current.get('refClicker02')!.level))
      localStorage.setItem("RC3Level", JSON.stringify(props.upgradeMap.current.get('refClicker03')!.level))
      localStorage.setItem("RC4Level", JSON.stringify(props.upgradeMap.current.get('refClicker04')!.level))
      localStorage.setItem("RC5Level", JSON.stringify(props.upgradeMap.current.get('refClicker05')!.level))
-    
+    //ads
+    localStorage.setItem("AD1Level", JSON.stringify(props.upgradeMap.current.get('adsClicker01')!.level))
+    localStorage.setItem("AD2Level", JSON.stringify(props.upgradeMap.current.get('adsClicker02')!.level))
 
      // Prepare data for Firebase D2
      const firebaseData = {
@@ -85,6 +86,8 @@ export function SaveGame(props: {
         autoClicker07: props.upgradeMap.current.get('autoClicker07')!.level,
         refClicker01: props.upgradeMap.current.get('refClicker01')!.level,
         refClicker02: props.upgradeMap.current.get('refClicker02')!.level,
+        adsClicker01: props.upgradeMap.current.get('adsClicker01')!.level,
+        adsClicker02: props.upgradeMap.current.get('adsClicker02')!.level,
       },
       //upgradeEnergy: {
         //energyPool: props.upgradeEnergyMap.current.get('energyPool')!.level,
@@ -153,7 +156,10 @@ export function SaveGame(props: {
     loadUpgrade('refClicker03', parseInt(JSON.parse(localStorage.getItem("RC3Level") || '0')), props.upgradeMap)
     loadUpgrade('refClicker04', parseInt(JSON.parse(localStorage.getItem("RC4Level") || '0')), props.upgradeMap)
     loadUpgrade('refClicker05', parseInt(JSON.parse(localStorage.getItem("RC5Level") || '0')), props.upgradeMap)
-   
+   //ads
+   loadUpgrade('adsClicker01', parseInt(JSON.parse(localStorage.getItem("AD1Level") || '0')), props.upgradeMap)
+   loadUpgrade('adsClicker02', parseInt(JSON.parse(localStorage.getItem("AD2Level") || '0')), props.upgradeMap)
+
     // console.log("Game loaded");
     loadUpgradeEnergy(
       "energyPool",
@@ -196,7 +202,10 @@ export function SaveGame(props: {
     loadUpgrade('refClicker03', parseInt(JSON.parse('0')), props.upgradeMap);
     loadUpgrade('refClicker04', parseInt(JSON.parse('0')), props.upgradeMap);
     loadUpgrade('refClicker05', parseInt(JSON.parse('0')), props.upgradeMap);
-    
+    //ads
+    loadUpgrade('adsClicker01', parseInt(JSON.parse('0')), props.upgradeMap);
+    loadUpgrade('adsClicker02', parseInt(JSON.parse('0')), props.upgradeMap);
+
     loadUpgradeEnergy(
       "energyPool",
       parseInt(JSON.parse("0")),
@@ -222,6 +231,9 @@ export function SaveGame(props: {
     localStorage.removeItem("RC3Level");
     localStorage.removeItem("RC4Level");
     localStorage.removeItem("RC5Level");
+//ads
+localStorage.removeItem("AD1Level");
+localStorage.removeItem("AD2Level");
 
     localStorage.removeItem("pool");
     localStorage.removeItem("refill");
