@@ -144,6 +144,8 @@ const upgradeMap = useRef(
       //ref card
       ["adsClicker01", new UpgradeState(500, 2, 0, 1)],
       ["adsClicker02", new UpgradeState(1500, 2, 0, 1.5)],
+      ["adsClicker03", new UpgradeState(50, 2, 0, 0.1)],
+      ["adsClicker04", new UpgradeState(150, 2, 0, 0.1)],
   ])
 );
 
@@ -170,7 +172,9 @@ let autoIncrement: number =
         upgradeMap.current.get("refClicker05")!.increment +
         //ads
         upgradeMap.current.get("adsClicker01")!.increment +
-        upgradeMap.current.get("adsClicker02")!.increment) * 
+        upgradeMap.current.get("adsClicker02")!.increment +
+        upgradeMap.current.get("adsClicker03")!.increment +
+        upgradeMap.current.get("adsClicker04")!.increment) * 
         100
     ) / 100 - (totalExchange/3600);
 
@@ -227,6 +231,8 @@ let autoIncrement: number =
     forceUpdate(); // Force an update to reflect the new balance
   };
 
+  
+
   return (
     <>
                 <SaveGame
@@ -248,6 +254,7 @@ let autoIncrement: number =
                   <AdsCard
                     id="adsClicker01"
                     ads="https://www.google.com/"
+                    password={["first1", "second2", "third3"]} 
                     name="Ads"
                     level={upgradeMap.current.get("adsClicker01")!.level}
                     cost={upgradeMap.current.get("adsClicker01")!.currentCost}
@@ -267,16 +274,63 @@ let autoIncrement: number =
                       );
                     }}
                   />
+                   <AdsCard
+                    id="adsClicker03"
+                    ads="https://www.google.com/"
+                    password={[ '12er34AM', '12er34PM','56qw78AM', '56qw78PM',  '90ty12AM', '90ty12PM','34ui56AM', '34ui56PM','78op90AM', '78op90PM','ab12cdAM', 'ab12cdPM', 'ef12ghAM', 'ef12ghPM']} 
+                    name="Ads3"
+                    level={upgradeMap.current.get("adsClicker03")!.level}
+                    cost={upgradeMap.current.get("adsClicker03")!.currentCost}
+                    increment={
+                      upgradeMap.current.get("adsClicker03")!.incrementAdd
+                    }
+                    balance={balanceRef.current.value}
+                    autoIncrementTotal={autoIncrement}
+                    clickHandler={(id) => {
+                      upgradeInvocationHandler(
+                        id,
+                        upgradeMap,
+                        upgradeEnergyMap,
+                        balanceRef,
+                        setMaxEnergy,
+                        setRefillRate
+                      );
+                    }}
+                  />
                 </div>
                 <div className=" col-6">
                 <AdsCard
                     id="adsClicker02"
                     ads="https://www.google.com/"
+                    password={["12qw34AM", "12qw34PM",'56er78AM', '56er78PM','90ty12AM', '90ty12PM', '34ui56AM', '34ui56PM', '78op90AM', '78op90PM','ab12cdAM', 'ab12cdPM', 'ef34ghAM', 'ef34ghPM']} 
                     name="Ads22"
                     level={upgradeMap.current.get("adsClicker02")!.level}
                     cost={upgradeMap.current.get("adsClicker02")!.currentCost}
                     increment={
                       upgradeMap.current.get("adsClicker02")!.incrementAdd
+                    }
+                    balance={balanceRef.current.value}
+                    autoIncrementTotal={autoIncrement}
+                    clickHandler={(id) => {
+                      upgradeInvocationHandler(
+                        id,
+                        upgradeMap,
+                        upgradeEnergyMap,
+                        balanceRef,
+                        setMaxEnergy,
+                        setRefillRate
+                      );
+                    }}
+                  />
+                   <AdsCard
+                    id="adsClicker04"
+                    ads="https://www.google.com/"
+                    password={["4first1", "4second2", "4third3"]} 
+                    name="Ads4"
+                    level={upgradeMap.current.get("adsClicker04")!.level}
+                    cost={upgradeMap.current.get("adsClicker04")!.currentCost}
+                    increment={
+                      upgradeMap.current.get("adsClicker04")!.incrementAdd
                     }
                     balance={balanceRef.current.value}
                     autoIncrementTotal={autoIncrement}
@@ -299,3 +353,13 @@ let autoIncrement: number =
     </>
   )
 }
+
+// const passwords = [
+//   '12qw34AM', '12qw34PM', // Day 1 (Sunday)
+//   '56er78AM', '56er78PM', // Day 2 (Monday)
+//   '90ty12AM', '90ty12PM', // Day 3 (Tuesday)
+//   '34ui56AM', '34ui56PM', // Day 4 (Wednesday)
+//   '78op90AM', '78op90PM', // Day 5 (Thursday)
+//   'ab12cdAM', 'ab12cdPM', // Day 6 (Friday)
+//   'ef34ghAM', 'ef34ghPM'  // Day 7 (Saturday)
+// ];

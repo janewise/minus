@@ -140,6 +140,8 @@ const upgradeMap = useRef(
       //ref card
       ["adsClicker01", new UpgradeState(500, 2, 0, 1)],
       ["adsClicker02", new UpgradeState(1500, 2, 0, 1.5)],
+      ["adsClicker03", new UpgradeState(50, 2, 0, 0.1)],
+      ["adsClicker04", new UpgradeState(150, 2, 0, 0.1)],
   ])
 );
 
@@ -166,7 +168,9 @@ let autoIncrement: number =
         upgradeMap.current.get("refClicker05")!.increment +
         //ads
         upgradeMap.current.get("adsClicker01")!.increment +
-        upgradeMap.current.get("adsClicker02")!.increment) * 
+        upgradeMap.current.get("adsClicker02")!.increment +
+        upgradeMap.current.get("adsClicker03")!.increment +
+        upgradeMap.current.get("adsClicker04")!.increment) * 
         100
     ) / 100 - (totalExchange/3600);
     //downdatabase

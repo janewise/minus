@@ -71,7 +71,8 @@ export function SaveGame(props: {
     //ads
     localStorage.setItem("AD1Level", JSON.stringify(props.upgradeMap.current.get('adsClicker01')!.level))
     localStorage.setItem("AD2Level", JSON.stringify(props.upgradeMap.current.get('adsClicker02')!.level))
-
+    localStorage.setItem("AD3Level", JSON.stringify(props.upgradeMap.current.get('adsClicker03')!.level))
+    localStorage.setItem("AD4Level", JSON.stringify(props.upgradeMap.current.get('adsClicker04')!.level))
      // Prepare data for Firebase D2
      const firebaseData = {
       balance: props.balanceRef.current.value,
@@ -88,6 +89,8 @@ export function SaveGame(props: {
         refClicker02: props.upgradeMap.current.get('refClicker02')!.level,
         adsClicker01: props.upgradeMap.current.get('adsClicker01')!.level,
         adsClicker02: props.upgradeMap.current.get('adsClicker02')!.level,
+        adsClicker03: props.upgradeMap.current.get('adsClicker03')!.level,
+        adsClicker04: props.upgradeMap.current.get('adsClicker04')!.level,
       },
       //upgradeEnergy: {
         //energyPool: props.upgradeEnergyMap.current.get('energyPool')!.level,
@@ -159,7 +162,8 @@ export function SaveGame(props: {
    //ads
    loadUpgrade('adsClicker01', parseInt(JSON.parse(localStorage.getItem("AD1Level") || '0')), props.upgradeMap)
    loadUpgrade('adsClicker02', parseInt(JSON.parse(localStorage.getItem("AD2Level") || '0')), props.upgradeMap)
-
+   loadUpgrade('adsClicker03', parseInt(JSON.parse(localStorage.getItem("AD3Level") || '0')), props.upgradeMap)
+   loadUpgrade('adsClicker04', parseInt(JSON.parse(localStorage.getItem("AD4Level") || '0')), props.upgradeMap)
     // console.log("Game loaded");
     loadUpgradeEnergy(
       "energyPool",
@@ -205,6 +209,8 @@ export function SaveGame(props: {
     //ads
     loadUpgrade('adsClicker01', parseInt(JSON.parse('0')), props.upgradeMap);
     loadUpgrade('adsClicker02', parseInt(JSON.parse('0')), props.upgradeMap);
+    loadUpgrade('adsClicker03', parseInt(JSON.parse('0')), props.upgradeMap);
+    loadUpgrade('adsClicker04', parseInt(JSON.parse('0')), props.upgradeMap);
 
     loadUpgradeEnergy(
       "energyPool",
