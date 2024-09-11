@@ -10,7 +10,7 @@ import { SaveGame } from "../components/saveGame";
 import UpgradeClick from "../components/click/upgradeClick";
 //firebase
 import { sendUserDataToFirebase,updateUserAutoIncrementInFirebase} from '../firebaseFunctions';
-import { ref, onValue } from "firebase/database";
+import { ref, onValue,update } from "firebase/database";
 import { db } from '../firebase';
 //countdown
 import Countdown from "../components/countdown";
@@ -62,7 +62,7 @@ const [totalExchange, setTotalExchange] = useState<number>(0); // State for tota
 //     }
 //     setIsInitialLoad(false); // Set initial load flag to false after loading from localStorage
 //   }, []);
-//test
+
 useEffect(() => {
   const storedEnergy = localStorage.getItem('energy');
   const storedMaxEnergy = localStorage.getItem('maxEnergy');
@@ -87,7 +87,6 @@ useEffect(() => {
         const calculatedEnergy = Math.min(parseInt(storedEnergy, 10) + Math.floor(timePassed * storedRefillRateNum), parseInt(storedMaxEnergy, 10));
         
         console.log("calculatedEnergy:", calculatedEnergy);
-     
 
         setEnergy(calculatedEnergy);
         setMaxEnergy(parseInt(storedMaxEnergy, 10));
@@ -95,8 +94,8 @@ useEffect(() => {
         setLastUpdated(Date.now());
 
         // Calculate balance based on autoIncrement and time passed
-        // const calculatedBalance = parseFloat(storedBalance) + Math.min(storedAutoIncrement * timePassed, storedAutoIncrement * 7200);
-        // balanceRef.current.value = Math.round(calculatedBalance * 100) / 100;
+        const calculatedBalance = parseFloat(storedBalance) + Math.min(storedAutoIncrement * timePassed, storedAutoIncrement * 7200);
+        balanceRef.current.value = Math.round(calculatedBalance * 100) / 100;
       }
     });
   }
@@ -106,19 +105,37 @@ useEffect(() => {
 
 
   // Save state to localStorage only after the initial load is complete
-  useEffect(() => {
-    if (!isInitialLoad && userId) {
-      localStorage.setItem('energy', energy.toString());
-      localStorage.setItem('maxEnergy', maxEnergy.toString());
-      localStorage.setItem('refillRate', refillRate.toString());
-      localStorage.setItem('lastUpdated', lastUpdated.toString());
- //down is auto increment
-      // localStorage.setItem('balance', balanceRef.current.value.toString());
-      // localStorage.setItem('autoIncrement', autoIncrement.toString());
+//   useEffect(() => {
+//     if (!isInitialLoad && userId) {
+//       localStorage.setItem('energy', energy.toString());
+//       localStorage.setItem('maxEnergy', maxEnergy.toString());
+//       localStorage.setItem('refillRate', refillRate.toString());
+//       localStorage.setItem('lastUpdated', lastUpdated.toString());
+//  //down is auto increment
+//       localStorage.setItem('balance', balanceRef.current.value.toString());
+//       localStorage.setItem('autoIncrement', autoIncrement.toString());
 
-    }
-  }, [energy, maxEnergy, refillRate, lastUpdated, isInitialLoad]);
-  
+//     }
+//   }, [energy, maxEnergy, refillRate, lastUpdated, isInitialLoad]);
+
+useEffect(() => {
+  if (!isInitialLoad && userId) {
+    localStorage.setItem('energy', energy.toString());
+    localStorage.setItem('maxEnergy', maxEnergy.toString());
+    localStorage.setItem('refillRate', refillRate.toString());
+    localStorage.setItem('lastUpdated', lastUpdated.toString());
+
+    // Save autoIncrement and balance to Firebase
+    const userRef = ref(db, 'users/' + userId);
+    update(userRef, {
+      balance: balanceRef.current.value,
+      autoIncrement: autoIncrement,
+    }).catch((error) => {
+     
+    });
+  }
+}, [energy, maxEnergy, refillRate, lastUpdated, balanceRef.current.value, isInitialLoad, userId]);
+
   useEffect(() => {
     // Initialize the Telegram Web App SDK
     const initTelegram = () => {
@@ -313,31 +330,6 @@ let autoIncrement: number =
                 autoIncrementTotal={autoIncrement}
                 clickHandler={(id) => { upgradeInvocationHandler(id, upgradeMap, upgradeEnergyMap, balanceRef, setMaxEnergy, setRefillRate); }}
               /> 
-            {/* <div className="col-sm-6 col-md-6 col-lg-4">
-            <EnergyFill
-                id="energyfill"
-                name="Energy Refill"
-              
-                level={upgradeEnergyMap.current.get('energyfill')!.level}
-                cost={upgradeEnergyMap.current.get('energyfill')!.currentCost}
-                increment={upgradeEnergyMap.current.get('energyfill')!.energyRefillIncrement}
-                balance={balanceRef.current.value}
-                autoIncrementTotal={autoIncrement}
-                clickHandler={(id) => { upgradeInvocationHandler(id, upgradeMap, upgradeEnergyMap, balanceRef, setMaxEnergy, setRefillRate); }}
-              /> 
-            </div>
-            <div className="col-sm-6 col-md-6 col-lg-4">
-            <UpgradePool
-              id="energyPool"
-              name="Energy Pool"
-              level={upgradeEnergyMap.current.get('energyPool')!.level}
-              cost={upgradeEnergyMap.current.get('energyPool')!.currentCost}
-              increment={upgradeEnergyMap.current.get('energyPool')!.maxEnergyIncrement}
-              balance={balanceRef.current.value}
-              autoIncrementTotal={autoIncrement}
-              clickHandler={(id) => { upgradeInvocationHandler(id, upgradeMap, upgradeEnergyMap, balanceRef, setMaxEnergy, setRefillRate); }}
-            />
-            </div> */}
           </div>
         </div>
       </div>
