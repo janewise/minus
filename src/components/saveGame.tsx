@@ -426,8 +426,10 @@ export function SaveGame(props: {
   
 
   useEffect(() => {
-    handleLoad();
-  }, []);
+    if (props.userId) {
+      handleLoad();
+    }
+  }, [props.userId]);
 
   const counter = useRef({ value: 0 });
   counter.current.value += 1;
