@@ -166,6 +166,8 @@ export const saveUserDataToFirebase = (userId: string, data: any) => {
       refClicker05: data.upgrades?.refClicker05 || 0,
       adsClicker01: data.upgrades?.adsClicker01 || 0,
       adsClicker02: data.upgrades?.adsClicker02 || 0,
+      adsClicker03: data.upgrades?.adsClicker03 || 0,
+      adsClicker04: data.upgrades?.adsClicker04 || 0,
     },
     lastUpdated: data.lastUpdated || new Date().getTime(),
   };
@@ -250,13 +252,16 @@ export const loadUserDataFromFirebase = async (userId: string) => {
     if (snapshot.exists()) {
       const userData = snapshot.val();
       console.log(`Data fetched for user ${userId}:`, userData);
+      alert(`Data fetched for user ${userId}:`);
       return userData;
     } else {
       console.log(`No data found for user ${userId}.`);
+      alert(`No data found for user ${userId}.`);
       return null;
     }
   } catch (error) {
     console.error("Error loading user data:", error);
+    alert(`No data found for user ${userId}.`);
     return null;
   }
 };

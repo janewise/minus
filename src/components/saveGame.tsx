@@ -331,7 +331,7 @@
 import { Button, Box, Typography, Modal, Snackbar } from "@mui/material";
 import React, { useEffect, useRef } from "react";
 import UpgradeState from "../classes/upgradeState";
-// import UpgradeEnergy from "../classes/upgradeEnergy";
+ import UpgradeEnergy from "../classes/upgradeEnergy";
 import { saveUserDataToFirebase, loadUserDataFromFirebase } from '../firebaseFunctions'; // Import your Firebase functions
 
 const style = {
@@ -370,6 +370,9 @@ export function SaveGame(props: {
           autoClicker07: props.upgradeMap.current.get('autoClicker07')!.level,
           refClicker01: props.upgradeMap.current.get('refClicker01')!.level,
           refClicker02: props.upgradeMap.current.get('refClicker02')!.level,
+          refClicker03: props.upgradeMap.current.get('refClicker03')!.level,
+          refClicker04: props.upgradeMap.current.get('refClicker04')!.level,
+          refClicker05: props.upgradeMap.current.get('refClicker05')!.level,
           adsClicker01: props.upgradeMap.current.get('adsClicker01')!.level,
           adsClicker02: props.upgradeMap.current.get('adsClicker02')!.level,
           adsClicker03: props.upgradeMap.current.get('adsClicker03')!.level,
@@ -382,6 +385,7 @@ export function SaveGame(props: {
       setOpenSnackbar(true);
     } else {
       console.error("Cannot save data: userId is null.");
+      alert("Cannot save firebase savetsx data: userId is null.");
     }
   }
 
@@ -389,7 +393,8 @@ export function SaveGame(props: {
   async function handleLoad() {
     if (props.userId) {
       const data = await loadUserDataFromFirebase(props.userId);
-  
+      alert(data);
+
       if (data) {
         props.balanceRef.current.value = data.balance || 0;
   
@@ -411,6 +416,7 @@ export function SaveGame(props: {
       }
     } else {
       console.error("Cannot load data: userId is null.");
+      alert("Cannot load data firebase save.tsx: userId is null.");
     }
   }
   
