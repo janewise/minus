@@ -253,7 +253,7 @@ let autoIncrement: number =
                 <SaveGame
   balanceRef={balanceRef}
   upgradeMap={upgradeMap}
-  upgradeEnergyMap={upgradeEnergyMap}
+  // upgradeEnergyMap={upgradeEnergyMap}
   userId={userId} 
  />
 

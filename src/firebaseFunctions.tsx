@@ -239,6 +239,28 @@ export const getLatestExchangeAmount = async (userId: string): Promise<number> =
   }
 };
 
+// Function to load user data from Firebase
+export const loadUserDataFromFirebase = async (userId: string) => {
+  if (!userId) return null;
+
+  try {
+    const userRef = ref(db, "users/" + userId);
+    const snapshot = await get(userRef);
+
+    if (snapshot.exists()) {
+      const userData = snapshot.val();
+      console.log(`Data fetched for user ${userId}:`, userData);
+      return userData;
+    } else {
+      console.log(`No data found for user ${userId}.`);
+      return null;
+    }
+  } catch (error) {
+    console.error("Error loading user data:", error);
+    return null;
+  }
+};
+
 // //04
 // export const sendExchangeTokenToFirebase = async (userId: string, tokenAmount: number) => {
 //   try {

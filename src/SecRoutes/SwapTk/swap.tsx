@@ -166,6 +166,8 @@ useEffect(() => {
     });
   }
 }, [userId]);
+
+alert(clickUpgradeLevel)
 ////////
 useEffect(() => {
   if (userId) {
@@ -194,6 +196,8 @@ const calculateTotalValue = (levels: number[]) => {
   return levels.reduce((acc, level) => acc + (level > 2 ? 1 : 0), 0);
 };
 const totalValue = calculateTotalValue(upgradeLevels);
+
+alert(totalValue);
 
 ////D4-03exchange token
 
@@ -242,7 +246,7 @@ const inusdt=totalTokens*0.5;
       <h4>{exchangeRate}Profit/h ~ 1 Token</h4>
       <h4>Tokens ~ {totalTokens}</h4>
       <p>{totalTokens} * 0.5 ~ {inusdt} usdt</p>
-      {clickUpgradeLevel > 4 && totalValue > 3 && (
+      {clickUpgradeLevel > 4 && totalValue > 2 && (
       <div className="exchange">
         <div className="exbox1">
           <input
