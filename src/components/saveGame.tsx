@@ -389,12 +389,11 @@ export function SaveGame(props: {
     }
   }
 
-  // Load data from Firebase
+  // // Load data from Firebase
   async function handleLoad() {
     if (props.userId) {
       const data = await loadUserDataFromFirebase(props.userId);
-      alert(data);
-
+  
       if (data) {
         props.balanceRef.current.value = data.balance || 0;
   
@@ -409,6 +408,9 @@ export function SaveGame(props: {
         upgradeMap.get('autoClicker07')?.loadUpgrade(data.upgrades.autoClicker07 || 0);
         upgradeMap.get('refClicker01')?.loadUpgrade(data.upgrades.refClicker01 || 0);
         upgradeMap.get('refClicker02')?.loadUpgrade(data.upgrades.refClicker02 || 0);
+        upgradeMap.get('refClicker03')?.loadUpgrade(data.upgrades.refClicker03 || 0);
+        upgradeMap.get('refClicker04')?.loadUpgrade(data.upgrades.refClicker04 || 0);
+        upgradeMap.get('refClicker05')?.loadUpgrade(data.upgrades.refClicker05 || 0);
         upgradeMap.get('adsClicker01')?.loadUpgrade(data.upgrades.adsClicker01 || 0);
         upgradeMap.get('adsClicker02')?.loadUpgrade(data.upgrades.adsClicker02 || 0);
         upgradeMap.get('adsClicker03')?.loadUpgrade(data.upgrades.adsClicker03 || 0);
@@ -416,9 +418,9 @@ export function SaveGame(props: {
       }
     } else {
       console.error("Cannot load data: userId is null.");
-      alert("Cannot load data firebase save.tsx: userId is null.");
     }
   }
+  
   
 
   useEffect(() => {
