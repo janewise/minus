@@ -396,7 +396,7 @@ export function SaveGame(props: {
       const data = await loadUserDataFromFirebase(props.userId);
   
       if (data) {
-        props.balanceRef.current.value = data.balance;
+        props.balanceRef.current.value = data.balance || 0;
   
         const upgradeMap = props.upgradeMap.current;
         upgradeMap.get('clickUpgrade')?.loadUpgrade(data.upgrades.clickUpgrade || 0);
