@@ -60,7 +60,7 @@ useEffect(() => {
      const calculatedBalance = parseFloat(storedBalance) + Math.min(storedAutoIncrementNum * timePassed, storedAutoIncrementNum * 7200);
      balanceRef.current.value = Math.round(calculatedBalance * 100) / 100;
     }
-    setIsInitialLoad(false); // Set initial load flag to false after loading from localStorage
+    setIsInitialLoad(true); // Set initial load flag to false after loading from localStorage
   }, []);
 
   // Save state to localStorage only after the initial load is complete
