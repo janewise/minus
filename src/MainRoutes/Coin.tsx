@@ -32,40 +32,81 @@ const [totalExchange, setTotalExchange] = useState<number>(0); // State for tota
   const [isInitialLoad, setIsInitialLoad] = useState(true); // Flag to check if initial load is done
 
   // Load state from localStorage on mount For energy and autoincrement on window close
-  useEffect(() => {
-    const storedEnergy = localStorage.getItem('energy');
-    const storedMaxEnergy = localStorage.getItem('maxEnergy');
-    const storedRefillRate = localStorage.getItem('refillRate');
-    const storedLastUpdated = localStorage.getItem('lastUpdated');
-//down is for autoincrement
- const storedBalance = localStorage.getItem('balance');
- const storedAutoIncrement = localStorage.getItem('autoIncrement');
+// useEffect(() => {
+//     const storedEnergy = localStorage.getItem('energy');
+//     const storedMaxEnergy = localStorage.getItem('maxEnergy');
+//     const storedRefillRate = localStorage.getItem('refillRate');
+//     const storedLastUpdated = localStorage.getItem('lastUpdated');
+// //down is for autoincrement
+//  const storedBalance = localStorage.getItem('balance');
+//  const storedAutoIncrement = localStorage.getItem('autoIncrement');
 
-    if (storedEnergy && storedMaxEnergy && storedRefillRate && storedLastUpdated && storedBalance && storedAutoIncrement) {
-      const timePassed = (Date.now() - parseInt(storedLastUpdated, 10)) / 1000; // time in seconds
-      console.log("timePassed (seconds):", timePassed);
+//     if (storedEnergy && storedMaxEnergy && storedRefillRate && storedLastUpdated && storedBalance && storedAutoIncrement) {
+//       const timePassed = (Date.now() - parseInt(storedLastUpdated, 10)) / 1000; // time in seconds
+//       console.log("timePassed (seconds):", timePassed);
 
-      const storedRefillRateNum = parseInt(storedRefillRate, 10);
-      const calculatedEnergy = Math.min(parseInt(storedEnergy, 10) + Math.floor(timePassed * storedRefillRateNum), parseInt(storedMaxEnergy, 10));
+//       const storedRefillRateNum = parseInt(storedRefillRate, 10);
+//       const calculatedEnergy = Math.min(parseInt(storedEnergy, 10) + Math.floor(timePassed * storedRefillRateNum), parseInt(storedMaxEnergy, 10));
       
-      console.log("calculatedEnergy:", calculatedEnergy);
+//       console.log("calculatedEnergy:", calculatedEnergy);
 
-      setEnergy(calculatedEnergy);
-      setMaxEnergy(parseInt(storedMaxEnergy, 10));
-      setRefillRate(storedRefillRateNum);
-      setLastUpdated(Date.now());
+//       setEnergy(calculatedEnergy);
+//       setMaxEnergy(parseInt(storedMaxEnergy, 10));
+//       setRefillRate(storedRefillRateNum);
+//       setLastUpdated(Date.now());
 
-//dowm is for autoincrement time on offline
-    const storedAutoIncrementNum = parseFloat(storedAutoIncrement);
-     const calculatedBalance = parseFloat(storedBalance) + Math.min(storedAutoIncrementNum * timePassed, storedAutoIncrementNum * 7200);
-     balanceRef.current.value = Math.round(calculatedBalance * 100) / 100;
-    }
-    setIsInitialLoad(false); // Set initial load flag to false after loading from localStorage
-  }, []);
+// //dowm is for autoincrement time on offline
+//     const storedAutoIncrementNum = parseFloat(storedAutoIncrement);
+//      const calculatedBalance = parseFloat(storedBalance) + Math.min(storedAutoIncrementNum * timePassed, storedAutoIncrementNum * 7200);
+//      balanceRef.current.value = Math.round(calculatedBalance * 100) / 100;
+//     }
+//     setIsInitialLoad(false); // Set initial load flag to false after loading from localStorage
+//   }, []);
+//test
+useEffect(() => {
+  const storedEnergy = localStorage.getItem('energy');
+  const storedMaxEnergy = localStorage.getItem('maxEnergy');
+  const storedRefillRate = localStorage.getItem('refillRate');
+  const storedLastUpdated = localStorage.getItem('lastUpdated');
+
+  // Fetch balance and autoIncrement from Firebase
+  if (userId) {
+    const userRef = ref(db, 'users/' + userId);
+    
+    onValue(userRef, (snapshot) => {
+      const data = snapshot.val();
+      
+      const storedBalance = data?.balance || 0;
+      const storedAutoIncrement = data?.autoIncrement || 0;
+
+      if (storedEnergy && storedMaxEnergy && storedRefillRate && storedLastUpdated) {
+        const timePassed = (Date.now() - parseInt(storedLastUpdated, 10)) / 1000; // time in seconds
+        console.log("timePassed (seconds):", timePassed);
+
+        const storedRefillRateNum = parseInt(storedRefillRate, 10);
+        const calculatedEnergy = Math.min(parseInt(storedEnergy, 10) + Math.floor(timePassed * storedRefillRateNum), parseInt(storedMaxEnergy, 10));
+        
+        console.log("calculatedEnergy:", calculatedEnergy);
+
+        setEnergy(calculatedEnergy);
+        setMaxEnergy(parseInt(storedMaxEnergy, 10));
+        setRefillRate(storedRefillRateNum);
+        setLastUpdated(Date.now());
+
+        // Calculate balance based on autoIncrement and time passed
+        const calculatedBalance = parseFloat(storedBalance) + Math.min(storedAutoIncrement * timePassed, storedAutoIncrement * 7200);
+        balanceRef.current.value = Math.round(calculatedBalance * 100) / 100;
+      }
+    });
+  }
+  
+  setIsInitialLoad(false); // Set initial load flag to false after loading from Firebase/localStorage
+}, [userId]);
+
 
   // Save state to localStorage only after the initial load is complete
   useEffect(() => {
-    if (!isInitialLoad) {
+    if (!isInitialLoad && userId) {
       localStorage.setItem('energy', energy.toString());
       localStorage.setItem('maxEnergy', maxEnergy.toString());
       localStorage.setItem('refillRate', refillRate.toString());
@@ -76,6 +117,7 @@ const [totalExchange, setTotalExchange] = useState<number>(0); // State for tota
 
     }
   }, [energy, maxEnergy, refillRate, lastUpdated, isInitialLoad]);
+  
   useEffect(() => {
     // Initialize the Telegram Web App SDK
     const initTelegram = () => {
