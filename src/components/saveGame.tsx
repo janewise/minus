@@ -577,12 +577,12 @@ export function SaveGame(props: {
           </Button>
         </Box>
       </Modal>
-      {/* <Snackbar
+      <Snackbar
         open={openSnackbar}
-        autoHideDuration={6000}
+        autoHideDuration={2000}
         onClose={handleCloseSnackbar}
         message="Game data saved successfully"
-      /> */}
+      />
     </>
   );
 }

@@ -38,10 +38,10 @@ useEffect(() => {
     const storedRefillRate = localStorage.getItem('refillRate');
     const storedLastUpdated = localStorage.getItem('lastUpdated');
 //down is for autoincrement
- const storedBalance = localStorage.getItem('balance');
- const storedAutoIncrement = localStorage.getItem('autoIncrement');
+//  const storedBalance = localStorage.getItem('balance');
+//  const storedAutoIncrement = localStorage.getItem('autoIncrement');
 
-    if (storedEnergy && storedMaxEnergy && storedRefillRate && storedLastUpdated && storedBalance && storedAutoIncrement) {
+    if (storedEnergy && storedMaxEnergy && storedRefillRate && storedLastUpdated) {
       const timePassed = (Date.now() - parseInt(storedLastUpdated, 10)) / 1000; // time in seconds
       console.log("timePassed (seconds):", timePassed);
 
@@ -56,11 +56,11 @@ useEffect(() => {
       setLastUpdated(Date.now());
 
 //dowm is for autoincrement time on offline
-    const storedAutoIncrementNum = parseFloat(storedAutoIncrement);
-     const calculatedBalance = parseFloat(storedBalance) + Math.min(storedAutoIncrementNum * timePassed, storedAutoIncrementNum * 7200);
-     balanceRef.current.value = Math.round(calculatedBalance * 100) / 100;
-    }
-    setIsInitialLoad(true); // Set initial load flag to false after loading from localStorage
+    // const storedAutoIncrementNum = parseFloat(storedAutoIncrement);
+    //  const calculatedBalance = parseFloat(storedBalance) + Math.min(storedAutoIncrementNum * timePassed, storedAutoIncrementNum * 7200);
+    //  balanceRef.current.value = Math.round(calculatedBalance * 100) / 100;
+     }
+    setIsInitialLoad(false); // Set initial load flag to false after loading from localStorage
   }, []);
 
   // Save state to localStorage only after the initial load is complete
@@ -71,8 +71,8 @@ useEffect(() => {
       localStorage.setItem('refillRate', refillRate.toString());
       localStorage.setItem('lastUpdated', lastUpdated.toString());
  //down is auto increment
-      localStorage.setItem('balance', balanceRef.current.value.toString());
-      localStorage.setItem('autoIncrement', autoIncrement.toString());
+      // localStorage.setItem('balance', balanceRef.current.value.toString());
+      // localStorage.setItem('autoIncrement', autoIncrement.toString());
 
     }
   }, [energy, maxEnergy, refillRate, lastUpdated, isInitialLoad]);
