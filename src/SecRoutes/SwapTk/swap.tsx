@@ -167,7 +167,7 @@ useEffect(() => {
   }
 }, [userId]);
 
-alert(clickUpgradeLevel)
+// alert(clickUpgradeLevel)
 ////////
 useEffect(() => {
   if (userId) {
@@ -197,7 +197,7 @@ const calculateTotalValue = (levels: number[]) => {
 };
 const totalValue = calculateTotalValue(upgradeLevels);
 
-alert(totalValue);
+// alert(totalValue);
 
 ////D4-03exchange token
 
