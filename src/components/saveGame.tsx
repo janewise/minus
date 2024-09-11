@@ -391,13 +391,53 @@ export function SaveGame(props: {
   // alert( props.userId);
 
   // // Load data from Firebase
+  // async function handleLoad() {
+  //   if (props.userId) {
+  //     const data = await loadUserDataFromFirebase(props.userId);
+  
+  //     if (data) {
+  //       props.balanceRef.current.value = data.balance || 0;
+  
+  //       const upgradeMap = props.upgradeMap.current;
+  //       upgradeMap.get('clickUpgrade')?.loadUpgrade(data.upgrades.clickUpgrade || 0);
+  //       upgradeMap.get('autoClicker01')?.loadUpgrade(data.upgrades.autoClicker01 || 0);
+  //       upgradeMap.get('autoClicker02')?.loadUpgrade(data.upgrades.autoClicker02 || 0);
+  //       upgradeMap.get('autoClicker03')?.loadUpgrade(data.upgrades.autoClicker03 || 0);
+  //       upgradeMap.get('autoClicker04')?.loadUpgrade(data.upgrades.autoClicker04 || 0);
+  //       upgradeMap.get('autoClicker05')?.loadUpgrade(data.upgrades.autoClicker05 || 0);
+  //       upgradeMap.get('autoClicker06')?.loadUpgrade(data.upgrades.autoClicker06 || 0);
+  //       upgradeMap.get('autoClicker07')?.loadUpgrade(data.upgrades.autoClicker07 || 0);
+  //       upgradeMap.get('refClicker01')?.loadUpgrade(data.upgrades.refClicker01 || 0);
+  //       upgradeMap.get('refClicker02')?.loadUpgrade(data.upgrades.refClicker02 || 0);
+  //       upgradeMap.get('refClicker03')?.loadUpgrade(data.upgrades.refClicker03 || 0);
+  //       upgradeMap.get('refClicker04')?.loadUpgrade(data.upgrades.refClicker04 || 0);
+  //       upgradeMap.get('refClicker05')?.loadUpgrade(data.upgrades.refClicker05 || 0);
+  //       upgradeMap.get('adsClicker01')?.loadUpgrade(data.upgrades.adsClicker01 || 0);
+  //       upgradeMap.get('adsClicker02')?.loadUpgrade(data.upgrades.adsClicker02 || 0);
+  //       upgradeMap.get('adsClicker03')?.loadUpgrade(data.upgrades.adsClicker03 || 0);
+  //       upgradeMap.get('adsClicker04')?.loadUpgrade(data.upgrades.adsClicker04 || 0);
+  //     }
+  //   } else {
+  //     console.error("Cannot load data: userId is null.");
+  //     alert("cant load user idnull")
+  //   }
+  // }
+  
   async function handleLoad() {
     if (props.userId) {
       const data = await loadUserDataFromFirebase(props.userId);
   
       if (data) {
-        props.balanceRef.current.value = data.balance || 0;
+        const currentTime = new Date().getTime();
+        const lastUpdated = data.lastUpdated || currentTime;
+        const timeDiffInSeconds = (currentTime - lastUpdated) / 1000;
+        const maxIncrementTime = 2 * 3600; // 2 hours in seconds
   
+        const incrementTime = Math.min(timeDiffInSeconds, maxIncrementTime);
+        const balanceIncrease = incrementTime * (data.autoIncrement || 0);
+  
+        props.balanceRef.current.value = data.balance + balanceIncrease;
+
         const upgradeMap = props.upgradeMap.current;
         upgradeMap.get('clickUpgrade')?.loadUpgrade(data.upgrades.clickUpgrade || 0);
         upgradeMap.get('autoClicker01')?.loadUpgrade(data.upgrades.autoClicker01 || 0);
@@ -419,11 +459,9 @@ export function SaveGame(props: {
       }
     } else {
       console.error("Cannot load data: userId is null.");
-      alert("cant load user idnull")
+      alert("Cannot load data: userId is null.");
     }
   }
-  
-  
 
   useEffect(() => {
     if (props.userId) {
