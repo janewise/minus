@@ -469,12 +469,12 @@ export function SaveGame(props: {
     }
   }, [props.userId]);
 
-  const counter = useRef({ value: 0 });
-  counter.current.value += 1;
-  if (counter.current.value >= 10) {
-    handleSave();
-    counter.current.value = 0;
-  }
+  // const counter = useRef({ value: 0 });
+  // counter.current.value += 1;
+  // if (counter.current.value >= 10) {
+  //   handleSave();
+  //   counter.current.value = 0;
+  // }
 
   
   //wipesave data in Firebase
