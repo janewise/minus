@@ -388,6 +388,7 @@ export function SaveGame(props: {
       alert("Cannot save firebase savetsx data: userId is null.");
     }
   }
+  alert( props.userId);
 
   // // Load data from Firebase
   async function handleLoad() {
@@ -418,6 +419,7 @@ export function SaveGame(props: {
       }
     } else {
       console.error("Cannot load data: userId is null.");
+      alert("cant load user idnull")
     }
   }
   
