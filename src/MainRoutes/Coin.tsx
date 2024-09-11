@@ -87,6 +87,7 @@ useEffect(() => {
         const calculatedEnergy = Math.min(parseInt(storedEnergy, 10) + Math.floor(timePassed * storedRefillRateNum), parseInt(storedMaxEnergy, 10));
         
         console.log("calculatedEnergy:", calculatedEnergy);
+     
 
         setEnergy(calculatedEnergy);
         setMaxEnergy(parseInt(storedMaxEnergy, 10));
@@ -94,8 +95,8 @@ useEffect(() => {
         setLastUpdated(Date.now());
 
         // Calculate balance based on autoIncrement and time passed
-        const calculatedBalance = parseFloat(storedBalance) + Math.min(storedAutoIncrement * timePassed, storedAutoIncrement * 7200);
-        balanceRef.current.value = Math.round(calculatedBalance * 100) / 100;
+        // const calculatedBalance = parseFloat(storedBalance) + Math.min(storedAutoIncrement * timePassed, storedAutoIncrement * 7200);
+        // balanceRef.current.value = Math.round(calculatedBalance * 100) / 100;
       }
     });
   }
@@ -112,8 +113,8 @@ useEffect(() => {
       localStorage.setItem('refillRate', refillRate.toString());
       localStorage.setItem('lastUpdated', lastUpdated.toString());
  //down is auto increment
-      localStorage.setItem('balance', balanceRef.current.value.toString());
-      localStorage.setItem('autoIncrement', autoIncrement.toString());
+      // localStorage.setItem('balance', balanceRef.current.value.toString());
+      // localStorage.setItem('autoIncrement', autoIncrement.toString());
 
     }
   }, [energy, maxEnergy, refillRate, lastUpdated, isInitialLoad]);
