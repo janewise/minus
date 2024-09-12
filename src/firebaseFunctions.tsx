@@ -262,7 +262,7 @@ export const loadUserDataFromFirebase = async (userId: string) => {
     }
   } catch (error) {
     console.error("Error loading user data:", error);
-    alert(`No data found for user ${userId}.`);
+    alert(`error loading user data ${userId}.`);
     return null;
   }
 };
