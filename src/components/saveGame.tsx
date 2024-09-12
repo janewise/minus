@@ -470,13 +470,6 @@ export function SaveGame(props: {
       handleLoad();
     }
 
-    const counter = useRef({ value: 0 });
-    counter.current.value += 1;
-    
-    if (navigator.onLine && counter.current.value >= 10) {
-      handleSave();
-      counter.current.value = 0;
-    }
   }, [props.userId]);
 
   // const counter = useRef({ value: 0 });
@@ -485,13 +478,13 @@ export function SaveGame(props: {
   //   handleSave();
   //   counter.current.value = 0;
   // }
-//   const counter = useRef({ value: 0 });
-// counter.current.value += 1;
+  const counter = useRef({ value: 0 });
+counter.current.value += 1;
 
-// if (navigator.onLine && counter.current.value >= 10) {
-//   handleSave();
-//   counter.current.value = 0;
-// }
+if (navigator.onLine && counter.current.value >= 10) {
+  handleSave();
+  counter.current.value = 0;
+}
 
 
   
