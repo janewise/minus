@@ -660,6 +660,7 @@ export function SaveGame(props: {
       }
 
       setIsDataLoaded(true); // Mark data as loaded
+      alert("i a, ll.");
     } else {
       console.error("Cannot load data: userId is null.");
       alert("Cannot load data: userId is null.");
