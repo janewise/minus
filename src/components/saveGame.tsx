@@ -626,7 +626,7 @@ export function SaveGame(props: {
 
   // Save data to Firebase
   function handleSave() {
-    if (props.userId && dataLoaded) { // Ensure data is loaded before saving
+    if (props.userId) { // Ensure data is loaded before saving
       const firebaseData = {
         balance: props.balanceRef.current.value,
         upgrades: {
