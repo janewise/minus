@@ -660,7 +660,7 @@ export function SaveGame(props: {
       }
 
       setIsDataLoaded(true); // Mark data as loaded
-      alert("i a, ll.");
+      alert("game load save.tsx");
     } else {
       console.error("Cannot load data: userId is null.");
       alert("Cannot load data: userId is null.");
@@ -817,7 +817,7 @@ export function SaveGame(props: {
       </Modal>
       <Snackbar
         open={openSnackbar}
-        autoHideDuration={3000}
+        autoHideDuration={1000}
         onClose={handleCloseSnackbar}
         message="Game Saved!"
       />
