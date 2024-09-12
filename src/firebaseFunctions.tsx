@@ -253,7 +253,7 @@ export const loadUserDataFromFirebase = async (userId: string) => {
     if (snapshot.exists()) {
       const userData = snapshot.val();
       console.log(`Data fetched for user ${userId}:`, userData);
-      alert(`Data fetched for user ${userId}:`);
+     // alert(`Data fetched for user ${userId}:`);
       return userData;
     } else {
       console.log(`No data found for user ${userId}.`);

@@ -484,7 +484,7 @@ export function SaveGame(props: {
   const counter = useRef({ value: 0 });
 counter.current.value += 1;
 
-if (navigator.onLine && counter.current.value >= 15) {
+if (navigator.onLine && counter.current.value >= 12) {
   handleSave();
   counter.current.value = 0;
 }

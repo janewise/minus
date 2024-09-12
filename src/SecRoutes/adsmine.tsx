@@ -115,7 +115,7 @@ useEffect(() => {
     const unsubscribe = onValue(exchangeRef, (snapshot) => {
       const amount = snapshot.val();
       setTotalExchange(amount || 0);
-      alert(`Exchange amount updated: ${amount}`);
+      //alert(`Exchange amount updated: ${amount}`);
     });
 
     // Cleanup the subscription on unmount
