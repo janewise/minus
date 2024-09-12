@@ -360,39 +360,7 @@ export function SaveGame(props: {
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
 
   // Save data to Firebase
-  function handleSave() {
-    if (props.userId) {
-      const firebaseData = {
-        balance: props.balanceRef.current.value,
-        upgrades: {
-          clickUpgrade: props.upgradeMap.current.get('clickUpgrade')!.level,
-          autoClicker01: props.upgradeMap.current.get('autoClicker01')!.level,
-          autoClicker02: props.upgradeMap.current.get('autoClicker02')!.level,
-          autoClicker03: props.upgradeMap.current.get('autoClicker03')!.level,
-          autoClicker04: props.upgradeMap.current.get('autoClicker04')!.level,
-          autoClicker05: props.upgradeMap.current.get('autoClicker05')!.level,
-          autoClicker06: props.upgradeMap.current.get('autoClicker06')!.level,
-          autoClicker07: props.upgradeMap.current.get('autoClicker07')!.level,
-          refClicker01: props.upgradeMap.current.get('refClicker01')!.level,
-          refClicker02: props.upgradeMap.current.get('refClicker02')!.level,
-          refClicker03: props.upgradeMap.current.get('refClicker03')!.level,
-          refClicker04: props.upgradeMap.current.get('refClicker04')!.level,
-          refClicker05: props.upgradeMap.current.get('refClicker05')!.level,
-          adsClicker01: props.upgradeMap.current.get('adsClicker01')!.level,
-          adsClicker02: props.upgradeMap.current.get('adsClicker02')!.level,
-          adsClicker03: props.upgradeMap.current.get('adsClicker03')!.level,
-          adsClicker04: props.upgradeMap.current.get('adsClicker04')!.level,
-        },
-        lastUpdated: new Date().getTime(),
-      };
 
-      saveUserDataToFirebase(props.userId, firebaseData);
-      setOpenSnackbar(true);
-    } else {
-      console.error("Cannot save data: userId is null.");
-      alert("Cannot save firebase savetsx data: userId is null.");
-    }
-  }
   // alert( props.userId);
 
   // // Load data from Firebase
@@ -468,6 +436,40 @@ export function SaveGame(props: {
     }
   }
 
+  function handleSave() {
+    if (props.userId) {
+      const firebaseData = {
+        balance: props.balanceRef.current.value,
+        upgrades: {
+          clickUpgrade: props.upgradeMap.current.get('clickUpgrade')!.level,
+          autoClicker01: props.upgradeMap.current.get('autoClicker01')!.level,
+          autoClicker02: props.upgradeMap.current.get('autoClicker02')!.level,
+          autoClicker03: props.upgradeMap.current.get('autoClicker03')!.level,
+          autoClicker04: props.upgradeMap.current.get('autoClicker04')!.level,
+          autoClicker05: props.upgradeMap.current.get('autoClicker05')!.level,
+          autoClicker06: props.upgradeMap.current.get('autoClicker06')!.level,
+          autoClicker07: props.upgradeMap.current.get('autoClicker07')!.level,
+          refClicker01: props.upgradeMap.current.get('refClicker01')!.level,
+          refClicker02: props.upgradeMap.current.get('refClicker02')!.level,
+          refClicker03: props.upgradeMap.current.get('refClicker03')!.level,
+          refClicker04: props.upgradeMap.current.get('refClicker04')!.level,
+          refClicker05: props.upgradeMap.current.get('refClicker05')!.level,
+          adsClicker01: props.upgradeMap.current.get('adsClicker01')!.level,
+          adsClicker02: props.upgradeMap.current.get('adsClicker02')!.level,
+          adsClicker03: props.upgradeMap.current.get('adsClicker03')!.level,
+          adsClicker04: props.upgradeMap.current.get('adsClicker04')!.level,
+        },
+        lastUpdated: new Date().getTime(),
+      };
+
+      saveUserDataToFirebase(props.userId, firebaseData);
+      setOpenSnackbar(true);
+    } else {
+      console.error("Cannot save data: userId is null.");
+      alert("Cannot save firebase savetsx data: userId is null.");
+    }
+  }
+
   useEffect(() => {
     if (props.userId) {
       handleLoad();
@@ -484,11 +486,10 @@ export function SaveGame(props: {
   const counter = useRef({ value: 0 });
 counter.current.value += 1;
 
-if (navigator.onLine && counter.current.value >= 12) {
+if (navigator.onLine && counter.current.value >= 10) {
   handleSave();
   counter.current.value = 0;
 }
-
 
   
   //wipesave data in Firebase
