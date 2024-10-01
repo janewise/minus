@@ -5,6 +5,7 @@ import UpgradeEnergy from "../../classes/upgradeEnergy";
 //for Task
 import Dailyreward from "../DailyandAir/Daily/dailyreward";
 //fire base
+import { SaveGame } from "../../components/saveGame";
 //import { sendUserDataToFirebase,updateUserAutoIncrementInFirebase} from '../firebaseFunctions';
 //firebase
 import { db } from '../../firebase';
@@ -246,6 +247,12 @@ let autoIncrement: number =
 
   return (
     <>
+                   <SaveGame
+  balanceRef={balanceRef}
+  upgradeMap={upgradeMap}
+  // upgradeEnergyMap={upgradeEnergyMap}
+  userId={userId} 
+ />
           <div className=" Task">
            <Dailyreward  balanceRef={balanceRef}
                 onRewardClaimed={handleRewardClaimed}/>
