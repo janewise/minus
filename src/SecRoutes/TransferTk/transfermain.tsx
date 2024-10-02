@@ -22,54 +22,123 @@ export function TransferMain() {
    //user
   const [userId, setUserId] = useState<string | null>(null);
 //  exchange
-const [totalExchange, setTotalExchange] = useState<number>(0); // State for total exchange amount
+const [localTotalExchange, setLocalTotalExchange] = useState<number>(0); // Local version of totalExchange
+// const [totalExchange, setTotalExchange] = useState<number>(0); //696
   const [isInitialLoad, setIsInitialLoad] = useState(true); // Flag to check if initial load is done
 
   // Load state from localStorage on mount For energy and autoincrement on window close
-  useEffect(() => {
-    const storedEnergy = localStorage.getItem('energy');
-    const storedMaxEnergy = localStorage.getItem('maxEnergy');
-    const storedRefillRate = localStorage.getItem('refillRate');
-    const storedLastUpdated = localStorage.getItem('lastUpdated');
-//down is for autoincrement
-//  const storedBalance = localStorage.getItem('balance');
-//  const storedAutoIncrement = localStorage.getItem('autoIncrement');
+//   useEffect(() => {
+//     const storedEnergy = localStorage.getItem('energy');
+//     const storedMaxEnergy = localStorage.getItem('maxEnergy');
+//     const storedRefillRate = localStorage.getItem('refillRate');
+//     const storedLastUpdated = localStorage.getItem('lastUpdated');
+// //down is for autoincrement
+// //  const storedBalance = localStorage.getItem('balance');
+// //  const storedAutoIncrement = localStorage.getItem('autoIncrement');
 
-    if (storedEnergy && storedMaxEnergy && storedRefillRate && storedLastUpdated) {
-      const timePassed = (Date.now() - parseInt(storedLastUpdated, 10)) / 1000; // time in seconds
-      console.log("timePassed (seconds):", timePassed);
+//     if (storedEnergy && storedMaxEnergy && storedRefillRate && storedLastUpdated) {
+//       const timePassed = (Date.now() - parseInt(storedLastUpdated, 10)) / 1000; // time in seconds
+//       console.log("timePassed (seconds):", timePassed);
 
-      const storedRefillRateNum = parseInt(storedRefillRate, 10);
-      const calculatedEnergy = Math.min(parseInt(storedEnergy, 10) + Math.floor(timePassed * storedRefillRateNum), parseInt(storedMaxEnergy, 10));
+//       const storedRefillRateNum = parseInt(storedRefillRate, 10);
+//       const calculatedEnergy = Math.min(parseInt(storedEnergy, 10) + Math.floor(timePassed * storedRefillRateNum), parseInt(storedMaxEnergy, 10));
       
-      console.log("calculatedEnergy:", calculatedEnergy);
+//       console.log("calculatedEnergy:", calculatedEnergy);
 
-      setEnergy(calculatedEnergy);
-      setMaxEnergy(parseInt(storedMaxEnergy, 10));
-      setRefillRate(storedRefillRateNum);
-      setLastUpdated(Date.now());
+//       setEnergy(calculatedEnergy);
+//       setMaxEnergy(parseInt(storedMaxEnergy, 10));
+//       setRefillRate(storedRefillRateNum);
+//       setLastUpdated(Date.now());
 
-//dowm is for autoincrement time on offline
-    // const storedAutoIncrementNum = parseFloat(storedAutoIncrement);
-    //  const calculatedBalance = parseFloat(storedBalance) + Math.min(storedAutoIncrementNum * timePassed, storedAutoIncrementNum * 7200);
-    //  balanceRef.current.value = Math.round(calculatedBalance * 100) / 100;
-     }
-    setIsInitialLoad(false); // Set initial load flag to false after loading from localStorage
-  }, []);
+// //dowm is for autoincrement time on offline
+//     // const storedAutoIncrementNum = parseFloat(storedAutoIncrement);
+//     //  const calculatedBalance = parseFloat(storedBalance) + Math.min(storedAutoIncrementNum * timePassed, storedAutoIncrementNum * 7200);
+//     //  balanceRef.current.value = Math.round(calculatedBalance * 100) / 100;
+//      }
+//     setIsInitialLoad(false); // Set initial load flag to false after loading from localStorage
+//   }, []);
 
-  // Save state to localStorage only after the initial load is complete
-  useEffect(() => {
-    if (!isInitialLoad && userId) {
-      localStorage.setItem('energy', energy.toString());
-      localStorage.setItem('maxEnergy', maxEnergy.toString());
-      localStorage.setItem('refillRate', refillRate.toString());
-      localStorage.setItem('lastUpdated', lastUpdated.toString());
- //down is auto increment
-      // localStorage.setItem('balance', balanceRef.current.value.toString());
-      // localStorage.setItem('autoIncrement', autoIncrement.toString());
+//   // Save state to localStorage only after the initial load is complete
+//   useEffect(() => {
+//     if (!isInitialLoad && userId) {
+//       localStorage.setItem('energy', energy.toString());
+//       localStorage.setItem('maxEnergy', maxEnergy.toString());
+//       localStorage.setItem('refillRate', refillRate.toString());
+//       localStorage.setItem('lastUpdated', lastUpdated.toString());
+//  //down is auto increment
+//       // localStorage.setItem('balance', balanceRef.current.value.toString());
+//       // localStorage.setItem('autoIncrement', autoIncrement.toString());
 
-    }
-  }, [energy, maxEnergy, refillRate, lastUpdated, isInitialLoad]);
+//     }
+//   }, [energy, maxEnergy, refillRate, lastUpdated, isInitialLoad]);
+
+useEffect(() => {
+  const storedEnergy = localStorage.getItem("energy");
+  const storedMaxEnergy = localStorage.getItem("maxEnergy");
+  const storedRefillRate = localStorage.getItem("refillRate");
+  const storedLastUpdated = localStorage.getItem("lastUpdated");
+  //down is for autoincrement
+  const storedBalance = localStorage.getItem("balance");
+  const storedAutoIncrement = localStorage.getItem("autoIncrement");
+  //D4
+const storedLocalTotalExchange = localStorage.getItem('localTotalExchange'); // Load local totalExchange
+
+  if (
+    storedEnergy &&
+    storedMaxEnergy &&
+    storedRefillRate &&
+    storedLastUpdated &&
+    storedBalance &&
+    storedAutoIncrement
+  ) {
+    const timePassed = (Date.now() - parseInt(storedLastUpdated, 10)) / 1000; // time in seconds
+    console.log("timePassed (seconds):", timePassed);
+
+    const storedRefillRateNum = parseInt(storedRefillRate, 10);
+    const calculatedEnergy = Math.min(
+      parseInt(storedEnergy, 10) +
+        Math.floor(timePassed * storedRefillRateNum),
+      parseInt(storedMaxEnergy, 10)
+    );
+
+    console.log("calculatedEnergy:", calculatedEnergy);
+
+    setEnergy(calculatedEnergy);
+    setMaxEnergy(parseInt(storedMaxEnergy, 10));
+    setRefillRate(storedRefillRateNum);
+    setLastUpdated(Date.now());
+
+    //dowm is for autoincrement time on offline
+    const storedAutoIncrementNum = parseFloat(storedAutoIncrement);
+    const calculatedBalance =
+      parseFloat(storedBalance) +
+      Math.min(
+        storedAutoIncrementNum * timePassed,
+        storedAutoIncrementNum * 7200
+      );
+    balanceRef.current.value = Math.round(calculatedBalance * 100) / 100;
+    //D4
+if (storedLocalTotalExchange) {
+setLocalTotalExchange(parseFloat(storedLocalTotalExchange));
+}
+  }
+  setIsInitialLoad(false); // Set initial load flag to false after loading from localStorage
+}, []);
+
+useEffect(() => {
+  if (!isInitialLoad) {
+    localStorage.setItem("energy", energy.toString());
+    localStorage.setItem("maxEnergy", maxEnergy.toString());
+    localStorage.setItem("refillRate", refillRate.toString());
+    localStorage.setItem("lastUpdated", lastUpdated.toString());
+    //down is auto increment
+    localStorage.setItem("balance", balanceRef.current.value.toString());
+    localStorage.setItem("autoIncrement", autoIncrement.toString());
+    //D4
+localStorage.setItem('localTotalExchange', localTotalExchange.toString());
+  }
+}, [energy, maxEnergy, refillRate, lastUpdated, isInitialLoad,localTotalExchange]);
+
   useEffect(() => {
     // Initialize the Telegram Web App SDK
     const initTelegram = () => {
@@ -111,7 +180,8 @@ useEffect(() => {
 
     const unsubscribe = onValue(exchangeRef, (snapshot) => {
       const amount = snapshot.val();
-      setTotalExchange(amount || 0);
+      // setTotalExchange(amount || 0);
+      setLocalTotalExchange(amount || 0);
      // alert(`Exchange amount updated: ${amount}`);
     });
 
@@ -131,48 +201,81 @@ const upgradeMap = useRef(
     ["autoClicker05", new UpgradeState(5000, 2, 0, 1)],
     ["autoClicker06", new UpgradeState(5000, 2, 0, 1)],
     ["autoClicker07", new UpgradeState(10000, 2, 0, 1.5)],
+    ["autoClicker08", new UpgradeState(10000, 2, 0, 1.5)],
+    ["autoClicker09", new UpgradeState(20000, 2, 0, 2)],
+    ["autoClicker10", new UpgradeState(20000, 2, 0, 2)],
     //ref card
     ["refClicker01", new UpgradeState(500, 2, 0, 1)],
     ["refClicker02", new UpgradeState(1500, 2, 0, 1.5)],
     ["refClicker03", new UpgradeState(1500, 2, 0, 1.5)],
     ["refClicker04", new UpgradeState(4000, 2, 0, 2)],
     ["refClicker05", new UpgradeState(4000, 2, 0, 2)],
-      //ref card
-      ["adsClicker01", new UpgradeState(500, 2, 0, 1)],
-      ["adsClicker02", new UpgradeState(1500, 2, 0, 1.5)],
-      ["adsClicker03", new UpgradeState(50, 2, 0, 0.1)],
-      ["adsClicker04", new UpgradeState(150, 2, 0, 0.1)],
+    ["refClicker06", new UpgradeState(1500, 2, 0, 1.5)],
+    ["refClicker07", new UpgradeState(4000, 2, 0, 2)],
+    ["refClicker08", new UpgradeState(8000, 2, 0, 2.5)],
+    ["refClicker09", new UpgradeState(18000, 2, 0, 3)],
+    ["refClicker10", new UpgradeState(3000, 2, 0, 1.5)],
+    ["refClicker11", new UpgradeState(3000, 2, 0, 1.5)],
+    ["refClicker12", new UpgradeState(18000, 2, 0, 3)],
+    ["refClicker13", new UpgradeState(8000, 2, 0, 2.5)],
+    ["refClicker14", new UpgradeState(30000, 2, 0, 3.5)],
+    //ref card
+    ["adsClicker01", new UpgradeState(5000, 2, 0, 2)],
+    ["adsClicker02", new UpgradeState(5000, 2, 0, 2)],
+    ["adsClicker03", new UpgradeState(5000, 2, 0, 2)],
+    ["adsClicker04", new UpgradeState(5000, 2, 0, 2)],
+    ["adsClicker05", new UpgradeState(5000, 2, 0, 2)],
+    ["adsClicker06", new UpgradeState(5000, 2, 0, 2)],
+    ["adsClicker07", new UpgradeState(5000, 2, 0, 2)],
+    ["adsClicker08", new UpgradeState(5000, 2, 0, 2)],
   ])
 );
 
-const upgradeEnergyMap = useRef(new Map<string, UpgradeEnergy>([
-  ['energyPool', new UpgradeEnergy(40, 1.4, 50,0)],
-  ['energyfill', new UpgradeEnergy(70, 2,0, 1)],
-   // Add other entries as needed
-]));
+const upgradeEnergyMap = useRef(
+  new Map<string, UpgradeEnergy>([
+    ["energyPool", new UpgradeEnergy(40, 1.4, 50, 0)],
+    ["energyfill", new UpgradeEnergy(70, 2, 0, 1)],
+    // Add other entries as needed
+  ])
+);
 
 let autoIncrement: number =
-    Math.round(
-      (upgradeMap.current.get("autoClicker01")!.increment +
-        upgradeMap.current.get("autoClicker02")!.increment +
-        upgradeMap.current.get("autoClicker03")!.increment +
-        upgradeMap.current.get("autoClicker04")!.increment +
-        upgradeMap.current.get("autoClicker05")!.increment +
-        upgradeMap.current.get("autoClicker06")!.increment +
-        upgradeMap.current.get("autoClicker07")!.increment +
-        //ref card
-        upgradeMap.current.get("refClicker01")!.increment +
-        upgradeMap.current.get("refClicker02")!.increment +
-        upgradeMap.current.get("refClicker03")!.increment +
-        upgradeMap.current.get("refClicker04")!.increment +
-        upgradeMap.current.get("refClicker05")!.increment +
-        //ads
-        upgradeMap.current.get("adsClicker01")!.increment +
-        upgradeMap.current.get("adsClicker02")!.increment +
-        upgradeMap.current.get("adsClicker03")!.increment +
-        upgradeMap.current.get("adsClicker04")!.increment) * 
-        100
-    ) / 100 - (totalExchange/3600);
+  Math.round(
+    (upgradeMap.current.get("autoClicker01")!.increment +
+      upgradeMap.current.get("autoClicker02")!.increment +
+      upgradeMap.current.get("autoClicker03")!.increment +
+      upgradeMap.current.get("autoClicker04")!.increment +
+      upgradeMap.current.get("autoClicker05")!.increment +
+      upgradeMap.current.get("autoClicker06")!.increment +
+      upgradeMap.current.get("autoClicker07")!.increment +
+      upgradeMap.current.get("autoClicker08")!.increment +
+      upgradeMap.current.get("autoClicker09")!.increment +
+      upgradeMap.current.get("autoClicker10")!.increment +
+      //ref card
+      upgradeMap.current.get("refClicker01")!.increment +
+      upgradeMap.current.get("refClicker02")!.increment +
+      upgradeMap.current.get("refClicker03")!.increment +
+      upgradeMap.current.get("refClicker04")!.increment +
+      upgradeMap.current.get("refClicker05")!.increment +
+      upgradeMap.current.get("refClicker06")!.increment +
+      upgradeMap.current.get("refClicker07")!.increment +
+      upgradeMap.current.get("refClicker08")!.increment +
+      upgradeMap.current.get("refClicker09")!.increment +
+      upgradeMap.current.get("refClicker10")!.increment +
+      upgradeMap.current.get("refClicker11")!.increment +
+      upgradeMap.current.get("refClicker12")!.increment +
+      upgradeMap.current.get("refClicker13")!.increment +
+      upgradeMap.current.get("refClicker14")!.increment +
+      //ads
+      upgradeMap.current.get("adsClicker01")!.increment +
+      upgradeMap.current.get("adsClicker02")!.increment +
+      upgradeMap.current.get("adsClicker03")!.increment +
+      upgradeMap.current.get("adsClicker04")!.increment +
+      upgradeMap.current.get("adsClicker05")!.increment +
+      upgradeMap.current.get("adsClicker06")!.increment +
+      upgradeMap.current.get("adsClicker07")!.increment +
+      upgradeMap.current.get("adsClicker08")!.increment) *
+      100 ) / 100 -(localTotalExchange/3600)
     //downdatabase
     useEffect(() => {
       if (userId !== null) {

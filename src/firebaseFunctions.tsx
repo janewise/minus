@@ -1,49 +1,3 @@
-// import { db } from "./firebase";
-// import { ref, set, update, get, child , push } from "firebase/database";
-
-// // Function to send user data to Firebase
-// export const sendUserDataToFirebase = (
-//   userId: string,
-//   autoIncrement: number
-// ) => {
-//   if (!userId) return;
-
-//   set(ref(db, "users/" + userId), {
-//     autoIncrement: autoIncrement,
-//     timestamp: new Date().toISOString(),
-//   });
-// };
-
-// // Function to update user's autoIncrement value in Firebase
-// export const updateUserAutoIncrementInFirebase = (
-//   userId: string,
-//   autoIncrement: number
-// ) => {
-//   if (!userId) return;
-
-//   update(ref(db, "users/" + userId), {
-//     autoIncrement: autoIncrement,
-//   });
-// };
-
-// export const storeReferral = async (userId: string, referredBy: string): Promise<void> => {
-//   const referralsRef = ref(db, `referrals/${referredBy}`);
-//   const newReferralRef = push(referralsRef);
-//   await set(newReferralRef, { userId, timestamp: Date.now() });
-// };
-
-// export const getReferredUsersCount = async (userId: string): Promise<number> => {
-//   const referralsRef = ref(db, `referrals/${userId}`);
-//   const snapshot = await get(referralsRef);
-
-//   if (snapshot.exists()) {
-//     const referralsData = snapshot.val();
-//     return Object.keys(referralsData).length;
-//   } else {
-//     return 0;
-//   }
-// };
-
 import { db } from "./firebase";
 import { ref, set, update, get, DataSnapshot } from "firebase/database";
 
@@ -160,15 +114,33 @@ export const saveUserDataToFirebase = (userId: string, data: any) => {
       autoClicker05: data.upgrades?.autoClicker05 || 0,
       autoClicker06: data.upgrades?.autoClicker06 || 0,
       autoClicker07: data.upgrades?.autoClicker07 || 0,
+      autoClicker08: data.upgrades?.autoClicker08 || 0,
+      autoClicker09: data.upgrades?.autoClicker09 || 0,
+      autoClicker10: data.upgrades?.autoClicker10 || 0,
+      //
       refClicker01: data.upgrades?.refClicker01 || 0,
       refClicker02: data.upgrades?.refClicker02 || 0,
       refClicker03: data.upgrades?.refClicker03 || 0,
       refClicker04: data.upgrades?.refClicker04 || 0,
       refClicker05: data.upgrades?.refClicker05 || 0,
+      refClicker06: data.upgrades?.refClicker06 || 0,
+      refClicker07: data.upgrades?.refClicker07 || 0,
+      refClicker08: data.upgrades?.refClicker08 || 0,
+      refClicker09: data.upgrades?.refClicker09 || 0,
+      refClicker10: data.upgrades?.refClicker10 || 0,
+      refClicker11: data.upgrades?.refClicker11 || 0,
+      refClicker12: data.upgrades?.refClicker12 || 0,
+      refClicker13: data.upgrades?.refClicker13 || 0,
+      refClicker14: data.upgrades?.refClicker14 || 0,
+      //
       adsClicker01: data.upgrades?.adsClicker01 || 0,
       adsClicker02: data.upgrades?.adsClicker02 || 0,
       adsClicker03: data.upgrades?.adsClicker03 || 0,
       adsClicker04: data.upgrades?.adsClicker04 || 0,
+      adsClicker05: data.upgrades?.adsClicker05 || 0,
+      adsClicker06: data.upgrades?.adsClicker06 || 0,
+      adsClicker07: data.upgrades?.adsClicker07 || 0,
+      adsClicker08: data.upgrades?.adsClicker08 || 0,
     },
     lastUpdated: data.lastUpdated || new Date().getTime(),
   };

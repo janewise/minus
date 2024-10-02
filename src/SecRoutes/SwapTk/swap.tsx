@@ -184,8 +184,31 @@ useEffect(() => {
         data.autoClicker05 || 0,
         data.autoClicker06 || 0,
         data.autoClicker07 || 0,
+        data.autoClicker08 || 0,
+        data.autoClicker09 || 0,
+        data.autoClicker10 || 0,
         data.refClicker01 || 0,
         data.refClicker02 || 0,
+        data.refClicker03 || 0,
+        data.refClicker04 || 0,
+        data.refClicker05 || 0,
+        data.refClicker06 || 0,
+        data.refClicker07 || 0,
+        data.refClicker08 || 0,
+        data.refClicker09 || 0,
+        data.refClicker10 || 0,
+        data.refClicker11 || 0,
+        data.refClicker12 || 0,
+        data.refClicker13 || 0,
+        data.refClicker14 || 0,
+        data.adsClicker01 || 0,
+        data.adsClicker02 || 0,
+        data.adsClicker03 || 0,
+        data.adsClicker04 || 0,
+        data.adsClicker05 || 0,
+        data.adsClicker06 || 0,
+        data.adsClicker07 || 0,
+        data.adsClicker08 || 0,
       ];
       setUpgradeLevels(levels);
     });
@@ -193,7 +216,7 @@ useEffect(() => {
 }, [userId]);
 
 const calculateTotalValue = (levels: number[]) => {
-  return levels.reduce((acc, level) => acc + (level > 2 ? 1 : 0), 0);
+  return levels.reduce((acc, level) => acc + (level > 1 ? 1 : 0), 0);
 };
 const totalValue = calculateTotalValue(upgradeLevels);
 
@@ -246,7 +269,7 @@ const inusdt=totalTokens*0.5;
       <h4>{exchangeRate}Profit/h ~ 1 Token</h4>
       <h4>Tokens ~ {totalTokens}</h4>
       <p>{totalTokens} * 0.5 ~ {inusdt} usdt</p>
-      {clickUpgradeLevel > 4 && totalValue > 2 && (
+      {clickUpgradeLevel > 3 && totalValue > 2 && (
       <div className="exchange">
         <div className="exbox1">
           <input

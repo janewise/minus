@@ -98,7 +98,7 @@ const Airone: React.FC<AironeProps> = ({ userId, balanceRef, onRewardClaimed }) 
     <div className="task-box">
       <span className="taskspan">
         <p className="taskp">
-          <span>Booster Lv.19 Needed(5K Coin)</span>
+          <span>Booster Lv.4 Needed(5K Coin)</span>
           <span>{renderButton()}</span>
         </p>
       </span>
