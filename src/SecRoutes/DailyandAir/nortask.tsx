@@ -116,48 +116,82 @@ const upgradeMap = useRef(
     ["autoClicker05", new UpgradeState(5000, 2, 0, 1)],
     ["autoClicker06", new UpgradeState(5000, 2, 0, 1)],
     ["autoClicker07", new UpgradeState(10000, 2, 0, 1.5)],
+    ["autoClicker08", new UpgradeState(10000, 2, 0, 1.5)],
+    ["autoClicker09", new UpgradeState(20000, 2, 0, 2)],
+    ["autoClicker10", new UpgradeState(20000, 2, 0, 2)],
     //ref card
     ["refClicker01", new UpgradeState(500, 2, 0, 1)],
     ["refClicker02", new UpgradeState(1500, 2, 0, 1.5)],
     ["refClicker03", new UpgradeState(1500, 2, 0, 1.5)],
     ["refClicker04", new UpgradeState(4000, 2, 0, 2)],
     ["refClicker05", new UpgradeState(4000, 2, 0, 2)],
-      //ref card
-      ["adsClicker01", new UpgradeState(500, 2, 0, 1)],
-      ["adsClicker02", new UpgradeState(1500, 2, 0, 1.5)],
-      ["adsClicker03", new UpgradeState(50, 2, 0, 0.1)],
-      ["adsClicker04", new UpgradeState(150, 2, 0, 0.1)],
+    ["refClicker06", new UpgradeState(1500, 2, 0, 1.5)],
+    ["refClicker07", new UpgradeState(4000, 2, 0, 2)],
+    ["refClicker08", new UpgradeState(8000, 2, 0, 2.5)],
+    ["refClicker09", new UpgradeState(18000, 2, 0, 3)],
+    ["refClicker10", new UpgradeState(3000, 2, 0, 1.5)],
+    ["refClicker11", new UpgradeState(3000, 2, 0, 1.5)],
+    ["refClicker12", new UpgradeState(18000, 2, 0, 3)],
+    ["refClicker13", new UpgradeState(8000, 2, 0, 2.5)],
+    ["refClicker14", new UpgradeState(30000, 2, 0, 3.5)],
+    //ref card
+    ["adsClicker01", new UpgradeState(5000, 2, 0, 2)],
+    ["adsClicker02", new UpgradeState(5000, 2, 0, 2)],
+    ["adsClicker03", new UpgradeState(5000, 2, 0, 2)],
+    ["adsClicker04", new UpgradeState(5000, 2, 0, 2)],
+    ["adsClicker05", new UpgradeState(5000, 2, 0, 2)],
+    ["adsClicker06", new UpgradeState(5000, 2, 0, 2)],
+    ["adsClicker07", new UpgradeState(5000, 2, 0, 2)],
+    ["adsClicker08", new UpgradeState(5000, 2, 0, 2)],
   ])
 );
 
-const upgradeEnergyMap = useRef(new Map<string, UpgradeEnergy>([
-  ['energyPool', new UpgradeEnergy(40, 1.4, 50,0)],
-  ['energyfill', new UpgradeEnergy(70, 2,0, 1)],
-   // Add other entries as needed
-]));
+const upgradeEnergyMap = useRef(
+  new Map<string, UpgradeEnergy>([
+    ["energyPool", new UpgradeEnergy(40, 1.4, 50, 0)],
+    ["energyfill", new UpgradeEnergy(70, 2, 0, 1)],
+    // Add other entries as needed
+  ])
+);
 
 let autoIncrement: number =
-    Math.round(
-      (upgradeMap.current.get("autoClicker01")!.increment +
-        upgradeMap.current.get("autoClicker02")!.increment +
-        upgradeMap.current.get("autoClicker03")!.increment +
-        upgradeMap.current.get("autoClicker04")!.increment +
-        upgradeMap.current.get("autoClicker05")!.increment +
-        upgradeMap.current.get("autoClicker06")!.increment +
-        upgradeMap.current.get("autoClicker07")!.increment +
-        //ref card
-        upgradeMap.current.get("refClicker01")!.increment +
-        upgradeMap.current.get("refClicker02")!.increment +
-        upgradeMap.current.get("refClicker03")!.increment +
-        upgradeMap.current.get("refClicker04")!.increment +
-        upgradeMap.current.get("refClicker05")!.increment +
-        //ads
-        upgradeMap.current.get("adsClicker01")!.increment +
-        upgradeMap.current.get("adsClicker02")!.increment +
-        upgradeMap.current.get("adsClicker03")!.increment +
-        upgradeMap.current.get("adsClicker04")!.increment) * 
-        100
-    ) / 100;
+  Math.round(
+    (upgradeMap.current.get("autoClicker01")!.increment +
+      upgradeMap.current.get("autoClicker02")!.increment +
+      upgradeMap.current.get("autoClicker03")!.increment +
+      upgradeMap.current.get("autoClicker04")!.increment +
+      upgradeMap.current.get("autoClicker05")!.increment +
+      upgradeMap.current.get("autoClicker06")!.increment +
+      upgradeMap.current.get("autoClicker07")!.increment +
+      upgradeMap.current.get("autoClicker08")!.increment +
+      upgradeMap.current.get("autoClicker09")!.increment +
+      upgradeMap.current.get("autoClicker10")!.increment +
+      //ref card
+      upgradeMap.current.get("refClicker01")!.increment +
+      upgradeMap.current.get("refClicker02")!.increment +
+      upgradeMap.current.get("refClicker03")!.increment +
+      upgradeMap.current.get("refClicker04")!.increment +
+      upgradeMap.current.get("refClicker05")!.increment +
+      upgradeMap.current.get("refClicker06")!.increment +
+      upgradeMap.current.get("refClicker07")!.increment +
+      upgradeMap.current.get("refClicker08")!.increment +
+      upgradeMap.current.get("refClicker09")!.increment +
+      upgradeMap.current.get("refClicker10")!.increment +
+      upgradeMap.current.get("refClicker11")!.increment +
+      upgradeMap.current.get("refClicker12")!.increment +
+      upgradeMap.current.get("refClicker13")!.increment +
+      upgradeMap.current.get("refClicker14")!.increment +
+      //ads
+      upgradeMap.current.get("adsClicker01")!.increment +
+      upgradeMap.current.get("adsClicker02")!.increment +
+      upgradeMap.current.get("adsClicker03")!.increment +
+      upgradeMap.current.get("adsClicker04")!.increment +
+      upgradeMap.current.get("adsClicker05")!.increment +
+      upgradeMap.current.get("adsClicker06")!.increment +
+      upgradeMap.current.get("adsClicker07")!.increment +
+      upgradeMap.current.get("adsClicker08")!.increment) *
+      100
+  ) / 100;
 
     //database
     useEffect(() => {

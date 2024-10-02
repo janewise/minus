@@ -25,40 +25,79 @@ export function Refmine() {
   //user
   const [userId, setUserId] = useState<string | null>(null);
   //D4
-  const [localTotalExchange, setLocalTotalExchange] = useState<number>(0); // Local version of totalExchange
-
+  //const [localTotalExchange, setLocalTotalExchange] = useState<number>(0); // Local version of totalExchange
+const [totalExchange, setTotalExchange] = useState<number>(0); //696
   const [isInitialLoad, setIsInitialLoad] = useState(true); // Flag to check if initial load is done
 
   // Load state from localStorage on mount For energy and autoincrement on window close
-  useEffect(() => {
-    const storedEnergy = localStorage.getItem("energy");
-    const storedMaxEnergy = localStorage.getItem("maxEnergy");
-    const storedRefillRate = localStorage.getItem("refillRate");
-    const storedLastUpdated = localStorage.getItem("lastUpdated");
-    //down is for autoincrement
-    const storedBalance = localStorage.getItem("balance");
-    const storedAutoIncrement = localStorage.getItem("autoIncrement");
-    //D4
-    const storedLocalTotalExchange = localStorage.getItem("localTotalExchange"); // Load local totalExchange
+  // useEffect(() => {
+  //   const storedEnergy = localStorage.getItem("energy");
+  //   const storedMaxEnergy = localStorage.getItem("maxEnergy");
+  //   const storedRefillRate = localStorage.getItem("refillRate");
+  //   const storedLastUpdated = localStorage.getItem("lastUpdated");
+  //   //down is for autoincrement
+  //   const storedBalance = localStorage.getItem("balance");
+  //   const storedAutoIncrement = localStorage.getItem("autoIncrement");
+  //   //D4
+  //   const storedLocalTotalExchange = localStorage.getItem("localTotalExchange"); // Load local totalExchange
 
-    if (
-      storedEnergy &&
-      storedMaxEnergy &&
-      storedRefillRate &&
-      storedLastUpdated &&
-      storedBalance &&
-      storedAutoIncrement
-    ) {
+  //   if (
+  //     storedEnergy &&
+  //     storedMaxEnergy &&
+  //     storedRefillRate &&
+  //     storedLastUpdated &&
+  //     storedBalance &&
+  //     storedAutoIncrement
+  //   ) {
+  //     const timePassed = (Date.now() - parseInt(storedLastUpdated, 10)) / 1000; // time in seconds
+  //     console.log("timePassed (seconds):", timePassed);
+
+  //     const storedRefillRateNum = parseInt(storedRefillRate, 10);
+  //     const calculatedEnergy = Math.min(
+  //       parseInt(storedEnergy, 10) +
+  //         Math.floor(timePassed * storedRefillRateNum),
+  //       parseInt(storedMaxEnergy, 10)
+  //     );
+
+  //     console.log("calculatedEnergy:", calculatedEnergy);
+
+  //     setEnergy(calculatedEnergy);
+  //     setMaxEnergy(parseInt(storedMaxEnergy, 10));
+  //     setRefillRate(storedRefillRateNum);
+  //     setLastUpdated(Date.now());
+
+  //     //dowm is for autoincrement time on offline
+  //     const storedAutoIncrementNum = parseFloat(storedAutoIncrement);
+  //     const calculatedBalance =
+  //       parseFloat(storedBalance) +
+  //       Math.min(
+  //         storedAutoIncrementNum * timePassed,
+  //         storedAutoIncrementNum * 7200
+  //       );
+  //     balanceRef.current.value = Math.round(calculatedBalance * 100) / 100;
+  //     //D4
+  //     if (storedLocalTotalExchange) {
+  //       setLocalTotalExchange(parseFloat(storedLocalTotalExchange));
+  //     }
+  //   }
+  //   setIsInitialLoad(false); // Set initial load flag to false after loading from localStorage
+  // }, []);
+  useEffect(() => {
+    const storedEnergy = localStorage.getItem('energy');
+    const storedMaxEnergy = localStorage.getItem('maxEnergy');
+    const storedRefillRate = localStorage.getItem('refillRate');
+    const storedLastUpdated = localStorage.getItem('lastUpdated');
+//down is for autoincrement
+//  const storedBalance = localStorage.getItem('balance');
+//  const storedAutoIncrement = localStorage.getItem('autoIncrement');
+
+    if (storedEnergy && storedMaxEnergy && storedRefillRate && storedLastUpdated) {
       const timePassed = (Date.now() - parseInt(storedLastUpdated, 10)) / 1000; // time in seconds
       console.log("timePassed (seconds):", timePassed);
 
       const storedRefillRateNum = parseInt(storedRefillRate, 10);
-      const calculatedEnergy = Math.min(
-        parseInt(storedEnergy, 10) +
-          Math.floor(timePassed * storedRefillRateNum),
-        parseInt(storedMaxEnergy, 10)
-      );
-
+      const calculatedEnergy = Math.min(parseInt(storedEnergy, 10) + Math.floor(timePassed * storedRefillRateNum), parseInt(storedMaxEnergy, 10));
+      
       console.log("calculatedEnergy:", calculatedEnergy);
 
       setEnergy(calculatedEnergy);
@@ -66,44 +105,46 @@ export function Refmine() {
       setRefillRate(storedRefillRateNum);
       setLastUpdated(Date.now());
 
-      //dowm is for autoincrement time on offline
-      const storedAutoIncrementNum = parseFloat(storedAutoIncrement);
-      const calculatedBalance =
-        parseFloat(storedBalance) +
-        Math.min(
-          storedAutoIncrementNum * timePassed,
-          storedAutoIncrementNum * 7200
-        );
-      balanceRef.current.value = Math.round(calculatedBalance * 100) / 100;
-      //D4
-      if (storedLocalTotalExchange) {
-        setLocalTotalExchange(parseFloat(storedLocalTotalExchange));
-      }
-    }
+//dowm is for autoincrement time on offline
+    // const storedAutoIncrementNum = parseFloat(storedAutoIncrement);
+    //  const calculatedBalance = parseFloat(storedBalance) + Math.min(storedAutoIncrementNum * timePassed, storedAutoIncrementNum * 7200);
+    //  balanceRef.current.value = Math.round(calculatedBalance * 100) / 100;
+     }
     setIsInitialLoad(false); // Set initial load flag to false after loading from localStorage
   }, []);
 
   // Save state to localStorage only after the initial load is complete
+  // useEffect(() => {
+  //   if (!isInitialLoad) {
+  //     localStorage.setItem("energy", energy.toString());
+  //     localStorage.setItem("maxEnergy", maxEnergy.toString());
+  //     localStorage.setItem("refillRate", refillRate.toString());
+  //     localStorage.setItem("lastUpdated", lastUpdated.toString());
+  //     //down is auto increment
+  //     localStorage.setItem("balance", balanceRef.current.value.toString());
+  //     localStorage.setItem("autoIncrement", autoIncrement.toString());
+  //     //D4
+  //     localStorage.setItem("localTotalExchange", localTotalExchange.toString());
+  //   }
+  // }, [
+  //   energy,
+  //   maxEnergy,
+  //   refillRate,
+  //   lastUpdated,
+  //   isInitialLoad,
+  //   localTotalExchange,
+  // ]);
   useEffect(() => {
-    if (!isInitialLoad) {
-      localStorage.setItem("energy", energy.toString());
-      localStorage.setItem("maxEnergy", maxEnergy.toString());
-      localStorage.setItem("refillRate", refillRate.toString());
-      localStorage.setItem("lastUpdated", lastUpdated.toString());
-      //down is auto increment
-      localStorage.setItem("balance", balanceRef.current.value.toString());
-      localStorage.setItem("autoIncrement", autoIncrement.toString());
-      //D4
-      localStorage.setItem("localTotalExchange", localTotalExchange.toString());
+    if (!isInitialLoad && userId) {
+      localStorage.setItem('energy', energy.toString());
+      localStorage.setItem('maxEnergy', maxEnergy.toString());
+      localStorage.setItem('refillRate', refillRate.toString());
+      localStorage.setItem('lastUpdated', lastUpdated.toString());
+ //down is auto increment
+      // localStorage.setItem('balance', balanceRef.current.value.toString());
+      // localStorage.setItem('autoIncrement', autoIncrement.toString());
     }
-  }, [
-    energy,
-    maxEnergy,
-    refillRate,
-    lastUpdated,
-    isInitialLoad,
-    localTotalExchange,
-  ]);
+  }, [energy, maxEnergy, refillRate, lastUpdated, isInitialLoad]);
   useEffect(() => {
     // Initialize the Telegram Web App SDK
     const initTelegram = () => {
@@ -143,7 +184,8 @@ export function Refmine() {
 
       const unsubscribe = onValue(exchangeRef, (snapshot) => {
         const amount = snapshot.val();
-        setLocalTotalExchange((amount || 0) / 3600);
+       // setLocalTotalExchange((amount || 0) / 3600);
+       setTotalExchange(amount || 0);
         //alert(`Exchange amount updated: ${amount}`);
       });
 
@@ -240,8 +282,8 @@ export function Refmine() {
         upgradeMap.current.get("adsClicker08")!.increment) *
         100
     ) /
-      100 -
-    localTotalExchange;
+      100 -(totalExchange/3600)
+
   //downdatabase
   useEffect(() => {
     if (userId !== null) {
@@ -300,7 +342,7 @@ export function Refmine() {
       <SaveGame
         balanceRef={balanceRef}
         upgradeMap={upgradeMap}
-        upgradeEnergyMap={upgradeEnergyMap}
+        // upgradeEnergyMap={upgradeEnergyMap}
         userId={userId}
       />
       <ShareBal
