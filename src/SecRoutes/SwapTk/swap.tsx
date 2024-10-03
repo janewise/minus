@@ -109,7 +109,7 @@ const Swap: React.FC<ExchangeProps> = ({ autoIncrement, userId }) => {
   const [error, setError] = useState<string | null>(null); // State for error message
   const [success, setSuccess] = useState<boolean>(false); // State for success feedback
 
-  const exchangeRate = 2000;
+  const exchangeRate = 3000;
   const maxExchangeValue = Math.floor(autoIncrement * 3600);
 
   const isClickable = inputValue > 0 && inputValue <= autoIncrement * 3600;
@@ -337,23 +337,3 @@ const inusdt=totalTokens*0.5;
 };
 
 export default Swap;
-
-// const handleExchange = () => {
-//   // Calculate how many tokens can be exchanged
-//   const tokens = Math.floor(inputValue / exchangeRate); // Determine number of tokens
-//   const exchangeAmount = tokens * exchangeRate; // Calculate the actual amount to exchange
-
-//   if (inputValue > maxExchangeValue) {
-//     setError("Input value exceeds the current autoIncrement");
-//     return;
-//   }
-
-//   if (tokens > 0 && userId) {
-//     sendExchangeTokenToFirebase(userId, tokens); // Call renamed function
-//     setInputValue(0); // Reset the input after a successful exchange
-//     setSuccess(true); // Set success feedback
-//     setError(null); // Clear any previous error
-//   } else {
-//     setError("User ID is not available or no valid exchange amount.");
-//   }
-// };
