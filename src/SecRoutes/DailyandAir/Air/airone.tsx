@@ -76,7 +76,7 @@ const Airone: React.FC<AironeProps> = ({ userId, balanceRef, onRewardClaimed }) 
   const renderButton = () => {
     if (taskState === "done") {
       return <button className="taskdone" disabled>✔️</button>;
-    } else if (clickUpgradeLevel === 5) {
+    } else if (clickUpgradeLevel === 4) {
       switch (taskState) {
         case "go":
           return <button className="taskgo" onClick={handleGoClick}>Go</button>;

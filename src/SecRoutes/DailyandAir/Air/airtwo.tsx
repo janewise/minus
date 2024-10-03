@@ -62,7 +62,7 @@ const Airtwo: React.FC<AirtwoProps> = ({ userId, balanceRef, onRewardClaimed }) 
   }, [userId]);
 
   const calculateTotalValue = (levels: number[]) => {
-    return levels.reduce((acc, level) => acc + (level > 2 ? 1 : 0), 0);
+    return levels.reduce((acc, level) => acc + (level > 1 ? 1 : 0), 0);
   };
 
   useEffect(() => {
@@ -97,7 +97,7 @@ const Airtwo: React.FC<AirtwoProps> = ({ userId, balanceRef, onRewardClaimed }) 
 
   const handleGoClick = () => {
      const totalValue = calculateTotalValue(upgradeLevels);
-    if (totalValue >= 4) {
+    if (totalValue >= 2) {
       setTaskState("check");
     }
   };
@@ -134,7 +134,7 @@ const Airtwo: React.FC<AirtwoProps> = ({ userId, balanceRef, onRewardClaimed }) 
     <div className="task-box">
       <span className="taskspan">
         <p className="taskp">
-          <span>Lv.5,18Cards Needed (7K Coin)</span>
+          <span>Lv.2,2Cards Needed (7K Coin)</span>
           <span>{renderButton()}</span>
         </p>
       </span>
