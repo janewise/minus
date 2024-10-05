@@ -4,7 +4,6 @@ import { ref, set, update, get, DataSnapshot } from "firebase/database";
 export const sendUserDataToFirebase = (
   userId: string,
   autoIncrement: number,
-  userwallet:string,
   initialInviteCount: number = 0
 ) => {
   if (!userId) return;
@@ -57,7 +56,7 @@ export const initializeUserData = async (userId: string) => {
   if (!snapshot.exists()) {
     await set(userRef, {
       autoIncrement: 0,
-      userwallet:"",
+      userwallet:"hello",
       inviteCount: 0, // Initialize inviteCount to 0 when initializing user data
       timestamp: new Date().toISOString(),
     });
