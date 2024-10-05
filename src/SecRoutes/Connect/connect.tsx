@@ -90,8 +90,8 @@ export function Connect() {
             <button type="submit" className="connectbutton">Connect</button>
           </form>
         </div>
-        {/* {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
-          {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>} */}
+      {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
+          {/* {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>} */} 
       </div>
     </>
   );
