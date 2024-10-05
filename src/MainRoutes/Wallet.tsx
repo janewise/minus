@@ -241,12 +241,20 @@ import { Route, Routes, NavLink, Navigate } from "react-router-dom";
 import "./SecNavcss/walletnav.css";
 import { SwapMain } from "../SecRoutes/SwapTk/swapmain";
 import { TransferMain } from "../SecRoutes/TransferTk/transfermain";
+import { Connect } from "../SecRoutes/Connect/connect";
 
 export function Wallet() {
   return (
     <>
       <div className="overlay">
+    
         <div className="container-fluid">
+        <NavLink 
+                  to="/connect" 
+                  className={({ isActive }) => isActive ? "minelink active" : "minelink"}
+                >
+                 Connect
+                </NavLink>
           <nav className="wallet_nav">
             <ul>
               <li>
