@@ -19,6 +19,8 @@
     display: flex;
     flex-direction: column;
    align-items: center;
+   font-size: 15px;
+   color: #8247e5;
 }
 
 .userwalletinputfield{
@@ -32,8 +34,12 @@
     border-radius: 5px;      
 }
 
-.connectbutton{
-    background-color: #8247e5;
+.wallet-connected h5{
+    padding: 3px 10px;
+    background-color: #92929218;
+}
+
+.connectbutton,.disconnectbutton{
     color: #fff;
     padding: 5px 10px;
     border: 1px solid rgba(211, 211, 211, 0.6);
@@ -41,8 +47,17 @@
     font-size: 17px;
     font-weight: 500;
     margin-bottom:1rem;
-    width: 270px;
     height: 40px;
     text-align: center;
     margin-top: 2rem;
+}
+
+.connectbutton{
+    background-color: #8247e5;
+    width: 270px;
+}
+
+.disconnectbutton{
+    background-color: red;
+    width: 170px;
 }
