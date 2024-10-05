@@ -274,7 +274,7 @@ export function Wallet() {
           {!connectedWallet ? (
             <NavLink to="/connect" className= "minelink"> Connect </NavLink>
           ):(
-          <NavLink to="/connect" className= "minelink"> Connected </NavLink>)}
+          <NavLink to="/connect" className= "minelink">{connectedWallet} </NavLink>)}
          
           </div>
        
