@@ -35,6 +35,8 @@
 
 .wallet-connected h5{
     padding: 3px 10px;
+    width: 300px;
+    height: 40px;
     background-color: #92929218;
 }
 

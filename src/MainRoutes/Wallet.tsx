@@ -236,7 +236,84 @@
 //   )
 // }
 
-import React, {useState } from "react";
+//02
+// import React, {useState } from "react";
+// import { ref, get } from "firebase/database";
+// import { db } from "../firebase";
+// import { Route, Routes, NavLink, Navigate } from "react-router-dom";
+// import { SwapMain } from "../SecRoutes/SwapTk/swapmain";
+// import { TransferMain } from "../SecRoutes/TransferTk/transfermain";
+// import "./SecNavcss/walletnav.css";
+
+// export function Wallet() {
+
+//   const [connectedWallet, setConnectedWallet] = useState<string | null>(null)
+
+//    // Function to fetch and set the connected wallet from Firebase
+//    const fetchUserWallet = async (userId: string) => {
+//     const userRef = ref(db, "users/" + userId);
+//     try {
+//       const snapshot = await get(userRef);
+//       if (snapshot.exists()) {
+//         const userData = snapshot.val();
+//         const wallet = userData?.addresswallet?.polygonwallet || null;
+//         setConnectedWallet(wallet);
+//       } else {
+//         setConnectedWallet(null);
+//       }
+//     } catch (error) {
+//       console.error("Error fetching wallet address:", error);
+//       setConnectedWallet(null);
+//     }
+//   };
+
+//   return (
+//     <>
+//       <div className="overlay">
+//         <div className="container-fluid">
+//           <div className= "connectwalletnav">
+//           {!connectedWallet ? (
+//             <NavLink to="/connect" className= "minelink"> Connect </NavLink>
+//           ):(
+//           <NavLink to="/connect" className= "minelink">{connectedWallet} </NavLink>)}
+         
+//           </div>
+       
+//           <nav className="wallet_nav">
+//             <ul>
+//               <li>
+//                 <NavLink 
+//                   to="/wallet/swapmain" 
+//                   className={({ isActive }) => isActive ? "minelink active" : "minelink"}
+//                 >
+//                   Swap
+//                 </NavLink>
+//               </li>
+//               <li>
+//                 <NavLink 
+//                   to="/wallet/transfermain" 
+//                   className={({ isActive }) => isActive ? "minelink active" : "minelink"}
+//                 >
+//                  Transfer
+//                 </NavLink>
+//               </li>
+//             </ul>
+//           </nav>
+
+//           <Routes>
+//             <Route path="/" element={<Navigate to="swapmain" />} />
+//             <Route path="swapmain" element={<SwapMain />} />
+//             <Route path="transfermain" element={<TransferMain />} />
+//           </Routes>
+//         </div>
+//       </div>
+//     </>
+//   );
+// }
+
+
+//03
+import React, { useState, useEffect } from "react";
 import { ref, get } from "firebase/database";
 import { db } from "../firebase";
 import { Route, Routes, NavLink, Navigate } from "react-router-dom";
@@ -245,11 +322,10 @@ import { TransferMain } from "../SecRoutes/TransferTk/transfermain";
 import "./SecNavcss/walletnav.css";
 
 export function Wallet() {
+  const [connectedWallet, setConnectedWallet] = useState<string | null>(null);
 
-  const [connectedWallet, setConnectedWallet] = useState<string | null>(null)
-
-   // Function to fetch and set the connected wallet from Firebase
-   const fetchUserWallet = async (userId: string) => {
+  // Function to fetch and set the connected wallet from Firebase
+  const fetchUserWallet = async (userId: string) => {
     const userRef = ref(db, "users/" + userId);
     try {
       const snapshot = await get(userRef);
@@ -266,18 +342,32 @@ export function Wallet() {
     }
   };
 
+  useEffect(() => {
+    const userId = "someUserId"; // Replace with actual user ID retrieval
+    fetchUserWallet(userId);
+  }, []);
+
+  // Function to shorten the wallet address (e.g., 0x0C68b...45B3E)
+  const shortenAddress = (address: string) => {
+    return `${address.slice(0, 6)}...${address.slice(-4)}`;
+  };
+
   return (
     <>
       <div className="overlay">
         <div className="container-fluid">
-          <div className= "connectwalletnav">
-          {!connectedWallet ? (
-            <NavLink to="/connect" className= "minelink"> Connect </NavLink>
-          ):(
-          <NavLink to="/connect" className= "minelink">{connectedWallet} </NavLink>)}
-         
+          <div className="connectwalletnav">
+            {/* If no wallet is connected, show the "Connect" link */}
+            {!connectedWallet ? (
+              <NavLink to="/connect" className="minelink">Connect</NavLink>
+            ) : (
+              // If wallet is connected, display the shortened address
+              <NavLink to="/connect" className="minelink">
+                {shortenAddress(connectedWallet)}
+              </NavLink>
+            )}
           </div>
-       
+
           <nav className="wallet_nav">
             <ul>
               <li>
@@ -293,7 +383,7 @@ export function Wallet() {
                   to="/wallet/transfermain" 
                   className={({ isActive }) => isActive ? "minelink active" : "minelink"}
                 >
-                 Transfer
+                  Transfer
                 </NavLink>
               </li>
             </ul>
