@@ -1,0 +1,45 @@
+.connectform{
+    height: 70vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.polygonlogo{
+   width: 130px;
+   height: auto;
+   padding: 2px 15px;
+   background-color: #ffffffb4;
+   border: 2px solid #8247e5;
+   border-radius: 10px;
+}
+
+.adressform{
+    display: flex;
+    flex-direction: column;
+   align-items: center;
+}
+
+.userwalletinputfield{
+    width: 270px;
+    height: 40px;
+    font-size: 18px;
+    font-weight: 500;
+    color: rgb(68, 68, 68);
+    outline: none;          
+}
+
+.connectbutton{
+    background-color: #8247e5;
+    color: #fff;
+    padding: 5px 10px;
+    border: 1px solid rgba(211, 211, 211, 0.6);
+    border-radius: 5px;
+    font-size: 17px;
+    font-weight: 500;
+    margin-bottom:1rem;
+    width: 270px;
+    text-align: center;
+    margin-top: 2rem;
+}
