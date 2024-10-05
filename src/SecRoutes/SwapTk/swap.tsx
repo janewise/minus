@@ -320,7 +320,7 @@ const inusdt=totalTokens*0.5;
         {success && (
             <Snackbar
               open={success}
-              autoHideDuration={3000}
+              autoHideDuration={2000}
               message="Exchange successful!"
               onClose={() => setSuccess(false)}
               anchorOrigin={{ vertical: "top", horizontal: "center" }}

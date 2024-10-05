@@ -336,6 +336,8 @@ export function Connect() {
           {/* Conditionally show form if no wallet is connected */}
           {!connectedWallet ? (
             <form onSubmit={handleSubmit} className="adressform">
+              <h5>Enter your Polygon WalletAddress</h5>
+              <br />
               <div>
                 <input
                   className="userwalletinputfield"
@@ -360,11 +362,12 @@ export function Connect() {
             </div>
           )}
         </div>
-
- <div> {successMessage && (
+        {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+      </div>
+      {successMessage && (
             <Snackbar
               open={successMessage}
-              autoHideDuration={3000}
+              autoHideDuration={1500}
               message="Connect Successful!"
               onClose={() => setSuccessMessage(false)}
               anchorOrigin={{ vertical: "top", horizontal: "center" }}
@@ -377,19 +380,15 @@ export function Connect() {
             {SuccessDisconnect && (
             <Snackbar
               open={SuccessDisconnect}
-              autoHideDuration={3000}
+              autoHideDuration={1500}
               message="Wallet Disconnect!"
               onClose={() =>  setSuccessDisconnect(false)}
               anchorOrigin={{ vertical: "top", horizontal: "center" }}
               ContentProps={{
-                sx: { backgroundColor: "red", color: "white" },
+                sx: { backgroundColor: "red", color: "white", },
               }}
             />
           )}
-      </div>
-  
-        {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
-      </div>
     </>
   );
 }

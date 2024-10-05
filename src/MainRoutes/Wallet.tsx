@@ -236,25 +236,48 @@
 //   )
 // }
 
-import React from "react";
+import React, {useState } from "react";
+import { ref, get } from "firebase/database";
+import { db } from "../firebase";
 import { Route, Routes, NavLink, Navigate } from "react-router-dom";
-import "./SecNavcss/walletnav.css";
 import { SwapMain } from "../SecRoutes/SwapTk/swapmain";
 import { TransferMain } from "../SecRoutes/TransferTk/transfermain";
-import { Connect } from "../SecRoutes/Connect/connect";
+import "./SecNavcss/walletnav.css";
 
 export function Wallet() {
+
+  const [connectedWallet, setConnectedWallet] = useState<string | null>(null)
+
+   // Function to fetch and set the connected wallet from Firebase
+   const fetchUserWallet = async (userId: string) => {
+    const userRef = ref(db, "users/" + userId);
+    try {
+      const snapshot = await get(userRef);
+      if (snapshot.exists()) {
+        const userData = snapshot.val();
+        const wallet = userData?.addresswallet?.polygonwallet || null;
+        setConnectedWallet(wallet);
+      } else {
+        setConnectedWallet(null);
+      }
+    } catch (error) {
+      console.error("Error fetching wallet address:", error);
+      setConnectedWallet(null);
+    }
+  };
+
   return (
     <>
       <div className="overlay">
-    
         <div className="container-fluid">
-        <NavLink 
-                  to="/connect" 
-                  className={({ isActive }) => isActive ? "minelink active" : "minelink"}
-                >
-                 Connect
-                </NavLink>
+          <div className= "connectwalletnav">
+          {!connectedWallet ? (
+            <NavLink to="/connect" className= "minelink"> Connect </NavLink>
+          ):(
+          <NavLink to="/connect" className= "minelink"> Connected </NavLink>)}
+         
+          </div>
+       
           <nav className="wallet_nav">
             <ul>
               <li>

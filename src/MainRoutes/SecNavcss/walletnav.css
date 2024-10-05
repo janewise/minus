@@ -1,8 +1,13 @@
 .wallet_nav {
     position: absolute;
-    top: 3rem;
+    top: 4rem;
   }
   
+  .connectwalletnav{
+text-align: right;
+padding-top: 0.5rem;
+  }
+
   .wallet_nav ul {
     display: flex;
     justify-content: space-around;
