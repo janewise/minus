@@ -305,6 +305,11 @@ export function Connect() {
     }
   };
 
+  //shorten
+  const shortenAddress = (address: string) => {
+    return `${address.slice(0, 6)}...${address.slice(-4)}`;
+  };
+
   // Function to handle disconnect
   const handleDisconnect = async () => {
     if (!userId) return;
@@ -355,7 +360,7 @@ export function Connect() {
             </form>
           ) : (
             <div className="wallet-connected">
-              <h5>{connectedWallet}</h5>
+              <h5>  {shortenAddress(connectedWallet)}</h5>
               <button className="disconnectbutton" onClick={handleDisconnect}>
                 Disconnect
               </button>

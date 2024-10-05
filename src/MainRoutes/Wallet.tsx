@@ -322,7 +322,38 @@ import { TransferMain } from "../SecRoutes/TransferTk/transfermain";
 import "./SecNavcss/walletnav.css";
 
 export function Wallet() {
+  const [userId, setUserId] = useState<string | null>(null);
   const [connectedWallet, setConnectedWallet] = useState<string | null>(null);
+
+  useEffect(() => {
+    // Initialize the Telegram Web App SDK
+    const initTelegram = () => {
+      const tg = window.Telegram.WebApp;
+      tg.ready();
+      console.log("Telegram Web App SDK initialized");
+      console.log("tg.initDataUnsafe:", tg.initDataUnsafe);
+
+      const user = tg.initDataUnsafe?.user;
+
+      if (user) {
+        setUserId(user.id.toString());
+        fetchUserWallet(user.id.toString());
+      }
+    };
+
+    if (window.Telegram) {
+      console.log("Telegram SDK is already loaded");
+      initTelegram();
+    } else {
+      console.log("Waiting for Telegram SDK to be ready");
+      window.addEventListener("TelegramWebAppReady", initTelegram);
+    }
+
+    return () => {
+      window.removeEventListener("TelegramWebAppReady", initTelegram);
+    };
+  }, []);
+
 
   // Function to fetch and set the connected wallet from Firebase
   const fetchUserWallet = async (userId: string) => {
@@ -341,11 +372,6 @@ export function Wallet() {
       setConnectedWallet(null);
     }
   };
-
-  useEffect(() => {
-    const userId = "someUserId"; // Replace with actual user ID retrieval
-    fetchUserWallet(userId);
-  }, []);
 
   // Function to shorten the wallet address (e.g., 0x0C68b...45B3E)
   const shortenAddress = (address: string) => {
