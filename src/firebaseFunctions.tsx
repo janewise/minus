@@ -105,6 +105,7 @@ export const saveUserDataToFirebase = (userId: string, data: any) => {
   const structuredData = {
     // autoIncrement: data.autoIncrement || 0,
     // inviteCount: data.inviteCount || 0,
+    userwallet: data.userwallet || "",
     balance: data.balance || 0,
     upgrades: {
       clickUpgrade: data.upgrades?.clickUpgrade || 0,

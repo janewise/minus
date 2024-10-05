@@ -6,10 +6,8 @@ export function Connect() {
   return (
     <>
       <div className="overlay">
-    
         <div className="container-fluid">
-gg
-         
+     
         </div>
       </div>
     </>
