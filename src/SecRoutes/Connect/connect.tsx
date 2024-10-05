@@ -22,6 +22,11 @@ export function Connect() {
       console.log('tg.initDataUnsafe:', tg.initDataUnsafe);
 
       const user = tg.initDataUnsafe?.user;
+
+      if (user) {
+        const id = user.id.toString();
+        setUserId(user.id.toString());
+      }
     };
 
     if (window.Telegram) {
@@ -91,7 +96,7 @@ export function Connect() {
           </form>
         </div>
       {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
-          {/* {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>} */} 
+          {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>} 
       </div>
     </>
   );
