@@ -385,10 +385,10 @@ export function Wallet() {
           <div className="connectwalletnav">
             {/* If no wallet is connected, show the "Connect" link */}
             {!connectedWallet ? (
-              <NavLink to="/connect" className="minelink">Connect</NavLink>
+              <NavLink to="/connect" className="minelink walletconnect">Connect</NavLink>
             ) : (
               // If wallet is connected, display the shortened address
-              <NavLink to="/connect" className="minelink">
+              <NavLink to="/connect" className="minelink walletaddress">
                 {shortenAddress(connectedWallet)}
               </NavLink>
             )}

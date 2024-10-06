@@ -227,6 +227,7 @@ export function Connect() {
   const [connectedWallet, setConnectedWallet] = useState<string | null>(null); // State to store the connected wallet
   const [successMessage, setSuccessMessage] = useState<boolean>(false); // State to store the success message
   const [SuccessDisconnect, setSuccessDisconnect] = useState<boolean>(false);
+  const [Successcopy, setSuccesscopy] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState(""); // State to store any error message
 
   useEffect(() => {
@@ -309,21 +310,21 @@ export function Connect() {
   const shortenAddress = (address: string) => {
     return `${address.slice(0, 7)}...${address.slice(-5)}`;
   };
-//copy walletadress
-const handleCopy = () => {
-  if (connectedWallet) {
-    navigator.clipboard.writeText(connectedWallet)
-      .then(() => {
-        alert('Address copied to clipboard!');
-      })
-      .catch(err => {
-        console.error('Failed to copy: ', err);
-      });
-  } else {
-    console.error('No wallet address to copy.');
-  }
-};
-
+  //copy walletadress
+  const handleCopy = () => {
+    if (connectedWallet) {
+      navigator.clipboard
+        .writeText(connectedWallet)
+        .then(() => {
+          setSuccesscopy(true);
+        })
+        .catch((err) => {
+          console.error("Failed to copy: ", err);
+        });
+    } else {
+      console.error("No wallet address to copy.");
+    }
+  };
 
   // Function to handle disconnect
   const handleDisconnect = async () => {
@@ -375,11 +376,24 @@ const handleCopy = () => {
             </form>
           ) : (
             <div className="wallet-connected">
-              <h5>  {shortenAddress(connectedWallet)}
-              <span onClick={handleCopy} className="providewalleticon"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="13" fill="currentColor" className="bi bi-copy" viewBox="0 0 16 16">
-  <path fill-rule="evenodd" d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1z"/>
-</svg>
-</span>
+              <h5>
+                {" "}
+                {shortenAddress(connectedWallet)}
+                <span onClick={handleCopy} className="providewalleticon">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="17"
+                    height="15"
+                    fill="#8247e5"
+                    className="bi bi-copy"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1z"
+                    />
+                  </svg>
+                </span>
               </h5>
               <button className="disconnectbutton" onClick={handleDisconnect}>
                 Disconnect
@@ -389,31 +403,46 @@ const handleCopy = () => {
         </div>
         {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
       </div>
+      
+      {/* for success connect */}
       {successMessage && (
-            <Snackbar
-              open={successMessage}
-              autoHideDuration={1500}
-              message="Connect Successful!"
-              onClose={() => setSuccessMessage(false)}
-              anchorOrigin={{ vertical: "top", horizontal: "center" }}
-              ContentProps={{
-                sx: { backgroundColor: "green", color: "white" },
-              }}
-            />
-          )}
-            
-            {SuccessDisconnect && (
-            <Snackbar
-              open={SuccessDisconnect}
-              autoHideDuration={1500}
-              message="Wallet Disconnect!"
-              onClose={() =>  setSuccessDisconnect(false)}
-              anchorOrigin={{ vertical: "top", horizontal: "center" }}
-              ContentProps={{
-                sx: { backgroundColor: "red", color: "white", },
-              }}
-            />
-          )}
+        <Snackbar
+          open={Successcopy}
+          autoHideDuration={700}
+          message="Connect Successful!"
+          onClose={() => setSuccesscopy(false)}
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
+          ContentProps={{
+            sx: { backgroundColor: "green", color: "white" },
+          }}
+        />
+      )}
+      {/* for success connect */}
+      {successMessage && (
+        <Snackbar
+          open={successMessage}
+          autoHideDuration={1500}
+          message="Connect Successful!"
+          onClose={() => setSuccessMessage(false)}
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
+          ContentProps={{
+            sx: { backgroundColor: "green", color: "white" },
+          }}
+        />
+      )}
+      {/* for success disconnect */}
+      {SuccessDisconnect && (
+        <Snackbar
+          open={SuccessDisconnect}
+          autoHideDuration={1500}
+          message="Wallet Disconnect!"
+          onClose={() => setSuccessDisconnect(false)}
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
+          ContentProps={{
+            sx: { backgroundColor: "red", color: "white" },
+          }}
+        />
+      )}
     </>
   );
 }
