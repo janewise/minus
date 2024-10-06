@@ -367,6 +367,7 @@ export function Connect() {
                   value={walletAddress}
                   onChange={(e) => setWalletAddress(e.target.value)}
                   placeholder="Enter your wallet address"
+                  minLength={15}
                   required
                 />
               </div>
@@ -405,15 +406,15 @@ export function Connect() {
       </div>
       
       {/* for success connect */}
-      {successMessage && (
+      {Successcopy && (
         <Snackbar
           open={Successcopy}
           autoHideDuration={700}
-          message="Connect Successful!"
+          message="Copied Successful!"
           onClose={() => setSuccesscopy(false)}
           anchorOrigin={{ vertical: "top", horizontal: "center" }}
           ContentProps={{
-            sx: { backgroundColor: "green", color: "white" },
+            sx: { backgroundColor: "lightgreen", color: "white" },
           }}
         />
       )}
