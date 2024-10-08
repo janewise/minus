@@ -571,8 +571,8 @@ export function ImageUpload({ telegramUserId }: ImageUploadProps) {
           </button>
 
           <button onClick={handleUpload} disabled={isUploading || images.length < 2}>
-//             {isUploading ? "Uploading..." : "Upload Images"}
-//           </button>
+             {isUploading ? "Uploading..." : "Upload Images"}
+          </button>
 
           {/* Progress display */}
           {uploadProgress.length > 0 && (
