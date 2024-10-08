@@ -458,7 +458,7 @@ export function ImageUpload({ telegramUserId }: ImageUploadProps) {
     if (e.target.files) {
       const selectedImages = Array.from(e.target.files);
       if (selectedImages.length > 2) {
-        alert("You can only upload a maximum of 4 images.");
+        alert("You can only upload a maximum of 2 images.");
         return;
       }
       setImages(selectedImages);
@@ -569,6 +569,10 @@ export function ImageUpload({ telegramUserId }: ImageUploadProps) {
             </svg>
             {isUploading ? "Uploading..." : "Upload Images"}
           </button>
+
+          <button onClick={handleUpload} disabled={isUploading || images.length < 2}>
+//             {isUploading ? "Uploading..." : "Upload Images"}
+//           </button>
 
           {/* Progress display */}
           {uploadProgress.length > 0 && (
