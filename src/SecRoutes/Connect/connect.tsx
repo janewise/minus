@@ -355,6 +355,7 @@ export function Connect() {
         <div className="container-fluid connectform">
 
         {userId && <ImageUpload telegramUserId={userId} />}
+        {/* <ImageUpload telegramUserId={userId}/>  */}
 
           <div>
           <img src={polygonlogo} alt="polygon logo" className="polygonlogo" />

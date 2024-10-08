@@ -1,7 +1,95 @@
+// import React, { useState } from "react";
+// import { ref as storageRef, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+// import { ref as dbRef, set } from "firebase/database";
+// import { storage, db } from "../../firebase"; // Import initialized Firebase services
+// import "./connect.css";
+
+// type ImageUploadProps = {
+//   telegramUserId: string; // Pass in Telegram user ID
+// };
+
+// export function ImageUpload({ telegramUserId }: ImageUploadProps) {
+//   const [images, setImages] = useState<File[]>([]);
+//   const [uploadProgress, setUploadProgress] = useState<number[]>([]);
+//   const [isUploading, setIsUploading] = useState(false);
+
+//   // Handle multiple image selection
+//   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+//     if (e.target.files) {
+//       const selectedImages = Array.from(e.target.files);
+//       if (selectedImages.length > 2) {
+//         alert("You can only upload a maximum of 4 images.");
+//         return;
+//       }
+//       setImages(selectedImages);
+//     }
+//   };
+
+//   const handleUpload = async () => {
+//     if (images.length < 2) {
+//       alert("Please upload at least 2 images.");
+//       return;
+//     }
+//     setIsUploading(true);
+//     const uploadTasks = images.map((image, index) => {
+//       const imgRef = storageRef(storage, `images/${telegramUserId}/image${index + 1}`);
+//       return uploadBytesResumable(imgRef, image);
+//     });
+
+//     const uploadProgressArr: number[] = Array(images.length).fill(0);
+//     Promise.all(
+//       uploadTasks.map((uploadTask, index) =>
+//         uploadTask.on(
+//           "state_changed",
+//           (snapshot) => {
+//             const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+//             uploadProgressArr[index] = progress;
+//             setUploadProgress([...uploadProgressArr]);
+//           },
+//           (error) => console.error("Upload failed:", error),
+//           async () => {
+//             const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+//             await saveImageData(telegramUserId, downloadURL, index);
+//           }
+//         )
+//       )
+//     ).finally(() => {
+//       setIsUploading(false);
+//       console.log("All uploads completed.");
+//     });
+//   };
+
+//   const saveImageData = async (telegramUserId: string, downloadURL: string, index: number) => {
+//     const userImagesRef = dbRef(db, `users/${telegramUserId}/images/image${index + 1}`);
+//     await set(userImagesRef, {
+//       url: downloadURL,
+//       isProcessed: false // Add a boolean field with value false
+//     });
+//   };
+  
+
+//   return (
+//     <div className="upload">
+//       <input type="file" accept="image/*" multiple onChange={handleImageChange} />
+//       <button onClick={handleUpload} disabled={isUploading || images.length < 2}>
+//         {isUploading ? "Uploading..." : "Upload Images"}
+//       </button>
+
+//       {uploadProgress.length > 0 && (
+//         <div>
+//           {uploadProgress.map((progress, index) => (
+//             <p key={index}>Image {index + 1}: {progress}% uploaded</p>
+//           ))}
+//         </div>
+//       )}
+//     </div>
+//   );
+// }
 import React, { useState } from "react";
 import { ref as storageRef, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { ref as dbRef, set } from "firebase/database";
 import { storage, db } from "../../firebase"; // Import initialized Firebase services
+import "./connect.css";
 
 type ImageUploadProps = {
   telegramUserId: string; // Pass in Telegram user ID
@@ -11,16 +99,18 @@ export function ImageUpload({ telegramUserId }: ImageUploadProps) {
   const [images, setImages] = useState<File[]>([]);
   const [uploadProgress, setUploadProgress] = useState<number[]>([]);
   const [isUploading, setIsUploading] = useState(false);
+  const [pending, setPending] = useState(false); // New state to track pending status
 
   // Handle multiple image selection
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const selectedImages = Array.from(e.target.files);
-      if (selectedImages.length > 4) {
+      if (selectedImages.length > 2) {
         alert("You can only upload a maximum of 4 images.");
         return;
       }
       setImages(selectedImages);
+      setPending(false); // Reset pending state when selecting new images
     }
   };
 
@@ -54,27 +144,46 @@ export function ImageUpload({ telegramUserId }: ImageUploadProps) {
       )
     ).finally(() => {
       setIsUploading(false);
+      setPending(true); // Set pending state after successful upload
       console.log("All uploads completed.");
     });
   };
 
   const saveImageData = async (telegramUserId: string, downloadURL: string, index: number) => {
     const userImagesRef = dbRef(db, `users/${telegramUserId}/images/image${index + 1}`);
-    await set(userImagesRef, downloadURL);
+    await set(userImagesRef, {
+      url: downloadURL,
+      isProcessed: false // Add a boolean field with value false
+    });
+  };
+
+  const handleReupload = () => {
+    setPending(false); // Reset pending state to allow reupload
+    setUploadProgress([]); // Reset upload progress
+    setImages([]); // Clear the images so new ones can be uploaded
   };
 
   return (
-    <div>
-      <input type="file" accept="image/*" multiple onChange={handleImageChange} />
-      <button onClick={handleUpload} disabled={isUploading || images.length < 2}>
-        {isUploading ? "Uploading..." : "Upload Images"}
-      </button>
+    <div className="upload">
+      {!pending ? ( // Show file input and upload button if not in pending state
+        <>
+          <input type="file" accept="image/*" multiple onChange={handleImageChange} disabled={isUploading} />
+          <button onClick={handleUpload} disabled={isUploading || images.length < 2}>
+            {isUploading ? "Uploading..." : "Upload Images"}
+          </button>
 
-      {uploadProgress.length > 0 && (
+          {uploadProgress.length > 0 && (
+            <div>
+              {uploadProgress.map((progress, index) => (
+                <p key={index}>Image {index + 1}: {progress}% uploaded</p>
+              ))}
+            </div>
+          )}
+        </>
+      ) : ( // Show "Pending" text and "Reupload" button if in pending state
         <div>
-          {uploadProgress.map((progress, index) => (
-            <p key={index}>Image {index + 1}: {progress}% uploaded</p>
-          ))}
+          <p>Pending</p>
+          <button onClick={handleReupload}>Reupload</button>
         </div>
       )}
     </div>
