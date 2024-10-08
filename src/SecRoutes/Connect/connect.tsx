@@ -224,6 +224,7 @@ import "./connect.css";
 
 export function Connect() {
   const [userId, setUserId] = useState<string | null>(null);
+  const [imageVerified, setImageVerified] = useState<boolean>(false);
   const [walletAddress, setWalletAddress] = useState(""); // State to store the wallet address
   const [connectedWallet, setConnectedWallet] = useState<string | null>(null); // State to store the connected wallet
   const [successMessage, setSuccessMessage] = useState<boolean>(false); // State to store the success message
@@ -349,15 +350,39 @@ export function Connect() {
     }
   };
 
+
+//for imageverified
+useEffect(() => {
+  // Fetch the imageverified value from Firebase
+  const fetchImageVerifiedStatus = async () => {
+    try {
+      const userImagesRef = ref(db, `users/${userId}/images/imageverified`);
+      const snapshot = await get(userImagesRef);
+      if (snapshot.exists()) {
+        setImageVerified(snapshot.val());
+      } else {
+        setImageVerified(false); // Default to false if no value exists
+      }
+    } catch (error) {
+      console.error("Error fetching imageverified status:", error);
+      setErrorMessage("Failed to fetch image verification status.");
+    }
+  };
+
+  if (userId) {
+    fetchImageVerifiedStatus();
+  }
+}, [userId]);
+
   return (
     <>
       <div className="overlay">
         <div className="container-fluid connectform">
 
-        {userId && <ImageUpload telegramUserId={userId} />}
+        {userId && !imageVerified && <ImageUpload telegramUserId={userId} />}
         {/* <ImageUpload telegramUserId={userId}/>  */}
-
-          <div>
+        {imageVerified && (
+          <div className="canconnectwallet">
           <img src={polygonlogo} alt="polygon logo" className="polygonlogo" />
           {/* Conditionally show form if no wallet is connected */}
           {!connectedWallet ? (
@@ -407,11 +432,11 @@ export function Connect() {
             </div>
           )}
           </div>
-          
+           )}
         </div>
         {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
       </div>
-      
+   
       {/* for success connect */}
       {Successcopy && (
         <Snackbar
