@@ -119,15 +119,18 @@ export function ImageUpload({ telegramUserId }: ImageUploadProps) {
       alert("Please upload at least 2 images.");
       return;
     }
+  
     setIsUploading(true);
+    const uploadProgressArr: number[] = Array(images.length).fill(0);
+    
+    // Track promises of all uploads
     const uploadTasks = images.map((image, index) => {
       const imgRef = storageRef(storage, `images/${telegramUserId}/image${index + 1}`);
-      return uploadBytesResumable(imgRef, image);
-    });
-
-    const uploadProgressArr: number[] = Array(images.length).fill(0);
-    Promise.all(
-      uploadTasks.map((uploadTask, index) =>
+      
+      // Upload each image with progress tracking
+      const uploadTask = uploadBytesResumable(imgRef, image);
+      
+      return new Promise<void>((resolve, reject) => {
         uploadTask.on(
           "state_changed",
           (snapshot) => {
@@ -135,20 +138,32 @@ export function ImageUpload({ telegramUserId }: ImageUploadProps) {
             uploadProgressArr[index] = progress;
             setUploadProgress([...uploadProgressArr]);
           },
-          (error) => console.error("Upload failed:", error),
+          (error) => {
+            console.error("Upload failed:", error);
+            reject(error);
+          },
           async () => {
             const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
             await saveImageData(telegramUserId, downloadURL, index);
+            resolve(); // Resolve the promise when the upload is complete
           }
-        )
-      )
-    ).finally(() => {
-      setIsUploading(false);
-      setPending(true); // Set pending state after successful upload
-      console.log("All uploads completed.");
+        );
+      });
     });
+  
+    // Wait for all upload tasks to complete
+    Promise.all(uploadTasks)
+      .then(() => {
+        console.log("All uploads completed.");
+        setIsUploading(false);
+        setPending(true); // Set pending state only after all uploads are complete
+      })
+      .catch((error) => {
+        console.error("Error in uploading:", error);
+        setIsUploading(false); // Ensure uploading state is reset even if an error occurs
+      });
   };
-
+  
   const saveImageData = async (telegramUserId: string, downloadURL: string, index: number) => {
     const userImagesRef = dbRef(db, `users/${telegramUserId}/images/image${index + 1}`);
     await set(userImagesRef, {
