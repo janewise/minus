@@ -219,6 +219,7 @@ import { ref, update, get } from "firebase/database";
 import { db } from "../../firebase";
 import polygonlogo from "./polygonMatic.png";
 import { Snackbar } from "@mui/material";
+import {ImageUpload} from "./upload"
 import "./connect.css";
 
 export function Connect() {
@@ -352,8 +353,11 @@ export function Connect() {
     <>
       <div className="overlay">
         <div className="container-fluid connectform">
-          <img src={polygonlogo} alt="polygon logo" className="polygonlogo" />
 
+        {userId && <ImageUpload telegramUserId={userId} />}
+
+          <div>
+          <img src={polygonlogo} alt="polygon logo" className="polygonlogo" />
           {/* Conditionally show form if no wallet is connected */}
           {!connectedWallet ? (
             <form onSubmit={handleSubmit} className="adressform">
@@ -401,6 +405,8 @@ export function Connect() {
               </button>
             </div>
           )}
+          </div>
+          
         </div>
         {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
       </div>

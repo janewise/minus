@@ -105,9 +105,9 @@ export const saveUserDataToFirebase = (userId: string, data: any) => {
     // autoIncrement: data.autoIncrement || 0,
     // inviteCount: data.inviteCount || 0,
     //adresswallet: data.userwallet || "",
-    adresswallet:{
-      polygonwallet: data.userwallet || "",
-    },
+    // adresswallet:{
+    //   polygonwallet: data.userwallet || "",
+    // },
     balance: data.balance || 0,
     upgrades: {
       clickUpgrade: data.upgrades?.clickUpgrade || 0,
