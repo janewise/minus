@@ -310,6 +310,17 @@
 //     </>
 //   );
 // }
+// {/* <div className="connectwalletnav">
+// {/* If no wallet is connected, show the "Connect" link */}
+// {!connectedWallet ? (
+//   <NavLink to="/connect" className="minelink walletconnect">Connect</NavLink>
+// ) : (
+//   // If wallet is connected, display the shortened address
+//   <NavLink to="/connect" className="minelink walletaddress">
+//     {shortenAddress(connectedWallet)}
+//   </NavLink>
+// )}
+// </div> */}
 
 
 //03
@@ -382,17 +393,7 @@ export function Wallet() {
     <>
       <div className="overlay">
         <div className="container-fluid">
-          <div className="connectwalletnav">
-            {/* If no wallet is connected, show the "Connect" link */}
-            {!connectedWallet ? (
-              <NavLink to="/connect" className="minelink walletconnect">Connect</NavLink>
-            ) : (
-              // If wallet is connected, display the shortened address
-              <NavLink to="/connect" className="minelink walletaddress">
-                {shortenAddress(connectedWallet)}
-              </NavLink>
-            )}
-          </div>
+         
 
           <nav className="wallet_nav">
             <ul>
