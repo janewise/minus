@@ -734,7 +734,7 @@
 //   );
 // }
 
-//
+
 import React, { useState, useRef } from "react";
 import { ref as storageRef, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { ref as dbRef, update } from "firebase/database";
@@ -746,18 +746,18 @@ type ImageUploadProps = {
 };
 
 export function ImageUpload({ telegramUserId }: ImageUploadProps) {
-  const [images, setImages] = useState<File[]>([]);
+  const [images, setImages] = useState<File[]>([]); // Array of selected images
   const [uploadProgress, setUploadProgress] = useState<number[]>([]);
   const [isUploading, setIsUploading] = useState(false);
-  const [pending, setPending] = useState(false); // New pending state
+  const [pending, setPending] = useState(false); // Add pending state
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      const selectedImages = Array.from(e.target.files); // Convert FileList to Array
-      if (selectedImages.length > 0) {
-        setImages(selectedImages); // Set the images to state
+      const selectedImage = e.target.files[0]; // Only handle one image at a time
+      if (selectedImage) {
+        setImages((prevImages) => [...prevImages, selectedImage]); // Append new image to the list
       }
     }
   };
@@ -769,6 +769,8 @@ export function ImageUpload({ telegramUserId }: ImageUploadProps) {
     }
 
     setIsUploading(true);
+    setPending(false); // Ensure pending is false when starting upload
+
     const uploadProgressArr: number[] = Array(images.length).fill(0);
 
     const uploadTasks = images.map((image, index) => {
@@ -801,7 +803,6 @@ export function ImageUpload({ telegramUserId }: ImageUploadProps) {
         console.log("All uploads completed.");
         setIsUploading(false);
         setImages([]); // Reset after successful upload
-        setPending(true); // Set pending to true after successful upload
       })
       .catch((error) => {
         console.error("Error in uploading:", error);
@@ -817,18 +818,18 @@ export function ImageUpload({ telegramUserId }: ImageUploadProps) {
       [imageKey]: downloadURL,
       imageverified: false
     });
+
+    setPending(true); // Set pending state to true after uploading
+  };
+
+  const handleReupload = () => {
+    setPending(false); // Reset pending state when re-upload is triggered
   };
 
   const triggerFileInput = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click();
     }
-  };
-
-  const handleReupload = () => {
-    setPending(false); // Reset pending state to false for re-uploading
-    setUploadProgress([]);
-    setImages([]);
   };
 
   return (
@@ -840,15 +841,10 @@ export function ImageUpload({ telegramUserId }: ImageUploadProps) {
             ref={fileInputRef}
             onChange={handleImageChange}
             accept="image/*"
-            multiple // Allow selecting multiple files
+            multiple // This allows selecting multiple files
             style={{ display: "none" }}
           />
-          {/* Custom button to trigger file input */}
-          <button
-            className="custom-upload-button"
-            onClick={triggerFileInput}
-            disabled={isUploading}
-          >
+          <button className="custom-upload-button" onClick={triggerFileInput} disabled={isUploading}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -867,7 +863,6 @@ export function ImageUpload({ telegramUserId }: ImageUploadProps) {
             {isUploading ? "Uploading..." : "Upload Images"}
           </button>
 
-          {/* Display progress */}
           {uploadProgress.length > 0 && (
             <div>
               {uploadProgress.map((progress, index) => (
