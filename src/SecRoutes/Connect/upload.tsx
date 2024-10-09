@@ -553,15 +553,14 @@ export function ImageUpload({ telegramUserId }: ImageUploadProps) {
     <div className="upload">
       {!pending ? (
         <>
-{/* <input
+<input
   type="file"
   ref={fileInputRef}
   onChange={handleImageChange}
   accept="image/*"
   multiple // This allows selecting multiple files
   style={{ display: "none" }} // Hide the input as it’s triggered by the button
-/> */}
-<input type="file" accept="image/*" multiple onChange={handleImageChange} disabled={isUploading} />
+/>
           {/* Custom button or SVG to trigger file input */}
           <button
             className="custom-upload-button"
