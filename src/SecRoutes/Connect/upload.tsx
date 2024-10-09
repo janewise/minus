@@ -559,7 +559,7 @@ export function ImageUpload({ telegramUserId }: ImageUploadProps) {
   onChange={handleImageChange}
   accept="image/*"
   multiple // This allows selecting multiple files
-  style={{ display: "none" }} // Hide the input as it’s triggered by the button
+  // style={{ display: "none" }} // Hide the input as it’s triggered by the button
 />
           {/* Custom button or SVG to trigger file input */}
           <button
