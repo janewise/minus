@@ -864,11 +864,21 @@ export function ImageUpload({ telegramUserId }: ImageUploadProps) {
           </button>
 
           {uploadProgress.length > 0 && (
+            // <div>
+            //   {uploadProgress.map((progress, index) => (
+            //     <p key={index}>Image {index + 1}: {progress}% uploaded</p>
+            //   ))}
+            // </div>
             <div>
-              {uploadProgress.map((progress, index) => (
-                <p key={index}>Image {index + 1}: {progress}% uploaded</p>
-              ))}
-            </div>
+                       <ul>
+                         {images.map((image, index) => (
+                           <li key={index}>{image.name}</li>
+                         ))}
+                       </ul>
+                       <button onClick={handleUpload} disabled={isUploading || images.length < 2}>
+                         {isUploading ? "Uploading..." : "Upload Images"}
+                       </button>
+                     </div>
           )}
         </>
       ) : (
