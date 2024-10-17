@@ -337,7 +337,7 @@ export function Claimtk() {
       <button
         className="claimbutton"
         onClick={handleClaimSubmit}
-        disabled={!connectedWallet || totalTokens <= 0} // Disable button if conditions are not met
+        // disabled={!connectedWallet || totalTokens <= 0} // Disable button if conditions are not met
       >
         Claim
       </button>
