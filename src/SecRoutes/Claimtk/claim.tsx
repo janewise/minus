@@ -173,7 +173,7 @@ export function Claimtk() {
     setErrorMessage(null); // Reset error message before validating
 
     // Check for errors
-    if (!walletAddress) {
+    if (!connectedWallet) {
       setErrorMessage("Wallet address is required.");
       return;
     }
