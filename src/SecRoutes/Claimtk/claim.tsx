@@ -221,7 +221,6 @@
 //     </div>
 //   );
 // }
-
 import React, { useEffect, useState } from "react";
 import { db } from "../../firebase";
 import { ref, onValue, get, update } from "firebase/database";
@@ -232,7 +231,8 @@ export function Claimtk() {
   const [userId, setUserId] = useState<string | null>(null);
   const [claimableTokens, setClaimableTokens] = useState<number>(0);
   const [connectedWallet, setConnectedWallet] = useState<string | null>(null);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null); // State for error message
+  const [pendingState, setPendingState] = useState<boolean | null>(null); // Track the pending state
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   useEffect(() => {
     const initTelegram = () => {
@@ -245,14 +245,13 @@ export function Claimtk() {
       if (user) {
         setUserId(user.id.toString());
         fetchUserWallet(user.id.toString());
+        fetchPendingState(user.id.toString());
       }
     };
 
     if (window.Telegram) {
-      console.log("Telegram SDK is already loaded");
       initTelegram();
     } else {
-      console.log("Waiting for Telegram SDK to be ready");
       window.addEventListener("TelegramWebAppReady", initTelegram);
     }
 
@@ -278,6 +277,22 @@ export function Claimtk() {
     }
   };
 
+  // Fetch pending state from Firebase
+  const fetchPendingState = async (userId: string) => {
+    const userRef = ref(db, `users/${userId}/addresswallet`);
+    try {
+      const snapshot = await get(userRef);
+      if (snapshot.exists()) {
+        const userData = snapshot.val();
+        setPendingState(userData?.pendingstate || false);
+      } else {
+        setPendingState(false); // If no pending state exists, assume it's not pending
+      }
+    } catch (error) {
+      console.error("Error fetching pending state:", error);
+    }
+  };
+
   useEffect(() => {
     if (userId) {
       const exchangeRef = ref(db, `users/${userId}/exchanges/tokens`);
@@ -285,7 +300,6 @@ export function Claimtk() {
         const tokens = snapshot.val();
         setTotalTokens(tokens || 0);
 
-        // Calculate claimable tokens after reducing 20%
         const claimable = tokens ? tokens * 0.8 : 0;
         setClaimableTokens(claimable);
       });
@@ -294,10 +308,8 @@ export function Claimtk() {
     }
   }, [userId]);
 
-  // Function to handle claim submission
   const handleClaimSubmit = async () => {
     if (!connectedWallet || totalTokens <= 0) {
-      // Display an error message if the button is disabled
       setErrorMessage(
         connectedWallet
           ? "You don't have enough tokens to claim."
@@ -312,11 +324,12 @@ export function Claimtk() {
 
     try {
       await update(userRef, {
-        pendingstate: true,
+        pendingstate: true, // Set the claim as pending
         claimstate: false
       });
       console.log("Claim submitted successfully");
-      setErrorMessage(null); // Clear the error message on successful submission
+      setPendingState(true); // Set pending state to true after submission
+      setErrorMessage(null);
     } catch (error) {
       console.error("Error updating claim state:", error);
       setErrorMessage("Error submitting claim. Please try again.");
@@ -325,24 +338,32 @@ export function Claimtk() {
 
   return (
     <div className="Claim">
-      <div className="claimtoken">
-        <div className="claimnote">
-          <p>Total Token - {totalTokens}</p>
-          <p>Transition fee - 20%</p>
-          <hr />
-          <p>Claimable Token - {claimableTokens}</p>
+      {pendingState ? (
+        <div className="pendingMessage">
+          <p>Your claim is pending. Please wait for approval.</p>
         </div>
-      </div>
+      ) : (
+        <div>
+          <div className="claimtoken">
+            <div className="claimnote">
+              <p>Total Token - {totalTokens}</p>
+              <p>Transition fee - 20%</p>
+              <hr />
+              <p>Claimable Token - {claimableTokens}</p>
+            </div>
+          </div>
 
-      <button
-        className="claimbutton"
-        onClick={handleClaimSubmit}
-        // disabled={!connectedWallet || totalTokens <= 0} // Disable button if conditions are not met
-      >
-        Claim
-      </button>
+          <button
+            className="claimbutton"
+            onClick={handleClaimSubmit}
+            disabled={!connectedWallet || totalTokens <= 0}
+          >
+            Claim
+          </button>
 
-      {errorMessage && <p className="error-message">{errorMessage}</p>} {/* Display error message */}
+          {errorMessage && <p className="error-message">{errorMessage}</p>}
+        </div>
+      )}
     </div>
   );
 }
