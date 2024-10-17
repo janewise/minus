@@ -319,6 +319,7 @@ import { db } from "../firebase";
 import { Route, Routes, NavLink, Navigate } from "react-router-dom";
 import { SwapMain } from "../SecRoutes/SwapTk/swapmain";
 import { TransferMain } from "../SecRoutes/TransferTk/transfermain";
+import { Claimtk } from "../SecRoutes/Claimtk/claim";
 import "./SecNavcss/walletnav.css";
 
 export function Wallet() {
@@ -412,6 +413,14 @@ export function Wallet() {
                   Transfer
                 </NavLink>
               </li>
+              <li>
+                <NavLink 
+                  to="/wallet/claim" 
+                  className={({ isActive }) => isActive ? "minelink active" : "minelink"}
+                >
+                 claim
+                </NavLink>
+              </li>
             </ul>
           </nav>
 
@@ -419,6 +428,7 @@ export function Wallet() {
             <Route path="/" element={<Navigate to="swapmain" />} />
             <Route path="swapmain" element={<SwapMain />} />
             <Route path="transfermain" element={<TransferMain />} />
+            <Route path="claim" element={<Claimtk />} />
           </Routes>
         </div>
       </div>
