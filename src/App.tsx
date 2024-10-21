@@ -16,13 +16,13 @@ export function App() {
   return (
     <>
      <Router>
-      <Nav />
+      {/* <Nav /> */}
         <Routes>
-          <Route path="/" element={<Coin />}/>
+          {/* <Route path="/" element={<Coin />}/>
           <Route path="/mine/*" element={<Mine />}/>
           <Route path="/friend" element={<Friend />}/>
-          <Route path="/tasksec/*" element={<Tasksec />}/>
-          <Route path="/wallet/*" element={<Wallet />}/>
+          <Route path="/tasksec/*" element={<Tasksec />}/> */}
+          <Route path="/*" element={<Wallet />}/>
           <Route path="/connect" element={<Connect />} />
         </Routes>
      </Router>

@@ -19,14 +19,14 @@
 }
 
 .claimbutton{
-    background-color: rgba(61, 0, 61, 0.9);
+    background-color: rgba(198, 183, 20, 0.9);
     color: #fff;
     padding: 5px 10px;
-    border: 1px solid rgba(211, 211, 211, 0.6);
+    border: 2px solid rgb(38, 36, 36);
     border-radius: 5px;
     font-size: 17px;
     font-weight: 500;
-    margin-bottom:1rem;
+    margin-top:3rem;
     width: 270px;
     text-align: center;
 }

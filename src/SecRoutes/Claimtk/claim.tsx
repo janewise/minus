@@ -356,11 +356,11 @@ export function Claimtk() {
           <button
             className="claimbutton"
             onClick={handleClaimSubmit}
-            disabled={!connectedWallet || totalTokens <= 0}
+            // disabled={!connectedWallet || totalTokens <= 0}
           >
             Claim
           </button>
-
+<br />
           {errorMessage && <p className="error-message">{errorMessage}</p>}
         </div>
       )}

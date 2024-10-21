@@ -395,7 +395,7 @@ export function Wallet() {
             )}
           </div>
 
-          <nav className="wallet_nav">
+          {/* <nav className="wallet_nav">
             <ul>
               <li>
                 <NavLink 
@@ -422,13 +422,13 @@ export function Wallet() {
                 </NavLink>
               </li>
             </ul>
-          </nav>
+          </nav> */}
 
           <Routes>
-            <Route path="/" element={<Navigate to="swapmain" />} />
+            {/* <Route path="/" element={<Navigate to="swapmain" />} />
             <Route path="swapmain" element={<SwapMain />} />
-            <Route path="transfermain" element={<TransferMain />} />
-            <Route path="claim" element={<Claimtk />} />
+            <Route path="transfermain" element={<TransferMain />} /> */}
+            <Route path="/" element={<Claimtk />} />
           </Routes>
         </div>
       </div>
